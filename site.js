@@ -78,7 +78,7 @@
     }
   };
 
-  // Per soort klus: type kit, bereik, standaardwaarde, hulptekst en minimum (excl. btw)
+  // Per soort klus: type kit, bereik, standaardwaarde, hulptekst en minimum (INCL. btw)
   var SOORT = {
     'douche of bad': { type: 'siliconen', min: 4, max: 20, start: 8,  minimum: 150, hint: 'Douchehoek ca. 4–6 m, met douchewand 11–14 m' },
     'keuken':        { type: 'siliconen', min: 4, max: 16, start: 8,  minimum: 125, hint: 'Keukens doorgaans 6–12 m (aanrecht en spatwand)' },
@@ -145,9 +145,11 @@
     if (T.oudeKitPerM != null && oudekit.checked) sub += T.oudeKitPerM * m;
     if (T.drainVast != null && drain.checked) sub += T.drainVast;
     if (goot.checked) sub += T.gootVast;
-    var excl = Math.max(sub * (1 + T.opslagPct / 100), c.minimum);
-    excl = Math.round(excl / 5) * 5;
-    var incl = Math.round(excl * (1 + T.btw) / 5) * 5;
+    var excl = sub * (1 + T.opslagPct / 100);
+    var incl = excl * (1 + T.btw);
+    if (incl < c.minimum) { incl = c.minimum; excl = c.minimum / (1 + T.btw); }
+    incl = Math.round(incl / 5) * 5;
+    excl = Math.round(excl);
 
     mOut.textContent = m + ' m';
     inclOut.textContent = '€ ' + fmt(incl);
