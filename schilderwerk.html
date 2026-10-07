@@ -50,14 +50,14 @@
 <h2 style="margin-bottom:24px">Reken je kamer even door.</h2>
 <p>Vul in wat er geschilderd moet worden. De richtprijs is inclusief afplakken en afdekken, twee lagen Sikkens, materiaal en voorrijkosten.</p>
 <p class="small">Richtprijs, geen offerte. De vaste prijs volgt na foto's of een opname. Houtrot, nicotine, nieuw stucwerk en hoogtes boven 3 meter prijzen we apart. Buitenwerk altijd na opname (€50, verrekend bij akkoord).</p>
-<p class="small">Standaard leveren we twee lagen met garantie. Een onderhoudslaag (één laag) kan alleen op intacte verf in dezelfde kleur, na beoordeling van foto's; daarop geven we geen garantie.</p>
+<p class="small">Standaard zetten we twee lagen op goed bestaand werk; kaal hout en kleurwissels krijgen eerst een grondlaag. Allebei met garantie. Een onderhoudslaag (één laag) kan alleen op intacte verf in dezelfde kleur, na beoordeling van foto's; daarop geven we geen garantie.</p>
 <p class="small">Tip voor de m²: lengte van alle muren bij elkaar × hoogte, ramen en deuren niet aftrekken. Plafond: lengte × breedte.</p>
 </div>
 <div class="calc" id="schildercalc">
 
 <div class="cgroep">
 <div class="ctitel">Afwerking</div>
-<div class="crow"><label for="s-afwerking">Hoe wil je het?</label><select id="s-afwerking"><option value="volledig">Volledig: 2 lagen, met garantie</option><option value="onderhoud">Onderhoudslaag: 1 laag, zelfde kleur, zonder garantie</option></select></div>
+<div class="crow"><label for="s-afwerking">Hoe wil je het?</label><select id="s-afwerking"><option value="standaard">Standaard: 2 lagen op goed bestaand werk, met garantie</option><option value="compleet">Compleet: grondlaag + 2 lagen (kaal hout, kleurwissel), met garantie</option><option value="onderhoud">Onderhoud: 1 laag, zelfde kleur, zonder garantie</option></select></div>
 <div class="hint mono" data-afw-hint hidden>Alleen op intacte verf in dezelfde kleur, na beoordeling van foto's. Geen kleurwissel, geen nieuw stuc.</div>
 </div>
 
@@ -84,6 +84,7 @@
 <summary>Lakwerk binnen <span class="mono">deuren, kozijnen, plinten, trap</span><span class="gekozen" data-sum></span></summary>
 <div class="cgroep" style="border:0;padding:4px 14px 12px">
 <div class="crow"><label for="s-deur">Binnendeuren, per zijde</label><div class="cin"><input id="s-deur" type="number" min="0" max="60" step="1" value="0" inputmode="numeric"><span>zijden</span></div></div>
+<div class="crow"><label for="s-deurtype">Deurtype</label><select id="s-deurtype"><option value="vlak">Vlak</option><option value="panelen">Met ramen of panelen</option></select></div>
 <div class="crow"><label for="s-kozijn">Kozijnen binnen (omtrek)</label><div class="cin"><input id="s-kozijn" type="number" min="0" max="200" step="1" value="0" inputmode="numeric"><span>m</span></div></div>
 <div class="crow"><label for="s-vensterbank">Vensterbanken</label><div class="cin"><input id="s-vensterbank" type="number" min="0" max="60" step="1" value="0" inputmode="numeric"><span>m</span></div></div>
 <div class="crow"><label for="s-plint">Plinten</label><div class="cin"><input id="s-plint" type="number" min="0" max="200" step="1" value="0" inputmode="numeric"><span>m</span></div></div>
