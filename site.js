@@ -41,7 +41,7 @@
     voorrijkosten: 65,
     opslagPct: 10,
     btw: 0.21,
-    oudeKitPerM: null,        // oude kit verwijderen, per meter — null = optie verborgen
+    oudeKitPerM: 5,           // oude kit verwijderen, per meter — null = optie verborgen
     drainVast: null,          // drain / RVS put meekitten, vast per klus — null = optie verborgen
     siliconen: {
       reinigenPerM: 3,        // ontvetten / reinigen, per meter
@@ -54,6 +54,18 @@
       kokerStandaard: 17.5,   // wit / lichtgrijs / transparant
       kokerKleur: 20,         // andere kleur
       kleuren: 27             // aantal meerprijs-kleuren in het palet
+    },
+    beglazing: {              // hybride beglazingskit: alleen wit en betongrijs
+      reinigenPerM: 3,
+      kitPerM: [
+        { tot: 10, prijs: 10 },
+        { tot: 20, prijs: 9 },
+        { tot: Infinity, prijs: 8 }
+      ],
+      meterPerKoker: 8,
+      kokerStandaard: 17.5,
+      kokerKleur: 20,
+      kleuren: 1
     },
     acryl: {
       reinigenPerM: 0,        // zit in de all-in meterprijs
@@ -69,7 +81,7 @@
   var SOORT = {
     'douche of bad': { type: 'siliconen', min: 4, max: 20, start: 8,  minimum: 150, hint: 'Douchehoek ca. 4–6 m, met douchewand 11–14 m' },
     'keuken':        { type: 'siliconen', min: 4, max: 16, start: 8,  minimum: 125, hint: 'Keukens doorgaans 6–12 m (aanrecht en spatwand)' },
-    'beglazing':     { type: 'siliconen', min: 4, max: 50, start: 12, minimum: 125, hint: 'Per raam ca. 4–5 m, hele woning tot ca. 46 m' },
+    'beglazing':     { type: 'beglazing', min: 4, max: 50, start: 12, minimum: 125, hint: 'Per raam ca. 4–5 m, hele woning tot ca. 46 m' },
     'stucnaden':     { type: 'acryl',     min: 5, max: 60, start: 20, minimum: 100, hint: 'Plinten en plafondnaden lopen snel op' }
   };
 
@@ -107,7 +119,7 @@
     if (eerste) eerste.checked = true;
     gekozen.textContent = '';
     meer.open = false;
-    aantalOut.textContent = 'meerprijs · ' + T[c.type].kleuren + ' kleuren';
+    aantalOut.textContent = 'meerprijs · ' + T[c.type].kleuren + (T[c.type].kleuren === 1 ? ' kleur' : ' kleuren');
   }
 
   function fmt(n) { return n.toLocaleString('nl-NL'); }
