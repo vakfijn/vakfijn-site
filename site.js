@@ -39,8 +39,11 @@
 
   var T = {
     reinigenPerM: 3,
-    kitPerMKlein: 10,   // < 10 m
-    kitPerMGroot: 9,    // 10–20 m
+    kitPerM: [            // staffel: tot en met X meter → prijs per meter
+      { tot: 10, prijs: 10 },
+      { tot: 20, prijs: 9 },
+      { tot: Infinity, prijs: 8 }
+    ],
     materiaal: 30,
     voorrijkosten: 65,
     opslagPct: 10,
@@ -79,7 +82,7 @@
 
   function update() {
     var m = Number(range.value);
-    var perM = m < 10 ? T.kitPerMKlein : T.kitPerMGroot;
+    var perM = T.kitPerM.filter(function (t) { return m <= t.tot; })[0].prijs;
     var sub = T.reinigenPerM * m + perM * m + T.materiaal + T.voorrijkosten;
     var excl = Math.max(sub * (1 + T.opslagPct / 100), T.minimum);
     excl = Math.round(excl / 5) * 5;
