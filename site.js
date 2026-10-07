@@ -137,7 +137,7 @@
         werk += (lak + lakToeslag) * (1 - korting);
       }
       if (regels.length && g('s-lastig').checked) regels.push('• Lastige ruimte: trapgat / schuine wanden / veel hoeken');
-      var AFW = { compleet: 'compleet, hechtprimer + 2 lagen, met garantie', standaard: 'standaard, 2 lagen zonder primer, zonder hechtgarantie', onderhoud: 'onderhoud, 1 laag, zonder garantie' };
+      var AFW = { compleet: 'compleet, 2 lagen, lakwerk met hechtprimer, met garantie', standaard: 'standaard, 2 lagen, lakwerk zonder primer, zonder hechtgarantie', onderhoud: 'onderhoud, 1 laag, zonder garantie' };
       if (regels.length) regels.push('• Afwerking: ' + AFW[afw]);
 
       // samenvatting in de ingeklapte balken
