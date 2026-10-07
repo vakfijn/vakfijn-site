@@ -72,7 +72,7 @@
       deur1: { zelfde: 150, nieuw: 150 }, deur2: { zelfde: 195, nieuw: 230 },
       kozijn: { zelfde: 175, nieuw: 205 }, vensterbank: { zelfde: 55, nieuw: 70 },
       plintM: { zelfde: 12, nieuw: 14 }, radiator: { zelfde: 95, nieuw: 120 },
-      trap: { zelfde: 650, nieuw: 775 },
+      trap: { zelfde: 1500, nieuw: 1650 },   // trap compleet vanaf €1.500
       opstart: [{ tot: 30, prijs: 60 }, { tot: 60, prijs: 120 }, { tot: Infinity, prijs: 175 }],  // afplakken/afdekken/opruimen, naar m²
       ritPrijs: 65,              // voorrijkosten per werkdag
       m2PerDag: 30,              // ritten = 1 + ceil(m² / 30)
