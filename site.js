@@ -65,7 +65,7 @@
   var sc = document.getElementById('schildercalc');
   if (sc) {
     var S = {  // prijzen excl. btw, incl. materiaal en arbeid — afgestemd op offertes 2026-0019 en 2026-0038
-      muur: { licht: 21, nieuw: 23, donker: 25 },                // per m², 2 lagen Sikkens
+      muur: { licht: 21, nieuw: 23, donker: 25 },                // per m², 2 lagen
       ondergrond: { goed: 0, nieuw: 5, herstel: 21.5 },          // per m² muur: voorstrijk €5, herstel + voorstrijk €16,50 + €5
       plafond: { wit: 31, kleur: 33, donker: 35 },               // per m², reinigen, schuren, 2 lagen
       gatenRuimte: 45, scheurM: 8, schadePlek: 145,              // stucherstel losse posten
