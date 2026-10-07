@@ -294,3 +294,12 @@ footer .copy a:hover{color:var(--goud)}
 .tip b{display:block;color:var(--ant);font-family:'DM Mono',monospace;font-size:12px;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px}
 .tip.weetje{border-left-color:var(--ant)}
 .tip.weetje svg{color:var(--ant)}
+
+/* praktijkvoorbeeld */
+.feiten{margin:24px 0 0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 24px}
+@media(max-width:480px){.feiten{grid-template-columns:1fr}}
+.feiten div{border-top:1px solid var(--lijn-d);padding-top:10px}
+.feiten dt{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--goud);margin-bottom:4px}
+.feiten dd{margin:0;font-size:15px;color:var(--zand)}
+.schets{margin:0;background:#3A3734;padding:24px;border:1px solid var(--lijn-d)}
+.schets svg{width:100%;height:auto;display:block}
