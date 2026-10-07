@@ -82,6 +82,7 @@
       opstart: [{ tot: 30, prijs: 60 }, { tot: 60, prijs: 120 }, { tot: Infinity, prijs: 175 }],  // afplakken/afdekken/opruimen, naar m²
       ritPrijs: 65,              // voorrijkosten per werkdag
       m2PerDag: 30,              // ritten = 1 + ceil(m² / 30)
+      lastigPct: 15,             // lastige ruimte (trapgat, schuine wanden, veel hoeken): toeslag op sauswerk
       onderhoudFactor: 0.65,     // onderhoudslaag (1 laag) = 65% van de 2-lagenprijs, voor sauswerk en lakwerk
       btwLaag: 0.09, btwHoog: 0.21
     };
@@ -103,9 +104,10 @@
       var regels = [], werk = 0;
       function post(bedrag, tekst) { if (bedrag > 0) { werk += bedrag; regels.push('• ' + tekst); } }
       var mk = g('s-muurkleur').value, pk = g('s-plafondkleur').value, og = g('s-ondergrond').value;
-      post(n('s-muur') * S.muur[mk] * f, 'Muren sauzen ' + n('s-muur') + ' m² (' + MK[mk] + ')' + lagen);
+      var lf = g('s-lastig').checked ? 1 + S.lastigPct / 100 : 1;
+      post(n('s-muur') * S.muur[mk] * f * lf, 'Muren sauzen ' + n('s-muur') + ' m² (' + MK[mk] + ')' + lagen);
       post(n('s-muur') * S.ondergrond[og], og === 'nieuw' ? 'Voorstrijken nieuw stucwerk' : 'Stuc herstellen en voorstrijken');
-      post(n('s-plafond') * S.plafond[pk] * f, 'Plafond sauzen ' + n('s-plafond') + ' m² (' + PK[pk] + ')' + lagen);
+      post(n('s-plafond') * S.plafond[pk] * f * lf, 'Plafond sauzen ' + n('s-plafond') + ' m² (' + PK[pk] + ')' + lagen);
       post(n('s-gaten') * S.gatenRuimte, 'Gaten vullen: ' + n('s-gaten') + ' ruimte(s)');
       post(n('s-scheur') * S.scheurM, 'Haarscheuren: ' + n('s-scheur') + ' m');
       post(n('s-schade') * S.schadePlek, 'Herstelplekken: ' + n('s-schade'));
@@ -125,6 +127,7 @@
         regels.push('• Lakwerk: ' + lagen + (lagen === 1 ? ' laag' : ' lagen') + ', ' + g('s-lakkleur').options[g('s-lakkleur').selectedIndex].text.toLowerCase() + ', ' + gl);
         werk += lak + lakToeslag;
       }
+      if (regels.length && g('s-lastig').checked) regels.push('• Lastige ruimte: trapgat / schuine wanden / veel hoeken');
       if (regels.length) regels.push(onderhoud ? '• Afwerking: onderhoudslaag, 1 laag, zonder garantie' : '• Afwerking: volledig, 2 lagen, met garantie');
 
       // samenvatting in de ingeklapte balken
@@ -173,6 +176,7 @@
     oudeKitPerM: 5,           // oude kit verwijderen, per meter — null = optie verborgen
     drainVast: 55,            // RVS put meekitten, vast per klus
     gootVast: 215,            // douchegoot / Easydrain: €55 arbeid + speciale koker (2× €80 inkoop)
+    lastigPct: 25,            // veel hoeken / nissen / krap: toeslag op de arbeid (afgestemd op offerte 2026-0036)
     siliconen: {
       reinigenPerM: 3,        // ontvetten / reinigen, per meter
       kitPerM: [              // arbeid kitten, staffel tot en met X meter
@@ -230,6 +234,7 @@
   var drain = calc.querySelector('#drain');
   var goot = calc.querySelector('#goot');
   var hybride = calc.querySelector('#hybride');
+  var lastig = calc.querySelector('#lastig');
   if (T.oudeKitPerM == null) calc.querySelector('[data-opt=oudekit]').hidden = true;
   if (T.drainVast == null) calc.querySelector('[data-opt=drain]').hidden = true;
   var mOut = calc.querySelector('[data-m]');
@@ -281,9 +286,10 @@
     var kokers = Math.max(1, Math.ceil(m / (hyb ? K.hybrideMeterPerKoker : K.meterPerKoker)));
     var kleurExtra = !!kleurEl().getAttribute('data-extra');
     var materiaal = kokers * (hyb ? K.hybrideKoker : (kleurExtra ? K.kokerKleur : K.kokerStandaard));
-    var sub = K.reinigenPerM * m + perM * m + materiaal + T.voorrijkosten;
     var oudePerM = K.oudeKitPerM != null ? K.oudeKitPerM : T.oudeKitPerM;
-    if (oudePerM != null && oudekit.checked) sub += oudePerM * m;
+    var arbeid = K.reinigenPerM * m + perM * m + ((oudePerM != null && oudekit.checked) ? oudePerM * m : 0);
+    if (lastig.checked) arbeid *= 1 + T.lastigPct / 100;
+    var sub = arbeid + materiaal + T.voorrijkosten;
     if (T.drainVast != null && drain.checked) sub += T.drainVast;
     if (goot.checked) sub += T.gootVast;
     var excl = sub * (1 + T.opslagPct / 100);
@@ -301,6 +307,7 @@
     if (T.drainVast != null && drain.checked) extras.push('RVS put meekitten');
     if (goot.checked) extras.push('douchegoot/Easydrain met speciale kit');
     if (hyb) extras.push('werkende naden met hybride kit');
+    if (lastig.checked) extras.push('veel hoeken/nissen/krap');
     var SOORTNAAM = { 'douche of bad': 'Douche of bad', 'keuken': 'Keuken', 'beglazing': 'Beglazing', 'stucnaden': 'Stucnaden en plinten' };
     var regels = [
       'Hallo Dennis, ik wil graag een vaste prijs voor kitwerk.',
@@ -330,6 +337,7 @@
   drain.addEventListener('change', update);
   goot.addEventListener('change', update);
   hybride.addEventListener('change', update);
+  lastig.addEventListener('change', update);
   applySoort();
   update();
 })();
