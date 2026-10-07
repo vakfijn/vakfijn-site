@@ -245,3 +245,13 @@ footer .copy a:hover{color:var(--goud)}
 .slides img{width:100%;height:100%;object-fit:cover;aspect-ratio:auto}
 .slides figcaption{position:absolute;left:16px;bottom:16px;background:var(--ant);color:var(--goud);font-family:'DM Mono',monospace;font-size:13px;letter-spacing:1px;text-transform:uppercase;padding:8px 12px}
 @media(prefers-reduced-motion:reduce){.slides figure{transition:none}}
+
+/* paginawissel: zachte overgang, navigatie blijft staan */
+@view-transition{navigation:auto}
+.nav{view-transition-name:nav}
+footer{view-transition-name:footer}
+::view-transition-old(root){animation:220ms ease-out both vt-uit}
+::view-transition-new(root){animation:260ms ease-in both vt-in}
+@keyframes vt-uit{to{opacity:0}}
+@keyframes vt-in{from{opacity:0}}
+@media(prefers-reduced-motion:reduce){::view-transition-old(root),::view-transition-new(root){animation:none}}
