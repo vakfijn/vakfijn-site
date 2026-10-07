@@ -33,7 +33,7 @@
 <div class="txt">
 <div class="label">Vakfijn — Schilderwerk</div>
 <h1>Strakke wanden. Daar begint het.</h1>
-<p>Muren en plafonds sauzen, stuc- en pleisterherstel, en het houtwerk eromheen. Eerst gaten, scheuren en zuigende ondergrond aanpakken, dan pas verf. Eigen premium kwaliteitsverf, dus garantie.</p>
+<p>Muren en plafonds sauzen, stuc- en pleisterherstel, en het houtwerk eromheen. Eerst gaten, scheuren en zuigende ondergrond aanpakken, dan pas verf. Premium kwaliteitsverf, dus garantie.</p>
 <div class="btns">
 <a class="btn btn-goud" href="https://wa.me/31639784959?text=Hallo%2C%20ik%20wil%20graag%20een%20offerte%20voor%20schilderwerk.%20Foto%27s%20volgen." target="_blank" rel="noopener">Foto's sturen via WhatsApp</a>
 <a class="btn btn-lijn" href="#prijs">Bereken je richtprijs</a>
@@ -55,22 +55,18 @@
 </div>
 <div class="calc" id="schildercalc">
 
-<div class="cgroep">
-<div class="ctitel">Afwerking</div>
-<div class="afw" role="radiogroup" aria-label="Afwerking">
-<label class="afwk"><input type="radio" name="s-afw" value="compleet" checked><span class="afwt">Compleet</span><span class="afwd">2 lagen · lakwerk met hechtprimer</span><span class="afwg goud">Met garantie</span></label>
-<label class="afwk"><input type="radio" name="s-afw" value="standaard"><span class="afwt">Standaard</span><span class="afwd">2 lagen · lakwerk zonder primer</span><span class="afwg">Zonder hechtgarantie</span></label>
-<label class="afwk"><input type="radio" name="s-afw" value="onderhoud"><span class="afwt">Onderhoud</span><span class="afwd">1 laag, zelfde kleur</span><span class="afwg">Zonder garantie</span></label>
-</div>
-<div class="hint mono">Muren en plafond altijd 2 lagen. Nieuw stuc, vochtschade of herstel kies je bij "Ondergrond muren".</div>
-<div class="hint mono" data-afw-hint hidden>Onderhoud: alleen op intacte verf in dezelfde kleur, na beoordeling van foto's. Geen kleurwissel, geen nieuw stuc.</div>
-</div>
+
 
 
 
 <details class="meer cdet">
-<summary>Muren en plafond <span class="mono">sauzen, stucherstel ondergrond</span><span class="gekozen" data-sum></span></summary>
+<summary>Muren en plafond <span class="mono">sauzen, 2 lagen</span><span class="gekozen" data-sum></span></summary>
 <div class="cgroep" style="border:0;padding:4px 14px 12px">
+<div class="afw twee" role="radiogroup" aria-label="Afwerking muren en plafond">
+<label class="afwk"><input type="radio" name="s-muurafw" value="volledig" checked><span class="afwt">2 lagen</span><span class="afwd">Dekkend, egaal</span><span class="afwg goud">Met garantie</span></label>
+<label class="afwk"><input type="radio" name="s-muurafw" value="onderhoud"><span class="afwt">Onderhoud</span><span class="afwd">1 laag, zelfde kleur</span><span class="afwg">Zonder garantie</span></label>
+</div>
+<div class="hint mono" data-muur-hint hidden>Onderhoud: alleen op intacte, gesausde wanden in dezelfde kleur. Geen kleurwissel, geen nieuw stuc.</div>
 <div class="crow"><label for="s-muur">Muren sauzen</label><div class="cin"><input id="s-muur" type="number" min="0" max="400" step="1" value="0" inputmode="numeric"><span>m²</span></div></div>
 <div class="crow"><label for="s-muurkleur">Kleur muren</label><select id="s-muurkleur"><option value="licht">Zelfde of lichte kleur</option><option value="nieuw">Nieuwe kleur</option><option value="donker">Donkere of volle kleur</option></select></div>
 <div class="crow"><label for="s-ondergrond">Ondergrond muren</label><select id="s-ondergrond"><option value="goed">Eerder gesausd, in orde</option><option value="nieuw">Nieuw stucwerk (voorstrijken)</option><option value="herstel">Beschadigd stuc (herstellen en voorstrijken)</option></select></div>
@@ -93,6 +89,12 @@
 <details class="meer cdet">
 <summary>Lakwerk binnen <span class="mono">deuren, kozijnen, plinten, trap</span><span class="gekozen" data-sum></span></summary>
 <div class="cgroep" style="border:0;padding:4px 14px 12px">
+<div class="afw" role="radiogroup" aria-label="Afwerking lakwerk">
+<label class="afwk"><input type="radio" name="s-lakafw" value="compleet" checked><span class="afwt">Compleet</span><span class="afwd">Hechtprimer + 2 lagen</span><span class="afwg goud">Met garantie</span></label>
+<label class="afwk"><input type="radio" name="s-lakafw" value="standaard"><span class="afwt">Standaard</span><span class="afwd">2 lagen, zonder primer</span><span class="afwg">Zonder hechtgarantie</span></label>
+<label class="afwk"><input type="radio" name="s-lakafw" value="onderhoud"><span class="afwt">Onderhoud</span><span class="afwd">1 laag, zelfde kleur</span><span class="afwg">Zonder garantie</span></label>
+</div>
+<div class="hint mono" data-lak-hint hidden>Onderhoud: alleen op intact lakwerk in dezelfde kleur. Geen kleurwissel.</div>
 <div class="crow"><label for="s-deur">Binnendeuren, per zijde</label><div class="cin"><input id="s-deur" type="number" min="0" max="60" step="1" value="0" inputmode="numeric"><span>zijden</span></div></div>
 <div class="crow"><label for="s-deurtype">Deurtype</label><select id="s-deurtype"><option value="vlak">Vlak</option><option value="panelen">Met ramen of panelen</option></select></div>
 <div class="crow"><label for="s-voordeur">Voordeur binnenzijde (met raam en lijsten)</label><div class="cin"><input id="s-voordeur" type="number" min="0" max="5" step="1" value="0" inputmode="numeric"><span>stuks</span></div></div>

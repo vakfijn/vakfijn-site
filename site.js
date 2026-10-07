@@ -97,14 +97,15 @@
     var PK = { wit: 'wit/licht', kleur: 'kleur', donker: 'donker' };
 
     function sUpdate() {
-      var afwEl = sc.querySelector('input[name=s-afw]:checked');
-      var afw = afwEl ? afwEl.value : 'compleet', onderhoud = afw === 'onderhoud';
-      // onderhoudslaag: alleen zelfde kleur en bestaande, intacte ondergrond
-      ['s-muurkleur', 's-plafondkleur', 's-lakkleur', 's-ondergrond'].forEach(function (id) {
-        var el = g(id); el.disabled = onderhoud; if (onderhoud) el.selectedIndex = 0;
-      });
-      sc.querySelector('[data-afw-hint]').hidden = !onderhoud;
-      var f = onderhoud ? S.onderhoudFactor : 1, lagen = onderhoud ? ' (1 laag)' : '';
+      var muurAfw = (sc.querySelector('input[name=s-muurafw]:checked') || {}).value || 'volledig';
+      var lakAfw = (sc.querySelector('input[name=s-lakafw]:checked') || {}).value || 'compleet';
+      var muurOnderhoud = muurAfw === 'onderhoud', lakOnderhoud = lakAfw === 'onderhoud';
+      // onderhoud: alleen zelfde kleur en bestaande, intacte ondergrond
+      ['s-muurkleur', 's-plafondkleur', 's-ondergrond'].forEach(function (id) { var el = g(id); el.disabled = muurOnderhoud; if (muurOnderhoud) el.selectedIndex = 0; });
+      (function () { var el = g('s-lakkleur'); el.disabled = lakOnderhoud; if (lakOnderhoud) el.selectedIndex = 0; })();
+      sc.querySelector('[data-muur-hint]').hidden = !muurOnderhoud;
+      sc.querySelector('[data-lak-hint]').hidden = !lakOnderhoud;
+      var f = muurOnderhoud ? S.onderhoudFactor : 1, lagen = muurOnderhoud ? ' (1 laag)' : '';
       var regels = [], werk = 0;
       function post(bedrag, tekst) { if (bedrag > 0) { werk += bedrag; regels.push('• ' + tekst); } }
       var mk = g('s-muurkleur').value, pk = g('s-plafondkleur').value, og = g('s-ondergrond').value;
@@ -116,7 +117,7 @@
       post(n('s-scheur') * S.scheurM, 'Haarscheuren: ' + n('s-scheur') + ' m');
       post(n('s-schade') * S.schadePlek, 'Herstelplekken: ' + n('s-schade'));
       // lakwerk: per laag, met kleur- en glanstoeslag over het lakwerk
-      var lagen = S.lagen[afw], lk = g('s-lakkleur').value, gl = g('s-glans').value;
+      var lagen = S.lagen[lakAfw], lk = g('s-lakkleur').value, gl = g('s-glans').value;
       var lak = n('s-deur') * S.deurZijdeLaag[g('s-deurtype').value] + n('s-voordeur') * S.voordeurLaag + n('s-raam') * S.raamLaag + n('s-kozijn') * S.kozijnMLaag + n('s-vensterbank') * S.vensterbankMLaag +
                 n('s-plint') * S.plintMLaag + n('s-radiator') * S.radiatorLaag + n('s-trap') * S.trapLaag;
       lak = lak * lagen;
@@ -137,8 +138,9 @@
         werk += (lak + lakToeslag) * (1 - korting);
       }
       if (regels.length && g('s-lastig').checked) regels.push('• Lastige ruimte: trapgat / schuine wanden / veel hoeken');
-      var AFW = { compleet: 'compleet, 2 lagen, lakwerk met hechtprimer, met garantie', standaard: 'standaard, 2 lagen, lakwerk zonder primer, zonder hechtgarantie', onderhoud: 'onderhoud, 1 laag, zonder garantie' };
-      if (regels.length) regels.push('• Afwerking: ' + AFW[afw]);
+      var LAFW = { compleet: 'compleet, hechtprimer + 2 lagen, met garantie', standaard: 'standaard, 2 lagen zonder primer, zonder hechtgarantie', onderhoud: 'onderhoud, 1 laag, zonder garantie' };
+      if (lak > 0) regels.push('• Lakwerk afwerking: ' + LAFW[lakAfw]);
+      if (n('s-muur') + n('s-plafond') > 0) regels.push('• Sauswerk: ' + (muurOnderhoud ? 'onderhoud, 1 laag, zonder garantie' : '2 lagen, met garantie'));
 
       // samenvatting in de ingeklapte balken
       var KORT = { 's-muur': ['m² muur', 'm² muur'], 's-plafond': ['m² plafond', 'm² plafond'], 's-gaten': ['ruimte', 'ruimtes'], 's-scheur': ['m scheur', 'm scheuren'], 's-schade': ['plek', 'plekken'],

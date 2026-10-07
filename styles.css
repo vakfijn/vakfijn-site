@@ -283,3 +283,6 @@ footer .copy a:hover{color:var(--goud)}
 .afwk:hover{border-color:#6B655D}
 .afwk:has(input:checked){border-color:var(--goud);background:rgba(212,168,44,.08)}
 .afwk:has(input:focus-visible){outline:2px solid var(--goud);outline-offset:2px}
+
+.afw.twee{grid-template-columns:repeat(2,minmax(0,1fr))}
+.cdet .afw{margin:6px 0 8px}
