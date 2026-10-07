@@ -80,10 +80,10 @@
 
   // Per soort klus: type kit, bereik, standaardwaarde, hulptekst en minimum (INCL. btw)
   var SOORT = {
-    'douche of bad': { type: 'siliconen', min: 4, max: 20, start: 8,  minimum: 150, hint: 'Douchehoek ca. 4–6 m, met douchewand 11–14 m' },
-    'keuken':        { type: 'siliconen', min: 4, max: 16, start: 8,  minimum: 125, hint: 'Keukens doorgaans 6–12 m (aanrecht en spatwand)' },
-    'beglazing':     { type: 'beglazing', min: 4, max: 50, start: 12, minimum: 125, hint: 'Per raam ca. 4–5 m, hele woning tot ca. 46 m' },
-    'stucnaden':     { type: 'acryl',     min: 5, max: 60, start: 20, minimum: 100, hint: 'Plinten en plafondnaden lopen snel op' }
+    'douche of bad': { type: 'siliconen', min: 2, max: 20, start: 8,  minimum: 150, hint: 'Wastafel of toilet 2–3 m, douchehoek 4–6 m, met douchewand 11–14 m' },
+    'keuken':        { type: 'siliconen', min: 2, max: 16, start: 8,  minimum: 125, hint: 'Keukens doorgaans 6–12 m (aanrecht en spatwand)' },
+    'beglazing':     { type: 'beglazing', min: 2, max: 50, start: 12, minimum: 125, hint: 'Per raam ca. 4–5 m, hele woning tot ca. 46 m' },
+    'stucnaden':     { type: 'acryl',     min: 3, max: 60, start: 20, minimum: 100, hint: 'Plinten en plafondnaden lopen snel op' }
   };
 
   var range = calc.querySelector('#meters');
