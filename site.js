@@ -133,7 +133,7 @@
         if (n('s-plint')) regels.push('• Plinten: ' + n('s-plint') + ' m');
         if (n('s-radiator')) regels.push('• Radiatoren: ' + n('s-radiator'));
         if (n('s-trap')) regels.push('• Trap compleet: ' + n('s-trap'));
-        regels.push('• Lakwerk: ' + lagen + (lagen === 1 ? ' laag' : ' lagen') + ', ' + g('s-lakkleur').options[g('s-lakkleur').selectedIndex].text.toLowerCase() + ', ' + gl);
+        regels.push('• Lak: ' + g('s-lakkleur').options[g('s-lakkleur').selectedIndex].text.toLowerCase() + ', ' + gl);
         if (korting) regels.push('• Staffelkorting lakwerk: ' + Math.round(korting * 100) + '%');
         werk += (lak + lakToeslag) * (1 - korting);
       }
