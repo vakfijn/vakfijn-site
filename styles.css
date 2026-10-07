@@ -315,3 +315,5 @@ footer .copy a:hover{color:var(--goud)}
 @media(max-width:480px){.weetjes .wtxt{min-height:6.5em}}
 .tip>div{flex:1 1 auto;min-width:0}
 .weetjes .wtxt{width:100%}
+.tile.dark{background:var(--ant);color:var(--zand)}
+.tile .amt{font-size:36px}
