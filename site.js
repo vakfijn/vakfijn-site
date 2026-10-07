@@ -33,6 +33,23 @@
     });
   });
 
+  // ---- Kaart werkgebied (home) ----
+  var kaartEl = document.getElementById('kaart');
+  if (kaartEl) {
+    var tekenKaart = function () {
+      if (!window.L) return setTimeout(tekenKaart, 100);
+      var elst = [51.918, 5.860];
+      var map = L.map(kaartEl, { scrollWheelZoom: false, zoomControl: true, attributionControl: true }).setView(elst, 9);
+      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        maxZoom: 18
+      }).addTo(map);
+      L.circle(elst, { radius: 35000, color: '#D4A82C', weight: 2, fillColor: '#D4A82C', fillOpacity: 0.12 }).addTo(map);
+      L.circleMarker(elst, { radius: 7, color: '#2C2A28', weight: 2, fillColor: '#D4A82C', fillOpacity: 1 }).addTo(map).bindTooltip('Vakfijn · Elst', { permanent: true, direction: 'bottom', offset: [0, 8], className: 'kaart-label' });
+    };
+    tekenKaart();
+  }
+
   // ---- Kit-calculator ----
   var calc = document.getElementById('kitcalc');
   if (!calc) return;

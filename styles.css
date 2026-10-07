@@ -192,3 +192,41 @@ figcaption{font-family:'DM Mono',monospace;font-size:13px;color:var(--grijs);mar
 
 .sw[hidden]{display:none}
 .meer[hidden]{display:none}
+
+/* juridische pagina's */
+.legal{max-width:820px}
+.toc{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:14px;margin-bottom:48px;padding-bottom:24px;border-bottom:1px solid var(--lijn)}
+.toc a{color:var(--grijs);text-decoration:none}
+.toc a:hover{color:var(--goud-d)}
+.legal article{margin-bottom:44px}
+.legal h2{font-size:24px;letter-spacing:-.3px;margin-bottom:14px;display:flex;align-items:baseline;gap:12px}
+.legal h2 .mono{color:var(--goud-d);font-weight:500}
+.legal ol,.legal ul{margin:0;padding-left:22px;font-size:16px;line-height:1.65;color:var(--grijs)}
+.legal li{margin-bottom:8px}
+.legal p{font-size:16px;line-height:1.65;color:var(--grijs);margin-bottom:12px}
+.legal b{color:var(--ant)}
+.contact-blok{background:var(--zand-d);padding:20px 24px;font-size:15px;line-height:1.7;margin-top:12px}
+footer .legal-links{display:flex;flex-direction:column}
+footer .legal-links a{color:var(--tekst-l);text-decoration:none;font-size:14px}
+
+/* kaart werkgebied */
+.kaart-wrap{border:2px solid var(--ant)}
+.kaart{height:440px;width:100%;background:var(--zand)}
+@media(max-width:640px){.kaart{height:340px}}
+.kaart-label{background:transparent;border:0;box-shadow:none;font-family:'DM Mono',monospace;font-size:12px;color:var(--ant);padding:0}
+.kaart-label::before{display:none}
+.leaflet-container{font-family:'Inter',sans-serif}
+
+/* faq */
+.faq{display:flex;flex-direction:column;border-top:1px solid var(--lijn)}
+.faq details{border-bottom:1px solid var(--lijn)}
+.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:18px 0;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:20px;color:var(--ant);min-height:48px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font-family:'DM Mono',monospace;font-size:22px;color:var(--goud-d);flex-shrink:0}
+.faq details[open] summary::after{content:"–"}
+.faq p{padding:0 0 20px;max-width:720px}
+
+.calc .hint{font-size:12px;color:#8E887E;margin-top:4px}
+.kaart .leaflet-tile-pane{filter:grayscale(1) sepia(.15) brightness(1.03)}
+.band .acts a{flex-wrap:wrap}
+.band .acts span{font-size:13px}
