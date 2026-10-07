@@ -232,3 +232,7 @@ footer .legal-links a{color:var(--tekst-l);text-decoration:none;font-size:14px}
 .band .acts span{font-size:13px}
 
 footer .copy{text-align:center;margin-top:40px;padding-top:20px;border-top:1px solid var(--lijn-d);color:#8E887E}
+
+footer .copy{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 28px}
+footer .copy a{color:#8E887E;text-decoration:none}
+footer .copy a:hover{color:var(--goud)}
