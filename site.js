@@ -69,11 +69,16 @@
       ondergrond: { goed: 0, nieuw: 5, herstel: 21.5 },          // per m² muur: voorstrijk €5, herstel + voorstrijk €16,50 + €5
       plafond: { wit: 31, kleur: 33, donker: 35 },               // per m², reinigen, schuren, 2 lagen
       gatenRuimte: 45, scheurM: 8, schadePlek: 145,              // stucherstel losse posten
-      deur1: { zelfde: 150, nieuw: 150 }, deur2: { zelfde: 195, nieuw: 230 },
-      kozijnM: { zelfde: 10, nieuw: 11 }, kozijnLagen: 3,   // per strekkende meter per laag; volledig = grondlaag + 2 lak
-      vensterbank: { zelfde: 55, nieuw: 70 },
-      plintM: { zelfde: 12, nieuw: 14 }, radiator: { zelfde: 95, nieuw: 120 },
-      trap: { zelfde: 1500, nieuw: 1650 },   // trap compleet vanaf €1.500
+      // lakwerk: prijs per laag; volledig = grondlaag + 2 lagen lak (3), onderhoudslaag = 1
+      lakLagen: 3,
+      deurZijdeLaag: 50,         // per deurzijde per laag (3 lagen = €150)
+      kozijnMLaag: 10,           // per strekkende meter per laag
+      vensterbankMLaag: 18,      // per meter per laag
+      plintMLaag: 4,             // per meter per laag
+      radiatorLaag: 32,          // per radiator per laag
+      trapLaag: 500,             // per laag (3 lagen = vanaf €1.500)
+      lakKleur: { wit: 0, kleur: 0.10, wissel: 0.15 },      // toeslag op lakwerk: andere kleur +10%, kleurwissel +15%
+      lakGlans: { zijdeglans: 0, mat: 0.10, hoogglans: 0.15 },
       opstart: [{ tot: 30, prijs: 60 }, { tot: 60, prijs: 120 }, { tot: Infinity, prijs: 175 }],  // afplakken/afdekken/opruimen, naar m²
       ritPrijs: 65,              // voorrijkosten per werkdag
       m2PerDag: 30,              // ritten = 1 + ceil(m² / 30)
@@ -90,12 +95,12 @@
     function sUpdate() {
       var onderhoud = g('s-afwerking').value === 'onderhoud';
       // onderhoudslaag: alleen zelfde kleur en bestaande, intacte ondergrond
-      ['s-muurkleur', 's-plafondkleur', 's-houtkleur', 's-ondergrond'].forEach(function (id) {
+      ['s-muurkleur', 's-plafondkleur', 's-lakkleur', 's-ondergrond'].forEach(function (id) {
         var el = g(id); el.disabled = onderhoud; if (onderhoud) el.selectedIndex = 0;
       });
       sc.querySelector('[data-afw-hint]').hidden = !onderhoud;
       var f = onderhoud ? S.onderhoudFactor : 1, lagen = onderhoud ? ' (1 laag)' : '';
-      var hk = g('s-houtkleur').value, regels = [], werk = 0;
+      var regels = [], werk = 0;
       function post(bedrag, tekst) { if (bedrag > 0) { werk += bedrag; regels.push('• ' + tekst); } }
       var mk = g('s-muurkleur').value, pk = g('s-plafondkleur').value, og = g('s-ondergrond').value;
       post(n('s-muur') * S.muur[mk] * f, 'Muren sauzen ' + n('s-muur') + ' m² (' + MK[mk] + ')' + lagen);
@@ -104,21 +109,28 @@
       post(n('s-gaten') * S.gatenRuimte, 'Gaten vullen: ' + n('s-gaten') + ' ruimte(s)');
       post(n('s-scheur') * S.scheurM, 'Haarscheuren: ' + n('s-scheur') + ' m');
       post(n('s-schade') * S.schadePlek, 'Herstelplekken: ' + n('s-schade'));
-      post(n('s-deur') * S.deur1[hk] * f, 'Binnendeur 1 zijde: ' + n('s-deur'));
-      post(n('s-deur2') * S.deur2[hk] * f, 'Binnendeur 2 zijden: ' + n('s-deur2'));
-      var kLagen = onderhoud ? 1 : S.kozijnLagen;
-      post(n('s-kozijn') * S.kozijnM[hk] * kLagen, 'Kozijnen binnen: ' + n('s-kozijn') + ' m, ' + kLagen + (kLagen === 1 ? ' laag' : ' lagen'));
-      post(n('s-vensterbank') * S.vensterbank[hk] * f, 'Vensterbank: ' + n('s-vensterbank'));
-      post(n('s-plint') * S.plintM[hk] * f, 'Plinten: ' + n('s-plint') + ' m');
-      post(n('s-radiator') * S.radiator[hk] * f, 'Radiator: ' + n('s-radiator'));
-      post(n('s-trap') * S.trap[hk] * f, 'Trap compleet: ' + n('s-trap'));
-      if (regels.length) regels.push('• Houtwerk: ' + (hk === 'nieuw' ? 'nieuwe kleur' : 'zelfde kleur'));
+      // lakwerk: per laag, met kleur- en glanstoeslag over het lakwerk
+      var lagen = onderhoud ? 1 : S.lakLagen, lk = g('s-lakkleur').value, gl = g('s-glans').value;
+      var lak = n('s-deur') * S.deurZijdeLaag + n('s-kozijn') * S.kozijnMLaag + n('s-vensterbank') * S.vensterbankMLaag +
+                n('s-plint') * S.plintMLaag + n('s-radiator') * S.radiatorLaag + n('s-trap') * S.trapLaag;
+      lak = lak * lagen;
+      var lakToeslag = lak * (S.lakKleur[lk] + S.lakGlans[gl]);
+      if (lak > 0) {
+        if (n('s-deur')) regels.push('• Binnendeuren: ' + n('s-deur') + ' zijde(n)');
+        if (n('s-kozijn')) regels.push('• Kozijnen binnen: ' + n('s-kozijn') + ' m');
+        if (n('s-vensterbank')) regels.push('• Vensterbanken: ' + n('s-vensterbank') + ' m');
+        if (n('s-plint')) regels.push('• Plinten: ' + n('s-plint') + ' m');
+        if (n('s-radiator')) regels.push('• Radiatoren: ' + n('s-radiator'));
+        if (n('s-trap')) regels.push('• Trap compleet: ' + n('s-trap'));
+        regels.push('• Lakwerk: ' + lagen + (lagen === 1 ? ' laag' : ' lagen') + ', ' + g('s-lakkleur').options[g('s-lakkleur').selectedIndex].text.toLowerCase() + ', ' + gl);
+        werk += lak + lakToeslag;
+      }
       if (regels.length) regels.push(onderhoud ? '• Afwerking: onderhoudslaag, 1 laag, zonder garantie' : '• Afwerking: volledig, 2 lagen, met garantie');
 
       // samenvatting in de ingeklapte balken
       var KORT = { 's-gaten': ['ruimte', 'ruimtes'], 's-scheur': ['m scheur', 'm scheuren'], 's-schade': ['plek', 'plekken'],
-        's-deur': ['deur', 'deuren'], 's-deur2': ['deur 2-zijdig', 'deuren 2-zijdig'], 's-kozijn': ['m kozijn', 'm kozijn'],
-        's-vensterbank': ['vensterbank', 'vensterbanken'], 's-plint': ['m plint', 'm plinten'], 's-radiator': ['radiator', 'radiatoren'], 's-trap': ['trap', 'trappen'] };
+        's-deur': ['deurzijde', 'deurzijden'], 's-kozijn': ['m kozijn', 'm kozijn'],
+        's-vensterbank': ['m vensterbank', 'm vensterbank'], 's-plint': ['m plint', 'm plinten'], 's-radiator': ['radiator', 'radiatoren'], 's-trap': ['trap', 'trappen'] };
       sc.querySelectorAll('details.cdet').forEach(function (d) {
         var delen = [];
         d.querySelectorAll('input[type=number]').forEach(function (inp) {
