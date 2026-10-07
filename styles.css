@@ -154,3 +154,9 @@ figcaption{font-family:'DM Mono',monospace;font-size:13px;color:var(--grijs);mar
 .wie{display:flex;flex-wrap:wrap;gap:32px;align-items:center}
 .wie img{width:160px;height:160px;border-radius:50%;object-fit:cover;flex-shrink:0}
 .wie p{font-size:17px;line-height:1.7;color:var(--grijs);max-width:620px}
+
+/* fixes */
+.hero .img img{height:auto}
+.dark .wie p{color:var(--tekst-l)}
+.vn{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.wie img{width:180px;height:180px;border:3px solid var(--goud)}
