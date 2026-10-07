@@ -76,6 +76,7 @@
       opstart: [{ tot: 30, prijs: 60 }, { tot: 60, prijs: 120 }, { tot: Infinity, prijs: 175 }],  // afplakken/afdekken/opruimen, naar m²
       ritPrijs: 65,              // voorrijkosten per werkdag
       m2PerDag: 30,              // ritten = 1 + ceil(m² / 30)
+      onderhoudFactor: 0.65,     // onderhoudslaag (1 laag) = 65% van de 2-lagenprijs, voor sauswerk en lakwerk
       btwLaag: 0.09, btwHoog: 0.21
     };
     var g = function (id) { return sc.querySelector('#' + id); };
@@ -86,23 +87,31 @@
     var PK = { wit: 'wit/licht', kleur: 'kleur', donker: 'donker' };
 
     function sUpdate() {
+      var onderhoud = g('s-afwerking').value === 'onderhoud';
+      // onderhoudslaag: alleen zelfde kleur en bestaande, intacte ondergrond
+      ['s-muurkleur', 's-plafondkleur', 's-houtkleur', 's-ondergrond'].forEach(function (id) {
+        var el = g(id); el.disabled = onderhoud; if (onderhoud) el.selectedIndex = 0;
+      });
+      sc.querySelector('[data-afw-hint]').hidden = !onderhoud;
+      var f = onderhoud ? S.onderhoudFactor : 1, lagen = onderhoud ? ' (1 laag)' : '';
       var hk = g('s-houtkleur').value, regels = [], werk = 0;
       function post(bedrag, tekst) { if (bedrag > 0) { werk += bedrag; regels.push('• ' + tekst); } }
       var mk = g('s-muurkleur').value, pk = g('s-plafondkleur').value, og = g('s-ondergrond').value;
-      post(n('s-muur') * S.muur[mk], 'Muren sauzen ' + n('s-muur') + ' m² (' + MK[mk] + ')');
+      post(n('s-muur') * S.muur[mk] * f, 'Muren sauzen ' + n('s-muur') + ' m² (' + MK[mk] + ')' + lagen);
       post(n('s-muur') * S.ondergrond[og], og === 'nieuw' ? 'Voorstrijken nieuw stucwerk' : 'Stuc herstellen en voorstrijken');
-      post(n('s-plafond') * S.plafond[pk], 'Plafond sauzen ' + n('s-plafond') + ' m² (' + PK[pk] + ')');
+      post(n('s-plafond') * S.plafond[pk] * f, 'Plafond sauzen ' + n('s-plafond') + ' m² (' + PK[pk] + ')' + lagen);
       post(n('s-gaten') * S.gatenRuimte, 'Gaten vullen: ' + n('s-gaten') + ' ruimte(s)');
       post(n('s-scheur') * S.scheurM, 'Haarscheuren: ' + n('s-scheur') + ' m');
       post(n('s-schade') * S.schadePlek, 'Herstelplekken: ' + n('s-schade'));
-      post(n('s-deur') * S.deur1[hk], 'Binnendeur 1 zijde: ' + n('s-deur'));
-      post(n('s-deur2') * S.deur2[hk], 'Binnendeur 2 zijden: ' + n('s-deur2'));
-      post(n('s-kozijn') * S.kozijn[hk], 'Kozijn binnen: ' + n('s-kozijn'));
-      post(n('s-vensterbank') * S.vensterbank[hk], 'Vensterbank: ' + n('s-vensterbank'));
-      post(n('s-plint') * S.plintM[hk], 'Plinten: ' + n('s-plint') + ' m');
-      post(n('s-radiator') * S.radiator[hk], 'Radiator: ' + n('s-radiator'));
-      post(n('s-trap') * S.trap[hk], 'Trap compleet: ' + n('s-trap'));
+      post(n('s-deur') * S.deur1[hk] * f, 'Binnendeur 1 zijde: ' + n('s-deur'));
+      post(n('s-deur2') * S.deur2[hk] * f, 'Binnendeur 2 zijden: ' + n('s-deur2'));
+      post(n('s-kozijn') * S.kozijn[hk] * f, 'Kozijn binnen: ' + n('s-kozijn'));
+      post(n('s-vensterbank') * S.vensterbank[hk] * f, 'Vensterbank: ' + n('s-vensterbank'));
+      post(n('s-plint') * S.plintM[hk] * f, 'Plinten: ' + n('s-plint') + ' m');
+      post(n('s-radiator') * S.radiator[hk] * f, 'Radiator: ' + n('s-radiator'));
+      post(n('s-trap') * S.trap[hk] * f, 'Trap compleet: ' + n('s-trap'));
       if (regels.length) regels.push('• Houtwerk: ' + (hk === 'nieuw' ? 'nieuwe kleur' : 'zelfde kleur'));
+      if (regels.length) regels.push(onderhoud ? '• Afwerking: onderhoudslaag, 1 laag, zonder garantie' : '• Afwerking: volledig, 2 lagen, met garantie');
 
       // samenvatting in de ingeklapte balken
       var KORT = { 's-gaten': ['ruimte', 'ruimtes'], 's-scheur': ['m scheur', 'm scheuren'], 's-schade': ['plek', 'plekken'],
