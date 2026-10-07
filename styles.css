@@ -320,6 +320,7 @@ footer .copy a:hover{color:var(--goud)}
 
 /* roterende weetjes */
 .weetjes{margin-top:16px;position:relative}
+.tips .weetjes{margin-top:0}
 .weetjes .wtxt{position:relative;min-height:4.7em}
 .weetjes .wtxt p{position:absolute;inset:0;margin:0;opacity:0;transition:opacity .8s ease;font-size:15px;line-height:1.55;color:var(--grijs)}
 .weetjes .wtxt p.on{opacity:1}
