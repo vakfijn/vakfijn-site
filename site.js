@@ -97,7 +97,8 @@
     var PK = { wit: 'wit/licht', kleur: 'kleur', donker: 'donker' };
 
     function sUpdate() {
-      var afw = g('s-afwerking').value, onderhoud = afw === 'onderhoud';
+      var afwEl = sc.querySelector('input[name=s-afw]:checked');
+      var afw = afwEl ? afwEl.value : 'compleet', onderhoud = afw === 'onderhoud';
       // onderhoudslaag: alleen zelfde kleur en bestaande, intacte ondergrond
       ['s-muurkleur', 's-plafondkleur', 's-lakkleur', 's-ondergrond'].forEach(function (id) {
         var el = g(id); el.disabled = onderhoud; if (onderhoud) el.selectedIndex = 0;
@@ -136,7 +137,8 @@
         werk += (lak + lakToeslag) * (1 - korting);
       }
       if (regels.length && g('s-lastig').checked) regels.push('• Lastige ruimte: trapgat / schuine wanden / veel hoeken');
-      if (regels.length) regels.push('• Afwerking: ' + g('s-afwerking').options[g('s-afwerking').selectedIndex].text.toLowerCase());
+      var AFW = { compleet: 'compleet, hechtprimer + 2 lagen, met garantie', standaard: 'standaard, 2 lagen zonder primer, zonder hechtgarantie', onderhoud: 'onderhoud, 1 laag, zonder garantie' };
+      if (regels.length) regels.push('• Afwerking: ' + AFW[afw]);
 
       // samenvatting in de ingeklapte balken
       var KORT = { 's-muur': ['m² muur', 'm² muur'], 's-plafond': ['m² plafond', 'm² plafond'], 's-gaten': ['ruimte', 'ruimtes'], 's-scheur': ['m scheur', 'm scheuren'], 's-schade': ['plek', 'plekken'],

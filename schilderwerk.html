@@ -57,9 +57,15 @@
 
 <div class="cgroep">
 <div class="ctitel">Afwerking</div>
-<div class="crow"><label for="s-afwerking">Hoe wil je het?</label><select id="s-afwerking"><option value="compleet">Compleet: hechtprimer + 2 lagen, met garantie</option><option value="standaard">Standaard: 2 lagen zonder primer, zonder hechtgarantie</option><option value="onderhoud">Onderhoud: 1 laag, zelfde kleur, zonder garantie</option></select></div>
+<div class="afw" role="radiogroup" aria-label="Afwerking">
+<label class="afwk"><input type="radio" name="s-afw" value="compleet" checked><span class="afwt">Compleet</span><span class="afwd">Hechtprimer + 2 lagen</span><span class="afwg goud">Met garantie</span></label>
+<label class="afwk"><input type="radio" name="s-afw" value="standaard"><span class="afwt">Standaard</span><span class="afwd">2 lagen, zonder primer</span><span class="afwg">Zonder hechtgarantie</span></label>
+<label class="afwk"><input type="radio" name="s-afw" value="onderhoud"><span class="afwt">Onderhoud</span><span class="afwd">1 laag, zelfde kleur</span><span class="afwg">Zonder garantie</span></label>
+</div>
 <div class="hint mono" data-afw-hint hidden>Alleen op intacte verf in dezelfde kleur, na beoordeling van foto's. Geen kleurwissel, geen nieuw stuc.</div>
 </div>
+
+
 
 <details class="meer cdet">
 <summary>Muren en plafond <span class="mono">sauzen, stucherstel ondergrond</span><span class="gekozen" data-sum></span></summary>

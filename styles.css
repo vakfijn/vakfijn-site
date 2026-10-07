@@ -270,3 +270,16 @@ footer nav .mono{font-size:12px;color:#8E887E;margin-top:6px}
 footer .copy{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 24px;margin-top:40px;padding-top:18px;border-top:1px solid var(--lijn-d);color:#8E887E;font-size:12px}
 footer .copy a{color:#8E887E;text-decoration:none}
 footer .copy a:hover{color:var(--goud)}
+
+/* afwerkingskeuze */
+.afw{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+@media(max-width:520px){.afw{grid-template-columns:1fr}}
+.afwk{position:relative;display:flex;flex-direction:column;gap:4px;padding:14px 14px 12px;border:1.5px solid #4A4640;cursor:pointer;min-height:44px}
+.afwk input{position:absolute;opacity:0;width:1px;height:1px;min-height:0;padding:0}
+.afwt{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:18px;color:var(--zand)}
+.afwd{font-size:13px;color:var(--tekst-l);line-height:1.4}
+.afwg{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.5px;text-transform:uppercase;color:#8E887E;margin-top:6px}
+.afwg.goud{color:var(--goud)}
+.afwk:hover{border-color:#6B655D}
+.afwk:has(input:checked){border-color:var(--goud);background:rgba(212,168,44,.08)}
+.afwk:has(input:focus-visible){outline:2px solid var(--goud);outline-offset:2px}
