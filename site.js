@@ -61,6 +61,64 @@
     tekenKaart();
   }
 
+  // ---- Schilder-calculator (binnenwerk) ----
+  var sc = document.getElementById('schildercalc');
+  if (sc) {
+    var S = {  // prijzen excl. btw, incl. standaard materiaal en arbeid (stelposten 2026)
+      muur: { licht: 15.5, nieuw: 17.5, donker: 19.5 },          // per m², 2 lagen
+      plafond: { wit: 19.5, kleur: 21.5, donker: 23.5 },         // per m², 2 lagen
+      gatenRuimte: 45, scheurM: 8, schadePlek: 145,              // stucherstel
+      deur1: { zelfde: 150, nieuw: 150 }, deur2: { zelfde: 195, nieuw: 230 },
+      kozijn: { zelfde: 175, nieuw: 205 }, vensterbank: { zelfde: 55, nieuw: 70 },
+      plintM: { zelfde: 12, nieuw: 14 }, radiator: { zelfde: 95, nieuw: 120 },
+      trap: { zelfde: 650, nieuw: 775 },
+      voorrijkosten: 65,
+      kleineKlusGrens: 500, kleineKlusToeslag: 150,              // onder €500 werk: toeslag kleine klus
+      btwLaag: 0.09, btwHoog: 0.21
+    };
+    var g = function (id) { return sc.querySelector('#' + id); };
+    var n = function (id) { var v = Number(g(id).value); return isNaN(v) || v < 0 ? 0 : v; };
+    var sInclOut = sc.querySelector('[data-incl]'), sExclOut = sc.querySelector('[data-excl]'), sNote = sc.querySelector('[data-note]'), sWa = sc.querySelector('[data-wa]');
+    var sFmt = function (x) { return Math.round(x).toLocaleString('nl-NL'); };
+    var MK = { licht: 'zelfde/lichte kleur', nieuw: 'nieuwe kleur', donker: 'donkere kleur' };
+    var PK = { wit: 'wit/licht', kleur: 'kleur', donker: 'donker' };
+
+    function sUpdate() {
+      var hk = g('s-houtkleur').value, regels = [], werk = 0;
+      function post(bedrag, tekst) { if (bedrag > 0) { werk += bedrag; regels.push('• ' + tekst); } }
+      var mk = g('s-muurkleur').value, pk = g('s-plafondkleur').value;
+      post(n('s-muur') * S.muur[mk], 'Muren sauzen ' + n('s-muur') + ' m² (' + MK[mk] + ')');
+      post(n('s-plafond') * S.plafond[pk], 'Plafond sauzen ' + n('s-plafond') + ' m² (' + PK[pk] + ')');
+      post(n('s-gaten') * S.gatenRuimte, 'Gaten vullen: ' + n('s-gaten') + ' ruimte(s)');
+      post(n('s-scheur') * S.scheurM, 'Haarscheuren: ' + n('s-scheur') + ' m');
+      post(n('s-schade') * S.schadePlek, 'Herstelplekken: ' + n('s-schade'));
+      post(n('s-deur') * S.deur1[hk], 'Binnendeur 1 zijde: ' + n('s-deur'));
+      post(n('s-deur2') * S.deur2[hk], 'Binnendeur 2 zijden: ' + n('s-deur2'));
+      post(n('s-kozijn') * S.kozijn[hk], 'Kozijn binnen: ' + n('s-kozijn'));
+      post(n('s-vensterbank') * S.vensterbank[hk], 'Vensterbank: ' + n('s-vensterbank'));
+      post(n('s-plint') * S.plintM[hk], 'Plinten: ' + n('s-plint') + ' m');
+      post(n('s-radiator') * S.radiator[hk], 'Radiator: ' + n('s-radiator'));
+      post(n('s-trap') * S.trap[hk], 'Trap compleet: ' + n('s-trap'));
+      if (regels.length) regels.push('• Houtwerk: ' + (hk === 'nieuw' ? 'nieuwe kleur' : 'zelfde kleur'));
+
+      var leeg = werk === 0;
+      var excl = werk + S.voorrijkosten, note = 'incl. voorrijkosten';
+      if (!leeg && werk < S.kleineKlusGrens) { excl += S.kleineKlusToeslag; note += ' en toeslag kleine klus'; }
+      var btw = g('s-oud').checked ? S.btwLaag : S.btwHoog;
+      var incl = Math.round(excl * (1 + btw) / 5) * 5;
+
+      sInclOut.textContent = leeg ? '€ —' : '€ ' + sFmt(incl);
+      sExclOut.textContent = leeg ? 'Vul hierboven in wat er geschilderd moet worden.' : '€ ' + sFmt(excl) + ' excl. ' + Math.round(btw * 100) + '% btw';
+      sNote.textContent = leeg ? '' : note;
+
+      var msg = ['Hallo Dennis, ik wil graag een vaste prijs voor schilderwerk binnen.', '', 'Overzicht via de calculator:'].concat(regels)
+        .concat(['• Richtprijs: € ' + sFmt(incl) + ' incl. ' + Math.round(btw * 100) + '% btw', '', 'Foto\'s van de ruimte stuur ik hierna.']).join('\n');
+      sWa.href = 'https://wa.me/' + sWa.getAttribute('data-nummer') + '?text=' + encodeURIComponent(msg);
+    }
+    sc.querySelectorAll('input, select').forEach(function (el) { el.addEventListener('input', sUpdate); el.addEventListener('change', sUpdate); });
+    sUpdate();
+  }
+
   // ---- Kit-calculator ----
   var calc = document.getElementById('kitcalc');
   if (!calc) return;

@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Schilderwerk Nijmegen en Arnhem — Vakfijn | binnen, buiten, stucherstel</title>
-<meta name="description" content="Schilder in Nijmegen, Arnhem en omgeving. Binnen- en buitenschilderwerk, kozijnen, stucherstel. Eigen Sikkens-verf, grondige voorbereiding, garantie. Richtprijs per meter.">
+<title>Schilder Nijmegen en Arnhem — Vakfijn | sauswerk, stucherstel, binnen en buiten</title>
+<meta name="description" content="Schilder in Nijmegen, Arnhem en omgeving. Muren en plafonds sauzen, stuc- en pleisterherstel, houtwerk binnen en buiten. Eigen Sikkens-verf, garantie. Bereken direct je richtprijs.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -32,11 +32,11 @@
 <div class="wrap">
 <div class="txt">
 <div class="label">Vakfijn — Schilderwerk</div>
-<h1>De laag die je ziet, staat op de laag die je niet ziet.</h1>
-<p>Binnen en buiten, inclusief stucherstel. Schuren, ontvetten, plamuren en gronden eerst. Afgewerkt met eigen Sikkens-verf, dus met garantie.</p>
+<h1>Strakke wanden. Daar begint het.</h1>
+<p>Muren en plafonds sauzen, stuc- en pleisterherstel, en het houtwerk eromheen. Eerst gaten, scheuren en zuigende ondergrond aanpakken, dan pas verf. Eigen Sikkens-verf, dus garantie.</p>
 <div class="btns">
 <a class="btn btn-goud" href="https://wa.me/31639784959?text=Hallo%2C%20ik%20wil%20graag%20een%20offerte%20voor%20schilderwerk.%20Foto%27s%20volgen." target="_blank" rel="noopener">Foto's sturen via WhatsApp</a>
-<a class="btn btn-lijn" href="#prijs">Richtprijzen</a>
+<a class="btn btn-lijn" href="#prijs">Bereken je richtprijs</a>
 </div>
 </div>
 <div class="img"><img src="/images/schilder-trap.jpg" alt="Wit gelakte trap na schilderwerk" width="1200" height="1600"></div>
@@ -46,15 +46,53 @@
 <section class="sec" id="prijs">
 <div class="wrap split">
 <div>
-<div class="label">Richtprijzen</div>
-<h2 style="margin-bottom:24px">Kozijnen: per meter, per laag.</h2>
-<p>Een goed kozijn krijgt drie lagen: een grondlaag en twee lagen lak. Buiten is zwaarder werk dan binnen, omdat de verf daar weer en zon moet doorstaan.</p>
-<p class="small">Richtprijs, geen offerte. Houtrot, kaal hout en plamuurwerk komen apart. Kleine klussen offreren we op foto's, buitenwerk na een opname (€50, verrekend bij akkoord).</p>
+<div class="label">Richtprijs binnenwerk</div>
+<h2 style="margin-bottom:24px">Reken je kamer even door.</h2>
+<p>Vul in wat er geschilderd moet worden. De richtprijs is inclusief voorbereiding, twee lagen, materiaal en voorrijkosten.</p>
+<p class="small">Richtprijs, geen offerte. De vaste prijs volgt na foto's of een opname. Houtrot, nicotine, nieuw stucwerk en hoogtes boven 3 meter prijzen we apart. Buitenwerk altijd na opname (€50, verrekend bij akkoord).</p>
+<p class="small">Tip voor de m²: lengte van alle muren bij elkaar × hoogte, ramen en deuren niet aftrekken. Plafond: lengte × breedte.</p>
 </div>
-<div class="tiles">
-<div class="tile dark"><span class="mono" style="color:var(--goud)">Kozijnen buiten</span><span class="amt">€ 15,75</span><span class="per">per strekkende meter, per laag · excl. btw</span><span class="sum">3 lagen ≈ € 47,25 per meter</span></div>
-<div class="tile"><span class="mono" style="color:var(--goud-d)">Kozijnen binnen</span><span class="amt">€ 10</span><span class="per">per strekkende meter, per laag · excl. btw</span><span class="sum">3 lagen ≈ € 30 per meter</span></div>
-<div class="tile full">Wanden, plafonds en deuren prijzen we per m² op foto's of na opname. Bij onderhoud aan woningen ouder dan twee jaar geldt 9% btw op schilderwerk.</div>
+<div class="calc" id="schildercalc">
+
+<div class="cgroep">
+<div class="ctitel">Muren en plafond</div>
+<div class="crow"><label for="s-muur">Muren sauzen</label><div class="cin"><input id="s-muur" type="number" min="0" max="400" step="1" value="40" inputmode="numeric"><span>m²</span></div></div>
+<div class="crow"><label for="s-muurkleur">Kleur muren</label><select id="s-muurkleur"><option value="licht">Zelfde of lichte kleur</option><option value="nieuw">Nieuwe kleur</option><option value="donker">Donkere of volle kleur</option></select></div>
+<div class="crow"><label for="s-plafond">Plafond sauzen</label><div class="cin"><input id="s-plafond" type="number" min="0" max="200" step="1" value="0" inputmode="numeric"><span>m²</span></div></div>
+<div class="crow"><label for="s-plafondkleur">Kleur plafond</label><select id="s-plafondkleur"><option value="wit">Wit of lichte kleur</option><option value="kleur">Kleur</option><option value="donker">Donkere kleur</option></select></div>
+</div>
+
+<div class="cgroep">
+<div class="ctitel">Stuc- en pleisterherstel</div>
+<div class="crow"><label for="s-gaten">Kleine gaten en pluggaten vullen</label><div class="cin"><input id="s-gaten" type="number" min="0" max="20" step="1" value="0" inputmode="numeric"><span>ruimtes</span></div></div>
+<div class="crow"><label for="s-scheur">Haarscheuren vullen</label><div class="cin"><input id="s-scheur" type="number" min="0" max="100" step="1" value="0" inputmode="numeric"><span>m</span></div></div>
+<div class="crow"><label for="s-schade">Beschadigde plek herstellen (waterschade, stuk stuc)</label><div class="cin"><input id="s-schade" type="number" min="0" max="20" step="1" value="0" inputmode="numeric"><span>plekken</span></div></div>
+</div>
+
+<div class="cgroep">
+<div class="ctitel">Houtwerk binnen</div>
+<div class="crow"><label for="s-deur">Binnendeur, 1 zijde</label><div class="cin"><input id="s-deur" type="number" min="0" max="30" step="1" value="0" inputmode="numeric"><span>stuks</span></div></div>
+<div class="crow"><label for="s-deur2">Binnendeur, 2 zijden</label><div class="cin"><input id="s-deur2" type="number" min="0" max="30" step="1" value="0" inputmode="numeric"><span>stuks</span></div></div>
+<div class="crow"><label for="s-kozijn">Kozijn binnen</label><div class="cin"><input id="s-kozijn" type="number" min="0" max="30" step="1" value="0" inputmode="numeric"><span>stuks</span></div></div>
+<div class="crow"><label for="s-vensterbank">Vensterbank</label><div class="cin"><input id="s-vensterbank" type="number" min="0" max="30" step="1" value="0" inputmode="numeric"><span>stuks</span></div></div>
+<div class="crow"><label for="s-plint">Plinten</label><div class="cin"><input id="s-plint" type="number" min="0" max="200" step="1" value="0" inputmode="numeric"><span>m</span></div></div>
+<div class="crow"><label for="s-radiator">Radiator</label><div class="cin"><input id="s-radiator" type="number" min="0" max="20" step="1" value="0" inputmode="numeric"><span>stuks</span></div></div>
+<div class="crow"><label for="s-trap">Trap compleet</label><div class="cin"><input id="s-trap" type="number" min="0" max="3" step="1" value="0" inputmode="numeric"><span>stuks</span></div></div>
+<div class="crow"><label for="s-houtkleur">Kleur houtwerk</label><select id="s-houtkleur"><option value="zelfde">Zelfde kleur</option><option value="nieuw">Nieuwe kleur</option></select></div>
+</div>
+
+<div class="opts">
+<label class="chk"><input type="checkbox" id="s-oud" checked> Woning ouder dan 2 jaar (9% btw op schilderwerk)</label>
+</div>
+
+<div class="result">
+<span class="mono" style="color:var(--tekst-l)">Richtprijs incl. btw</span>
+<span class="price" data-incl>€ —</span>
+<span class="mono" style="color:#8E887E" data-excl></span>
+<span class="mono" style="color:#8E887E" data-note></span>
+</div>
+<a class="btn btn-goud" data-wa data-nummer="31639784959" href="https://wa.me/31639784959" target="_blank" rel="noopener">Vaste prijs aanvragen via WhatsApp</a>
+<span class="note">Je overzicht staat al in het bericht. Alleen nog foto's van de ruimte toevoegen.</span>
 </div>
 </div>
 </section>
@@ -62,12 +100,12 @@
 <section class="sec" style="background:var(--zand-d)">
 <div class="wrap">
 <div class="label">Wat we schilderen</div>
-<h2 style="margin-bottom:48px">Binnen, buiten en de wand eronder.</h2>
+<h2 style="margin-bottom:48px">Wanden eerst, dan de rest.</h2>
 <div class="cards">
-<div class="card"><h3>Wanden en plafonds</h3><p>Egaal, zonder aanzetten of strepen. Kale wanden eerst voorstrijken.</p></div>
-<div class="card"><h3>Houtwerk binnen</h3><p>Deuren, kozijnen, trappen en plinten. Geschuurd tussen de lagen voor een gladde lakfilm.</p></div>
-<div class="card"><h3>Buitenschilderwerk</h3><p>Kozijnen, ramen, deuren en boeidelen. Eerst controleren op houtrot, dan pas verf.</p></div>
-<div class="card"><h3>Stuc- en pleisterherstel</h3><p>Scheuren, gaten en beschadigd pleisterwerk herstellen. Werkende scheuren en vensterbankaansluitingen sluiten we met een hybride kit die meebeweegt en overschilderbaar is, zodat ze niet terugkomen.</p></div>
+<div class="card"><h3>Muren en plafonds sauzen</h3><p>Egaal, zonder aanzetten of strepen. Twee lagen, nieuw stucwerk eerst voorstrijken. Ook kleurwissels en donkere kleuren.</p></div>
+<div class="card"><h3>Stuc- en pleisterherstel</h3><p>Gaten, pluggaten, haarscheuren en beschadigd pleisterwerk sausklaar maken. Werkende scheuren en vensterbankaansluitingen sluiten we met een hybride kit die meebeweegt en overschilderbaar is.</p></div>
+<div class="card"><h3>Houtwerk binnen</h3><p>Deuren, kozijnen, plinten, radiatoren en trappen. Geschuurd tussen de lagen voor een gladde lakfilm.</p></div>
+<div class="card"><h3>Buitenschilderwerk</h3><p>Kozijnen, ramen, deuren en boeidelen. Eerst controleren op houtrot, dan pas verf. Altijd na een opname.</p></div>
 </div>
 </div>
 </section>

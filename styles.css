@@ -255,3 +255,13 @@ footer{view-transition-name:footer}
 @keyframes vt-uit{to{opacity:0}}
 @keyframes vt-in{from{opacity:0}}
 @media(prefers-reduced-motion:reduce){::view-transition-old(root),::view-transition-new(root){animation:none}}
+
+/* schilder-calculator */
+.cgroep{display:flex;flex-direction:column;gap:10px;padding-bottom:18px;border-bottom:1px solid var(--lijn-d)}
+.ctitel{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:18px;color:var(--zand)}
+.crow{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px}
+.crow label{font-size:15px;color:var(--tekst-l);flex:1 1 200px;font-weight:500}
+.crow select{flex:0 1 240px;width:auto;min-height:44px;padding:8px 12px;font-size:15px}
+.cin{display:flex;align-items:center;gap:8px;flex:0 0 auto}
+.cin input{width:88px;min-height:44px;padding:8px 10px;text-align:right;font-size:16px;font-family:'DM Mono',monospace;background:var(--zand)}
+.cin span{font-family:'DM Mono',monospace;font-size:13px;color:#8E887E;min-width:48px}
