@@ -70,7 +70,11 @@
     },
     acryl: {
       reinigenPerM: 0,        // zit in de all-in meterprijs
-      kitPerM: [{ tot: Infinity, prijs: 6 }],   // €6 all-in per meter
+      kitPerM: [              // all-in per meter, staffel
+        { tot: 10, prijs: 6 },
+        { tot: 25, prijs: 5.5 },
+        { tot: Infinity, prijs: 5 }
+      ],
       meterPerKoker: 10,
       kokerStandaard: 10,     // wit
       kokerKleur: 12.5,       // kleur / structuur — AANNAME, aanpassen
