@@ -303,3 +303,13 @@ footer .copy a:hover{color:var(--goud)}
 .feiten dd{margin:0;font-size:15px;color:var(--zand)}
 .schets{margin:0;background:#3A3734;padding:24px;border:1px solid var(--lijn-d)}
 .schets svg{width:100%;height:auto;display:block}
+
+/* roterende weetjes */
+.weetjes{margin-top:16px;position:relative}
+.weetjes .wtxt{position:relative;min-height:4.7em}
+.weetjes .wtxt p{position:absolute;inset:0;margin:0;opacity:0;transition:opacity .8s ease;font-size:15px;line-height:1.55;color:var(--grijs)}
+.weetjes .wtxt p.on{opacity:1}
+.wdots{display:flex;gap:6px;margin-top:10px}
+.wdots span{width:7px;height:7px;border-radius:50%;background:var(--lijn);transition:background .3s}
+.wdots span.on{background:var(--ant)}
+@media(max-width:480px){.weetjes .wtxt{min-height:6.5em}}

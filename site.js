@@ -44,6 +44,17 @@
     }, 4000);
   }
 
+  // ---- Roterende weetjes (kitwerk): elke 6 seconden het volgende ----
+  var wj = document.getElementById('kitweetjes');
+  if (wj && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    var wps = wj.querySelectorAll('.wtxt p'), wds = wj.querySelectorAll('.wdots span'), wi = 0;
+    setInterval(function () {
+      wps[wi].classList.remove('on'); wds[wi].classList.remove('on');
+      wi = (wi + 1) % wps.length;
+      wps[wi].classList.add('on'); wds[wi].classList.add('on');
+    }, 6000);
+  }
+
   // ---- Kaart werkgebied (home) ----
   var kaartEl = document.getElementById('kaart');
   if (kaartEl) {
