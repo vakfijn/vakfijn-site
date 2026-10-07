@@ -33,6 +33,17 @@
     });
   });
 
+  // ---- Hero-diashow (home): elke 4 seconden een volgend vak ----
+  var slides = document.getElementById('heroslides');
+  if (slides && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    var figs = slides.querySelectorAll('figure'), idx = 0;
+    setInterval(function () {
+      figs[idx].classList.remove('on');
+      idx = (idx + 1) % figs.length;
+      figs[idx].classList.add('on');
+    }, 4000);
+  }
+
   // ---- Kaart werkgebied (home) ----
   var kaartEl = document.getElementById('kaart');
   if (kaartEl) {
