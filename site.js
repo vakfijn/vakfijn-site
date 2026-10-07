@@ -74,6 +74,8 @@
       meterPerKoker: 10,
       kokerStandaard: 10,     // wit
       kokerKleur: 12.5,       // kleur / structuur — AANNAME, aanpassen
+      hybrideKoker: 20,       // hybride (STP) kit voor werkende naden — AANNAME: 2× inkoop
+      hybrideMeterPerKoker: 8,
       kleuren: 4
     }
   };
@@ -93,6 +95,7 @@
   var oudekit = calc.querySelector('#oudekit');
   var drain = calc.querySelector('#drain');
   var goot = calc.querySelector('#goot');
+  var hybride = calc.querySelector('#hybride');
   if (T.oudeKitPerM == null) calc.querySelector('[data-opt=oudekit]').hidden = true;
   if (T.drainVast == null) calc.querySelector('[data-opt=drain]').hidden = true;
   var mOut = calc.querySelector('[data-m]');
@@ -127,6 +130,8 @@
     // drain/put alleen zinvol bij douche of bad
     calc.querySelector('[data-opt=drain]').hidden = (T.drainVast == null) || c.type !== 'siliconen' || soort.value !== 'douche of bad';
     calc.querySelector('[data-opt=goot]').hidden = soort.value !== 'douche of bad';
+    calc.querySelector('[data-opt=hybride]').hidden = c.type !== 'acryl';
+    hybride.checked = false;
     if (soort.value !== 'douche of bad') { drain.checked = false; goot.checked = false; }
     // oude kit verwijderen: standaard aan bij siliconen en beglazing, uit bij acryl
     oudekit.checked = c.type !== 'acryl';
@@ -138,9 +143,10 @@
     var m = Number(range.value);
     var c = huidig(); var K = T[c.type];
     var perM = K.kitPerM.filter(function (t) { return m <= t.tot; })[0].prijs;
-    var kokers = Math.max(1, Math.ceil(m / K.meterPerKoker));
+    var hyb = c.type === 'acryl' && hybride.checked;
+    var kokers = Math.max(1, Math.ceil(m / (hyb ? K.hybrideMeterPerKoker : K.meterPerKoker)));
     var kleurExtra = !!kleurEl().getAttribute('data-extra');
-    var materiaal = kokers * (kleurExtra ? K.kokerKleur : K.kokerStandaard);
+    var materiaal = kokers * (hyb ? K.hybrideKoker : (kleurExtra ? K.kokerKleur : K.kokerStandaard));
     var sub = K.reinigenPerM * m + perM * m + materiaal + T.voorrijkosten;
     if (T.oudeKitPerM != null && oudekit.checked) sub += T.oudeKitPerM * m;
     if (T.drainVast != null && drain.checked) sub += T.drainVast;
@@ -159,6 +165,7 @@
     if (T.oudeKitPerM != null && oudekit.checked) extras.push('oude kit verwijderen');
     if (T.drainVast != null && drain.checked) extras.push('RVS put meekitten');
     if (goot.checked) extras.push('douchegoot/Easydrain met speciale kit');
+    if (hyb) extras.push('werkende naden met hybride kit');
     var msg = 'Hallo, ik wil graag een vaste prijs voor kitwerk (' + soort.value + ', ca. ' + m + ' m, kleur ' + kleurEl().value +
       (extras.length ? ', ' + extras.join(', ') : '') + '). Richtprijs via de site: € ' + fmt(incl) + ' incl. btw. Foto\'s volgen.';
     wa.href = 'https://wa.me/' + nummer + '?text=' + encodeURIComponent(msg);
@@ -176,6 +183,7 @@
   oudekit.addEventListener('change', update);
   drain.addEventListener('change', update);
   goot.addEventListener('change', update);
+  hybride.addEventListener('change', update);
   applySoort();
   update();
 })();
