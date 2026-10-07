@@ -104,6 +104,19 @@
       post(n('s-trap') * S.trap[hk], 'Trap compleet: ' + n('s-trap'));
       if (regels.length) regels.push('• Houtwerk: ' + (hk === 'nieuw' ? 'nieuwe kleur' : 'zelfde kleur'));
 
+      // samenvatting in de ingeklapte balken
+      var KORT = { 's-gaten': ['ruimte', 'ruimtes'], 's-scheur': ['m scheur', 'm scheuren'], 's-schade': ['plek', 'plekken'],
+        's-deur': ['deur', 'deuren'], 's-deur2': ['deur 2-zijdig', 'deuren 2-zijdig'], 's-kozijn': ['kozijn', 'kozijnen'],
+        's-vensterbank': ['vensterbank', 'vensterbanken'], 's-plint': ['m plint', 'm plinten'], 's-radiator': ['radiator', 'radiatoren'], 's-trap': ['trap', 'trappen'] };
+      sc.querySelectorAll('details.cdet').forEach(function (d) {
+        var delen = [];
+        d.querySelectorAll('input[type=number]').forEach(function (inp) {
+          var v = Number(inp.value), k = KORT[inp.id];
+          if (v > 0 && k) delen.push(v + ' ' + (v === 1 ? k[0] : k[1]));
+        });
+        d.querySelector('[data-sum]').textContent = delen.length ? '· ' + delen.join(', ') : '';
+      });
+
       var leeg = werk === 0;
       var m2 = n('s-muur') + n('s-plafond');
       var opstart = S.opstart.filter(function (t) { return m2 <= t.tot; })[0].prijs;
