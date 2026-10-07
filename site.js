@@ -139,7 +139,7 @@
       if (regels.length) regels.push('• Afwerking: ' + g('s-afwerking').options[g('s-afwerking').selectedIndex].text.toLowerCase());
 
       // samenvatting in de ingeklapte balken
-      var KORT = { 's-gaten': ['ruimte', 'ruimtes'], 's-scheur': ['m scheur', 'm scheuren'], 's-schade': ['plek', 'plekken'],
+      var KORT = { 's-muur': ['m² muur', 'm² muur'], 's-plafond': ['m² plafond', 'm² plafond'], 's-gaten': ['ruimte', 'ruimtes'], 's-scheur': ['m scheur', 'm scheuren'], 's-schade': ['plek', 'plekken'],
         's-deur': ['deurzijde', 'deurzijden'], 's-raam': ['raam', 'ramen'], 's-voordeur': ['voordeur', 'voordeuren'], 's-kozijn': ['m kozijn', 'm kozijn'],
         's-vensterbank': ['m vensterbank', 'm vensterbank'], 's-plint': ['m plint', 'm plinten'], 's-radiator': ['radiator', 'radiatoren'], 's-trap': ['trap', 'trappen'] };
       sc.querySelectorAll('details.cdet').forEach(function (d) {
