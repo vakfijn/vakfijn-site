@@ -317,3 +317,5 @@ footer .copy a:hover{color:var(--goud)}
 .weetjes .wtxt{width:100%}
 .tile.dark{background:var(--ant);color:var(--zand)}
 .tile .amt{font-size:36px}
+
+.card p a{color:var(--goud-d);font-weight:600}
