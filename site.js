@@ -76,7 +76,7 @@
       raamLaag: 65,              // binnenraam / dagraam per laag
       kozijnMLaag: 15,           // per strekkende meter per laag (kozijn ca. 5 m = €75/laag)
       vensterbankMLaag: 18,      // per meter per laag
-      plintMLaag: 4,             // per meter per laag
+      plintMLaag: { laag: 4, hoog: 6, profiel: 8 },   // per meter per laag, naar hoogte
       radiatorLaag: 32,          // per radiator per laag
       trapLaag: 500,             // trap zonder treden, per laag (3 lagen = vanaf €1.500)
       tredenLaag: 120,           // traptreden per laag; om en om, dus 2 werkdagen per laag (stelpost €350 / 3)
@@ -121,7 +121,7 @@
       // lakwerk: per laag, met kleur- en glanstoeslag over het lakwerk
       var lagen = S.lagen[lakAfw], lk = g('s-lakkleur').value, gl = g('s-glans').value;
       var lak = n('s-deur') * S.deurZijdeLaag[g('s-deurtype').value] + n('s-voordeur') * S.voordeurLaag + n('s-raam') * S.raamLaag + n('s-kozijn') * S.kozijnMLaag + n('s-vensterbank') * S.vensterbankMLaag +
-                n('s-plint') * S.plintMLaag + n('s-radiator') * S.radiatorLaag + n('s-trap') * S.trapLaag + n('s-treden') * S.tredenLaag;
+                n('s-plint') * S.plintMLaag[g('s-plinttype').value] + n('s-radiator') * S.radiatorLaag + n('s-trap') * S.trapLaag + n('s-treden') * S.tredenLaag;
       lak = lak * lagen;
       var lakToeslag = lak * (S.lakKleur[lk] + S.lakGlans[gl]);
       var korting = 0;
@@ -132,7 +132,7 @@
         if (n('s-raam')) regels.push('• Binnenramen/dagramen: ' + n('s-raam'));
         if (n('s-kozijn')) regels.push('• Kozijnen binnen: ' + n('s-kozijn') + ' m');
         if (n('s-vensterbank')) regels.push('• Vensterbanken: ' + n('s-vensterbank') + ' m');
-        if (n('s-plint')) regels.push('• Plinten: ' + n('s-plint') + ' m');
+        if (n('s-plint')) regels.push('• Plinten: ' + n('s-plint') + ' m, ' + g('s-plinttype').options[g('s-plinttype').selectedIndex].text.toLowerCase());
         if (n('s-radiator')) regels.push('• Radiatoren: ' + n('s-radiator'));
         if (n('s-trap')) regels.push('• Trap zonder treden: ' + n('s-trap'));
         if (n('s-treden')) regels.push('• Traptreden (om en om): ' + n('s-treden') + ' trap(pen)');
