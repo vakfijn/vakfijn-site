@@ -152,34 +152,73 @@
 </dl>
 </div>
 <figure class="schets">
-<svg viewBox="0 0 520 400" role="img" aria-label="Schematische doorsnede van de zolder: schuine dakvlakken, knieschotten, dakraam en trapgat met werkplateau">
-<g fill="none" stroke="#F5F2EC" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
-<path d="M40 340 L40 230 L260 40 L480 230 L480 340"/>
-<path d="M40 340 H480"/>
-<path d="M40 230 L100 230 L100 340"/>
-<path d="M480 230 L420 230 L420 340"/>
-<path d="M300 110 l40 34 l-24 28 l-40 -34 z"/>
-<path d="M312 122 l16 14 M300 138 l16 14"/>
-<path d="M150 340 L150 300 L250 300 L250 340"/>
-<path d="M165 300 L165 340 M180 300 L180 340 M195 300 L195 340 M210 300 L210 340 M225 300 L225 340 M240 300 L240 340" stroke-width="1.5"/>
+<svg viewBox="0 0 560 420" role="img" aria-label="Schematische doorsnede van de zolder: schuine dakvlakken, knieschotten, dakraam en trapgat met werkplateau">
+<defs>
+<pattern id="pap" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="#F5F2EC" stroke-opacity=".06" stroke-width="1"/></pattern>
+<linearGradient id="dakL" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F5F2EC" stop-opacity=".16"/><stop offset="1" stop-color="#F5F2EC" stop-opacity=".04"/></linearGradient>
+<linearGradient id="dakR" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F5F2EC" stop-opacity=".10"/><stop offset="1" stop-color="#F5F2EC" stop-opacity=".02"/></linearGradient>
+<pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><path d="M0 0V8" stroke="#F5F2EC" stroke-opacity=".18" stroke-width="1.5"/></pattern>
+</defs>
+<rect width="560" height="420" fill="url(#pap)"/>
+<!-- dakvlakken -->
+<path d="M60 250 L280 50 L280 360 L60 360 Z" fill="url(#dakL)"/>
+<path d="M280 50 L500 250 L500 360 L280 360 Z" fill="url(#dakR)"/>
+<!-- knieschotten -->
+<path d="M60 250 H120 V360 H60 Z" fill="url(#hatch)"/>
+<path d="M440 250 H500 V360 H440 Z" fill="url(#hatch)"/>
+<!-- vloer -->
+<rect x="40" y="360" width="480" height="10" fill="#F5F2EC" fill-opacity=".12"/>
+<g fill="none" stroke="#F5F2EC" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round">
+<path d="M40 365 H520"/>
+<path d="M60 360 V250 L280 50 L500 250 V360"/>
+<path d="M60 250 H120 V360"/>
+<path d="M500 250 H440 V360"/>
+<!-- gording / balk -->
+<path d="M190 132 L370 132" stroke-dasharray="4 6" stroke-opacity=".5"/>
 </g>
-<g stroke="#D4A82C" stroke-width="3" fill="none" stroke-linecap="round">
-<path d="M130 290 H270"/>
-<path d="M140 290 L140 340 M260 290 L260 340" stroke-dasharray="6 6" stroke-width="2"/>
+<!-- dakraam -->
+<g transform="rotate(42 395 150)">
+<rect x="365" y="128" width="60" height="44" rx="2" fill="#F5F2EC" fill-opacity=".14" stroke="#F5F2EC" stroke-width="2"/>
+<path d="M365 150 H425 M395 128 V172" stroke="#F5F2EC" stroke-width="1.5" stroke-opacity=".8"/>
 </g>
-<g fill="#D4A82C" font-family="'DM Mono',monospace" font-size="12">
-<text x="52" y="128">schuin dakvlak</text>
-<text x="350" y="170">dakraam</text>
-<text x="44" y="258">knieschot</text>
-<text x="424" y="258">knieschot</text>
-<text x="280" y="285">werkplateau</text>
-<text x="152" y="362">trapgat</text>
+<!-- trapgat met hek -->
+<g fill="none" stroke="#F5F2EC" stroke-width="2" stroke-linecap="round">
+<path d="M170 365 V318 H260 V365"/>
+<path d="M170 318 H260" stroke-width="3"/>
+<path d="M182 318 V365 M194 318 V365 M206 318 V365 M218 318 V365 M230 318 V365 M242 318 V365" stroke-width="1.4" stroke-opacity=".8"/>
 </g>
-<g fill="#F5F2EC" font-family="'DM Mono',monospace" font-size="12">
-<text x="250" y="30" text-anchor="middle">nok · 4,30 m</text>
-<text x="260" y="390" text-anchor="middle" fill="#8E887E">doorsnede, niet op schaal</text>
+<!-- werkplateau -->
+<g stroke="#D4A82C" fill="none" stroke-linecap="round">
+<rect x="150" y="296" width="130" height="8" fill="#D4A82C" stroke="none"/>
+<path d="M158 304 V362 M272 304 V362" stroke-width="2.5" stroke-dasharray="7 6"/>
+<path d="M158 334 L272 304 M158 304 L272 334" stroke-width="1.2" stroke-opacity=".7"/>
 </g>
-<g stroke="#8E887E" stroke-width="1" stroke-dasharray="3 4" fill="none"><path d="M500 40 V340"/><path d="M494 40 h12 M494 340 h12"/></g>
+<!-- hoogtemaat -->
+<g stroke="#D4A82C" stroke-width="1.2" fill="none">
+<path d="M536 50 V365"/><path d="M530 50 H542 M530 365 H542"/>
+<path d="M280 50 H536" stroke-dasharray="3 5" stroke-opacity=".6"/>
+</g>
+<!-- leaders -->
+<g stroke="#D4A82C" stroke-width="1" fill="#D4A82C">
+<circle cx="170" cy="150" r="3"/><path d="M170 150 L120 150" fill="none"/>
+<circle cx="398" cy="118" r="3"/><path d="M398 118 L450 100" fill="none"/>
+<circle cx="90" cy="300" r="3"/>
+<circle cx="470" cy="300" r="3"/>
+<circle cx="285" cy="300" r="3"/><path d="M285 300 L330 290" fill="none"/>
+</g>
+<g font-family="'DM Mono',monospace" font-size="12" fill="#D4A82C">
+<text x="52" y="146" text-anchor="start">schuin dakvlak</text>
+<text x="454" y="96">dakraam</text>
+<text x="90" y="325" text-anchor="middle" font-size="11">knie-</text><text x="90" y="339" text-anchor="middle" font-size="11">schot</text>
+<text x="470" y="325" text-anchor="middle" font-size="11">knie-</text><text x="470" y="339" text-anchor="middle" font-size="11">schot</text>
+<text x="334" y="294">werkplateau</text>
+<text x="215" y="390" text-anchor="middle">trapgat</text>
+</g>
+<g font-family="'DM Mono',monospace" font-size="12" fill="#F5F2EC">
+<text x="280" y="36" text-anchor="middle">nok</text>
+<text x="548" y="212" text-anchor="middle" transform="rotate(90 548 212)">4,30 m</text>
+<text x="280" y="410" text-anchor="middle" fill="#8E887E" font-size="11">doorsnede · niet op schaal</text>
+</g>
 </svg>
 </figure>
 </div>
