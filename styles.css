@@ -122,3 +122,35 @@ footer .brand b{font-size:20px}
 footer nav{display:flex;flex-direction:column}
 footer nav a{color:var(--zand);text-decoration:none}
 .fine{font-family:'DM Mono',monospace;font-size:13px;color:var(--grijs);margin-top:24px}
+
+/* logo (wordmark) */
+.logo{display:flex;flex-direction:column;gap:5px;text-decoration:none;color:var(--zand)}
+.logo b{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:26px;letter-spacing:.5px;line-height:1}
+.logo i{display:block;width:44px;height:3px;background:var(--goud)}
+.logo small{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--tekst-l)}
+.logo .sub{font-family:'DM Mono',monospace;font-size:13px;color:var(--goud);letter-spacing:0;text-transform:none}
+
+/* hero met foto */
+.hero .wrap{display:flex;flex-wrap:wrap;gap:48px;align-items:center}
+.hero .txt{flex:999 1 520px;min-width:0}
+.hero .img{flex:1 1 360px;min-width:0}
+.hero .img img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover}
+@media(max-width:640px){.hero .img img{aspect-ratio:4/3}}
+
+/* fotogalerij */
+.gal{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.gal figure{margin:0}
+.gal img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;background:var(--zand-d)}
+.gal.wide img{aspect-ratio:3/2}
+figcaption{font-family:'DM Mono',monospace;font-size:13px;color:var(--grijs);margin-top:10px}
+.dark figcaption{color:var(--tekst-l)}
+
+/* voor/na */
+.vn{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}
+.vn figure{margin:0}
+.vn img{display:block;width:100%;aspect-ratio:3/2;object-fit:cover;background:var(--zand-d)}
+
+/* dennis */
+.wie{display:flex;flex-wrap:wrap;gap:32px;align-items:center}
+.wie img{width:160px;height:160px;border-radius:50%;object-fit:cover;flex-shrink:0}
+.wie p{font-size:17px;line-height:1.7;color:var(--grijs);max-width:620px}
