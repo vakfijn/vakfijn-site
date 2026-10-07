@@ -69,23 +69,22 @@
       ondergrond: { goed: 0, nieuw: 5, herstel: 21.5 },          // per m² muur: voorstrijk €5, herstel + voorstrijk €16,50 + €5
       plafond: { wit: 31, kleur: 33, donker: 35 },               // per m², reinigen, schuren, 2 lagen
       gatenRuimte: 45, scheurM: 8, schadePlek: 145,              // stucherstel losse posten
-      // lakwerk: prijs per laag, excl. materiaal — afgestemd op offerte 2026-0042 (Sonja binnen)
+      // lakwerk: prijs per laag, incl. voorbereiding en materiaal
       lagen: { compleet: 3, standaard: 2, onderhoud: 1 },   // primer + 2 lak / 2 lak / 1 laag
-      deurZijdeLaag: { vlak: 90, panelen: 120 },  // per deurzijde per laag
-      raamLaag: 47.5,            // binnenraam / dagraam per laag
-      kozijnMLaag: 13.5,         // per strekkende meter per laag (kozijn ca. 5 m = €70/laag)
+      deurZijdeLaag: { vlak: 40, panelen: 55 },   // binnendeur per zijde per laag
+      voordeurLaag: 150,         // voordeur binnenzijde met raam en lijsten, per laag (offerte 2026-0042)
+      raamLaag: 65,              // binnenraam / dagraam per laag
+      kozijnMLaag: 15,           // per strekkende meter per laag (kozijn ca. 5 m = €75/laag)
       vensterbankMLaag: 18,      // per meter per laag
       plintMLaag: 4,             // per meter per laag
       radiatorLaag: 32,          // per radiator per laag
       trapLaag: 500,             // per laag (3 lagen = vanaf €1.500)
-      voorbereidingStuk: 35,     // schuren, ontvetten, stofvrij: per deurzijde / raam / kozijn / radiator
-      materiaalPct: 0.15,        // Sikkens lak en primer: 15% van het lakwerk
       lakKleur: { wit: 0, kleur: 0.10, wissel: 0.15 },      // toeslag op lakwerk: andere kleur +10%, kleurwissel +15%
       lakGlans: { zijdeglans: 0, mat: 0.10, hoogglans: 0.15 },
       opstart: [{ tot: 30, prijs: 60 }, { tot: 60, prijs: 120 }, { tot: Infinity, prijs: 175 }],  // afplakken/afdekken/opruimen, naar m²
       ritPrijs: 65,              // voorrijkosten per werkdag
       werkPerDag: 450,           // ritten = ceil(werk / 450), minimaal 1
-      lakStaffel: [{ vanaf: 900, korting: 0.15 }, { vanaf: 400, korting: 0.10 }],   // meeschalen: groter lakwerk goedkoper per onderdeel
+      lakStaffel: [{ vanaf: 1800, korting: 0.15 }, { vanaf: 900, korting: 0.10 }],   // meeschalen: groter lakwerk goedkoper per onderdeel
       lastigPct: 15,             // lastige ruimte (trapgat, schuine wanden, veel hoeken): toeslag op sauswerk
       onderhoudFactor: 0.65,     // onderhoudslaag (1 laag) = 65% van de 2-lagenprijs, voor sauswerk en lakwerk
       btwLaag: 0.09, btwHoog: 0.21
@@ -117,16 +116,15 @@
       post(n('s-schade') * S.schadePlek, 'Herstelplekken: ' + n('s-schade'));
       // lakwerk: per laag, met kleur- en glanstoeslag over het lakwerk
       var lagen = S.lagen[afw], lk = g('s-lakkleur').value, gl = g('s-glans').value;
-      var lak = n('s-deur') * S.deurZijdeLaag[g('s-deurtype').value] + n('s-raam') * S.raamLaag + n('s-kozijn') * S.kozijnMLaag + n('s-vensterbank') * S.vensterbankMLaag +
+      var lak = n('s-deur') * S.deurZijdeLaag[g('s-deurtype').value] + n('s-voordeur') * S.voordeurLaag + n('s-raam') * S.raamLaag + n('s-kozijn') * S.kozijnMLaag + n('s-vensterbank') * S.vensterbankMLaag +
                 n('s-plint') * S.plintMLaag + n('s-radiator') * S.radiatorLaag + n('s-trap') * S.trapLaag;
       lak = lak * lagen;
-      var stuks = n('s-deur') + n('s-raam') + n('s-radiator') + Math.ceil(n('s-kozijn') / 5);
-      var voorbereiding = lak > 0 ? stuks * S.voorbereidingStuk : 0;
-      var lakToeslag = lak * (S.lakKleur[lk] + S.lakGlans[gl]) + lak * S.materiaalPct;
+      var lakToeslag = lak * (S.lakKleur[lk] + S.lakGlans[gl]);
       var korting = 0;
       S.lakStaffel.some(function (t) { if (lak >= t.vanaf) { korting = t.korting; return true; } return false; });
       if (lak > 0) {
         if (n('s-deur')) regels.push('• Binnendeuren: ' + n('s-deur') + ' zijde(n), ' + (g('s-deurtype').value === 'vlak' ? 'vlak' : 'met ramen/panelen'));
+        if (n('s-voordeur')) regels.push('• Voordeur binnenzijde: ' + n('s-voordeur'));
         if (n('s-raam')) regels.push('• Binnenramen/dagramen: ' + n('s-raam'));
         if (n('s-kozijn')) regels.push('• Kozijnen binnen: ' + n('s-kozijn') + ' m');
         if (n('s-vensterbank')) regels.push('• Vensterbanken: ' + n('s-vensterbank') + ' m');
@@ -135,14 +133,14 @@
         if (n('s-trap')) regels.push('• Trap compleet: ' + n('s-trap'));
         regels.push('• Lakwerk: ' + lagen + (lagen === 1 ? ' laag' : ' lagen') + ', ' + g('s-lakkleur').options[g('s-lakkleur').selectedIndex].text.toLowerCase() + ', ' + gl);
         if (korting) regels.push('• Staffelkorting lakwerk: ' + Math.round(korting * 100) + '%');
-        werk += (lak + lakToeslag) * (1 - korting) + voorbereiding;
+        werk += (lak + lakToeslag) * (1 - korting);
       }
       if (regels.length && g('s-lastig').checked) regels.push('• Lastige ruimte: trapgat / schuine wanden / veel hoeken');
       if (regels.length) regels.push('• Afwerking: ' + g('s-afwerking').options[g('s-afwerking').selectedIndex].text.toLowerCase());
 
       // samenvatting in de ingeklapte balken
       var KORT = { 's-gaten': ['ruimte', 'ruimtes'], 's-scheur': ['m scheur', 'm scheuren'], 's-schade': ['plek', 'plekken'],
-        's-deur': ['deurzijde', 'deurzijden'], 's-raam': ['raam', 'ramen'], 's-kozijn': ['m kozijn', 'm kozijn'],
+        's-deur': ['deurzijde', 'deurzijden'], 's-raam': ['raam', 'ramen'], 's-voordeur': ['voordeur', 'voordeuren'], 's-kozijn': ['m kozijn', 'm kozijn'],
         's-vensterbank': ['m vensterbank', 'm vensterbank'], 's-plint': ['m plint', 'm plinten'], 's-radiator': ['radiator', 'radiatoren'], 's-trap': ['trap', 'trappen'] };
       sc.querySelectorAll('details.cdet').forEach(function (d) {
         var delen = [];
@@ -156,7 +154,7 @@
       var leeg = werk === 0;
       var m2 = n('s-muur') + n('s-plafond');
       var opstart = S.opstart.filter(function (t) { return m2 <= t.tot; })[0].prijs;
-      var ritten = Math.max(1, Math.ceil(werk / S.werkPerDag), lak > 0 ? lagen : 1);   // lakwerk: per laag een werkmoment (droogtijd)
+      var ritten = Math.max(1, Math.ceil(werk / S.werkPerDag));
       var excl = werk + opstart + ritten * S.ritPrijs;
       var note = 'incl. opstart (afplakken, afdekken, opruimen) en voorrijkosten voor ' + ritten + (ritten === 1 ? ' werkdag' : ' werkdagen');
       var btw = g('s-oud').checked ? S.btwLaag : S.btwHoog;
