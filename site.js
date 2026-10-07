@@ -64,16 +64,18 @@
   // ---- Schilder-calculator (binnenwerk) ----
   var sc = document.getElementById('schildercalc');
   if (sc) {
-    var S = {  // prijzen excl. btw, incl. standaard materiaal en arbeid (stelposten 2026)
-      muur: { licht: 15.5, nieuw: 17.5, donker: 19.5 },          // per m², 2 lagen
-      plafond: { wit: 19.5, kleur: 21.5, donker: 23.5 },         // per m², 2 lagen
-      gatenRuimte: 45, scheurM: 8, schadePlek: 145,              // stucherstel
+    var S = {  // prijzen excl. btw, incl. materiaal en arbeid — afgestemd op offertes 2026-0019 en 2026-0038
+      muur: { licht: 21, nieuw: 23, donker: 25 },                // per m², 2 lagen Sikkens
+      ondergrond: { goed: 0, nieuw: 5, herstel: 21.5 },          // per m² muur: voorstrijk €5, herstel + voorstrijk €16,50 + €5
+      plafond: { wit: 31, kleur: 33, donker: 35 },               // per m², reinigen, schuren, 2 lagen
+      gatenRuimte: 45, scheurM: 8, schadePlek: 145,              // stucherstel losse posten
       deur1: { zelfde: 150, nieuw: 150 }, deur2: { zelfde: 195, nieuw: 230 },
       kozijn: { zelfde: 175, nieuw: 205 }, vensterbank: { zelfde: 55, nieuw: 70 },
       plintM: { zelfde: 12, nieuw: 14 }, radiator: { zelfde: 95, nieuw: 120 },
       trap: { zelfde: 650, nieuw: 775 },
-      voorrijkosten: 65,
-      kleineKlusGrens: 500, kleineKlusToeslag: 150,              // onder €500 werk: toeslag kleine klus
+      opstart: [{ tot: 30, prijs: 60 }, { tot: 60, prijs: 120 }, { tot: Infinity, prijs: 175 }],  // afplakken/afdekken/opruimen, naar m²
+      ritPrijs: 45,              // voorrijkosten per werkdag
+      m2PerDag: 30,              // ritten = 1 + ceil(m² / 30)
       btwLaag: 0.09, btwHoog: 0.21
     };
     var g = function (id) { return sc.querySelector('#' + id); };
@@ -86,8 +88,9 @@
     function sUpdate() {
       var hk = g('s-houtkleur').value, regels = [], werk = 0;
       function post(bedrag, tekst) { if (bedrag > 0) { werk += bedrag; regels.push('• ' + tekst); } }
-      var mk = g('s-muurkleur').value, pk = g('s-plafondkleur').value;
+      var mk = g('s-muurkleur').value, pk = g('s-plafondkleur').value, og = g('s-ondergrond').value;
       post(n('s-muur') * S.muur[mk], 'Muren sauzen ' + n('s-muur') + ' m² (' + MK[mk] + ')');
+      post(n('s-muur') * S.ondergrond[og], og === 'nieuw' ? 'Voorstrijken nieuw stucwerk' : 'Stuc herstellen en voorstrijken');
       post(n('s-plafond') * S.plafond[pk], 'Plafond sauzen ' + n('s-plafond') + ' m² (' + PK[pk] + ')');
       post(n('s-gaten') * S.gatenRuimte, 'Gaten vullen: ' + n('s-gaten') + ' ruimte(s)');
       post(n('s-scheur') * S.scheurM, 'Haarscheuren: ' + n('s-scheur') + ' m');
@@ -102,8 +105,11 @@
       if (regels.length) regels.push('• Houtwerk: ' + (hk === 'nieuw' ? 'nieuwe kleur' : 'zelfde kleur'));
 
       var leeg = werk === 0;
-      var excl = werk + S.voorrijkosten, note = 'incl. voorrijkosten';
-      if (!leeg && werk < S.kleineKlusGrens) { excl += S.kleineKlusToeslag; note += ' en toeslag kleine klus'; }
+      var m2 = n('s-muur') + n('s-plafond');
+      var opstart = S.opstart.filter(function (t) { return m2 <= t.tot; })[0].prijs;
+      var ritten = 1 + Math.ceil(m2 / S.m2PerDag);
+      var excl = werk + opstart + ritten * S.ritPrijs;
+      var note = 'incl. opstart (afplakken, afdekken, opruimen) en voorrijkosten voor ' + ritten + (ritten === 1 ? ' werkdag' : ' werkdagen');
       var btw = g('s-oud').checked ? S.btwLaag : S.btwHoog;
       var incl = Math.round(excl * (1 + btw) / 5) * 5;
 
