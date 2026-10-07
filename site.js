@@ -48,6 +48,14 @@
     btw: 0.21
   };
 
+  // Per soort klus: bereik, standaardwaarde en hulptekst onder de schuif
+  var SOORT = {
+    'douche of bad': { min: 4,  max: 20, start: 8,  hint: 'Douchehoek ca. 4–6 m, met douchewand 11–14 m' },
+    'keuken':        { min: 4,  max: 16, start: 8,  hint: 'Keukens doorgaans 6–12 m (aanrecht en spatwand)' },
+    'beglazing':     { min: 4,  max: 50, start: 12, hint: 'Per raam ca. 4–5 m, hele woning tot ca. 46 m' },
+    'stucnaden':     { min: 5,  max: 60, start: 20, hint: 'Plinten en plafondnaden lopen snel op' }
+  };
+
   var range = calc.querySelector('#meters');
   var soort = calc.querySelector('#soort');
   var mOut = calc.querySelector('[data-m]');
@@ -55,6 +63,17 @@
   var exclOut = calc.querySelector('[data-excl]');
   var wa = calc.querySelector('[data-wa]');
   var nummer = wa.getAttribute('data-nummer');
+  var minOut = calc.querySelector('[data-min]');
+  var maxOut = calc.querySelector('[data-max]');
+  var hintOut = calc.querySelector('[data-hint]');
+
+  function applySoort() {
+    var c = SOORT[soort.value] || SOORT['douche of bad'];
+    range.min = c.min; range.max = c.max; range.value = c.start;
+    minOut.textContent = c.min + ' m';
+    maxOut.textContent = c.max + ' m';
+    hintOut.textContent = c.hint;
+  }
 
   function fmt(n) { return n.toLocaleString('nl-NL'); }
 
@@ -76,6 +95,7 @@
   }
 
   range.addEventListener('input', update);
-  soort.addEventListener('change', update);
+  soort.addEventListener('change', function () { applySoort(); update(); });
+  applySoort();
   update();
 })();
