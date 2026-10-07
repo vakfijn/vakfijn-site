@@ -42,7 +42,7 @@
     opslagPct: 10,
     btw: 0.21,
     oudeKitPerM: 5,           // oude kit verwijderen, per meter — null = optie verborgen
-    drainVast: null,          // drain / RVS put meekitten, vast per klus — null = optie verborgen
+    drainVast: 55,            // drain / RVS put meekitten, vast per klus — null = optie verborgen
     siliconen: {
       reinigenPerM: 3,        // ontvetten / reinigen, per meter
       kitPerM: [              // arbeid kitten, staffel tot en met X meter
@@ -65,7 +65,7 @@
       meterPerKoker: 8,
       kokerStandaard: 17.5,
       kokerKleur: 20,
-      kleuren: 1
+      kleuren: 0              // beglazingskit: één kleur, geen palet
     },
     acryl: {
       reinigenPerM: 0,        // zit in de all-in meterprijs
@@ -120,6 +120,13 @@
     gekozen.textContent = '';
     meer.open = false;
     aantalOut.textContent = 'meerprijs · ' + T[c.type].kleuren + (T[c.type].kleuren === 1 ? ' kleur' : ' kleuren');
+    // geen keuze? dan de uitklapbalk verbergen
+    meer.hidden = T[c.type].kleuren === 0;
+    // drain/put alleen zinvol bij douche of bad
+    calc.querySelector('[data-opt=drain]').hidden = (T.drainVast == null) || c.type !== 'siliconen' || soort.value !== 'douche of bad';
+    if (soort.value !== 'douche of bad') drain.checked = false;
+    // oude kit verwijderen: standaard aan bij siliconen en beglazing, uit bij acryl
+    oudekit.checked = c.type !== 'acryl';
   }
 
   function fmt(n) { return n.toLocaleString('nl-NL'); }
