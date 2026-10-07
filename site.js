@@ -38,18 +38,23 @@
   if (!calc) return;
 
   var T = {
-    reinigenPerM: 3,
-    kitPerM: [            // staffel: tot en met X meter → prijs per meter
+    reinigenPerM: 3,          // ontvetten / reinigen, per meter
+    kitPerM: [                // arbeid kitten, staffel tot en met X meter
       { tot: 10, prijs: 10 },
       { tot: 20, prijs: 9 },
       { tot: Infinity, prijs: 8 }
     ],
-    materiaal: 30,
+    meterPerKoker: 8,         // hoeveel meter naad uit één koker (aanpassen naar praktijk)
+    kokerStandaard: 17.5,     // wit / lichtgrijs / transparant, per koker
+    kokerKleur: 20,           // andere kleur, per koker
+    oudeKitPerM: null,        // oude kit verwijderen, per meter — null = optie verborgen
+    drainVast: null,          // drain / RVS put meekitten, vast per klus — null = optie verborgen
     voorrijkosten: 65,
     opslagPct: 10,
-    minimum: 125,       // excl. btw
+    minimum: 125,             // excl. btw
     btw: 0.21
   };
+
 
   // Per soort klus: bereik, standaardwaarde en hulptekst onder de schuif
   var SOORT = {
@@ -61,6 +66,11 @@
 
   var range = calc.querySelector('#meters');
   var soort = calc.querySelector('#soort');
+  var kleur = calc.querySelector('#kleur');
+  var oudekit = calc.querySelector('#oudekit');
+  var drain = calc.querySelector('#drain');
+  if (T.oudeKitPerM == null) calc.querySelector('[data-opt=oudekit]').hidden = true;
+  if (T.drainVast == null) calc.querySelector('[data-opt=drain]').hidden = true;
   var mOut = calc.querySelector('[data-m]');
   var inclOut = calc.querySelector('[data-incl]');
   var exclOut = calc.querySelector('[data-excl]');
@@ -83,22 +93,33 @@
   function update() {
     var m = Number(range.value);
     var perM = T.kitPerM.filter(function (t) { return m <= t.tot; })[0].prijs;
-    var sub = T.reinigenPerM * m + perM * m + T.materiaal + T.voorrijkosten;
+    var kokers = Math.max(1, Math.ceil(m / T.meterPerKoker));
+    var kleurExtra = !!kleur.options[kleur.selectedIndex].getAttribute('data-extra');
+    var materiaal = kokers * (kleurExtra ? T.kokerKleur : T.kokerStandaard);
+    var sub = T.reinigenPerM * m + perM * m + materiaal + T.voorrijkosten;
+    if (T.oudeKitPerM != null && oudekit.checked) sub += T.oudeKitPerM * m;
+    if (T.drainVast != null && drain.checked) sub += T.drainVast;
     var excl = Math.max(sub * (1 + T.opslagPct / 100), T.minimum);
     excl = Math.round(excl / 5) * 5;
     var incl = Math.round(excl * (1 + T.btw) / 5) * 5;
 
     mOut.textContent = m + ' m';
     inclOut.textContent = '€ ' + fmt(incl);
-    exclOut.textContent = '€ ' + fmt(excl) + ' excl. 21% btw · incl. materiaal en voorrijkosten';
+    exclOut.textContent = '€ ' + fmt(excl) + ' excl. 21% btw · incl. ' + kokers + (kokers === 1 ? ' koker' : ' kokers') + ' kit en voorrijkosten';
 
-    var msg = 'Hallo, ik wil graag een vaste prijs voor kitwerk (' + soort.value +
-      ', ca. ' + m + ' m). Richtprijs via de site: € ' + fmt(incl) + ' incl. btw. Foto\'s volgen.';
+    var extras = [];
+    if (T.oudeKitPerM != null && oudekit.checked) extras.push('oude kit verwijderen');
+    if (T.drainVast != null && drain.checked) extras.push('drain/RVS put meekitten');
+    var msg = 'Hallo, ik wil graag een vaste prijs voor kitwerk (' + soort.value + ', ca. ' + m + ' m, kleur ' + kleur.value +
+      (extras.length ? ', ' + extras.join(', ') : '') + '). Richtprijs via de site: € ' + fmt(incl) + ' incl. btw. Foto\'s volgen.';
     wa.href = 'https://wa.me/' + nummer + '?text=' + encodeURIComponent(msg);
   }
 
   range.addEventListener('input', update);
   soort.addEventListener('change', function () { applySoort(); update(); });
+  kleur.addEventListener('change', update);
+  oudekit.addEventListener('change', update);
+  drain.addEventListener('change', update);
   applySoort();
   update();
 })();

@@ -62,6 +62,22 @@
 </select>
 </div>
 <div class="field">
+<label for="kleur">Kleur kit</label>
+<select id="kleur">
+<option value="wit">Wit (standaard)</option>
+<option value="lichtgrijs">Lichtgrijs (standaard)</option>
+<option value="transparant">Transparant (standaard)</option>
+<option value="antraciet" data-extra="1">Antraciet (meerprijs)</option>
+<option value="zwart" data-extra="1">Zwart (meerprijs)</option>
+<option value="zand/beige" data-extra="1">Zand / beige (meerprijs)</option>
+<option value="andere kleur" data-extra="1">Andere kleur (meerprijs)</option>
+</select>
+</div>
+<div class="opts">
+<label class="chk" data-opt="oudekit"><input type="checkbox" id="oudekit" checked> Oude kit zit er nog in (verwijderen)</label>
+<label class="chk" data-opt="drain"><input type="checkbox" id="drain"> Douchedrain of RVS put meekitten</label>
+</div>
+<div class="field">
 <div class="top"><label for="meters">Aantal strekkende meter</label><span class="m" data-m>8 m</span></div>
 <input id="meters" type="range" min="4" max="20" step="1" value="8">
 <div class="scale"><span data-min>4 m</span><span data-hint>Douchehoek ca. 4–6 m, met douchewand 11–14 m</span><span data-max>20 m</span></div>
