@@ -85,6 +85,7 @@
       opstart: [{ tot: 30, prijs: 60 }, { tot: 60, prijs: 120 }, { tot: Infinity, prijs: 175 }],  // afplakken/afdekken/opruimen, naar m²
       ritPrijs: 65,              // voorrijkosten per werkdag
       werkPerDag: 450,           // ritten = ceil(werk / 450), minimaal 1
+      extraRitten: { goed: 0, nieuw: 1, herstel: 2 },   // droogtijd: voorstrijk moet drogen (+1), pleisterherstel én voorstrijk (+2)
       lakStaffel: [{ vanaf: 1800, korting: 0.15 }, { vanaf: 900, korting: 0.10 }],   // meeschalen: groter lakwerk goedkoper per onderdeel
       lastigPct: 15,             // lastige ruimte (trapgat, schuine wanden, veel hoeken): toeslag op sauswerk
       onderhoudFactor: 0.65,     // onderhoudslaag (1 laag) = 65% van de 2-lagenprijs, voor sauswerk en lakwerk
@@ -161,9 +162,10 @@
       var m2 = n('s-muur') + n('s-plafond');
       var opstart = S.opstart.filter(function (t) { return m2 <= t.tot; })[0].prijs;
       var ritten = Math.max(1, Math.ceil(werk / S.werkPerDag));
+      if (n('s-muur') > 0 && !muurOnderhoud) ritten += S.extraRitten[og];   // terugkomen na drogen van stuc / voorstrijk
       if (n('s-treden') > 0) ritten = Math.max(ritten, 2 * lagen);   // treden om en om: twee werkdagen per laag
       var excl = werk + opstart + ritten * S.ritPrijs;
-      var note = 'incl. opstart (afplakken, afdekken, opruimen) en voorrijkosten voor ' + ritten + (ritten === 1 ? ' werkdag' : ' werkdagen');
+      var note = 'incl. opstart (afplakken, afdekken, opruimen) en voorrijkosten voor ' + ritten + (ritten === 1 ? ' werkmoment' : ' werkmomenten') + ((n('s-muur') > 0 && !muurOnderhoud && S.extraRitten[og]) ? ' (incl. droogtijd stuc/voorstrijk)' : '');
       var btw = g('s-oud').checked ? S.btwLaag : S.btwHoog;
       var incl = Math.round(excl * (1 + btw) / 5) * 5;
 
