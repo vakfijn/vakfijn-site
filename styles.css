@@ -313,3 +313,5 @@ footer .copy a:hover{color:var(--goud)}
 .wdots span{width:7px;height:7px;border-radius:50%;background:var(--lijn);transition:background .3s}
 .wdots span.on{background:var(--ant)}
 @media(max-width:480px){.weetjes .wtxt{min-height:6.5em}}
+.tip>div{flex:1 1 auto;min-width:0}
+.weetjes .wtxt{width:100%}
