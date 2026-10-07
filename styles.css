@@ -113,16 +113,6 @@ input[type=range]{width:100%;accent-color:var(--goud);min-height:44px;border:0;p
 .band .acts a{justify-content:space-between;padding:18px 24px;min-height:56px;font-size:17px}
 .band .acts span{font-family:'DM Mono',monospace;font-size:14px}
 
-/* footer */
-footer{background:var(--ant);color:var(--tekst-l);padding:56px 0 40px;font-size:15px;line-height:1.8}
-footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:32px}
-footer .brand{margin-bottom:16px}
-footer .vf{width:36px;height:36px;font-size:15px}
-footer .brand b{font-size:20px}
-footer nav{display:flex;flex-direction:column}
-footer nav a{color:var(--zand);text-decoration:none}
-.fine{font-family:'DM Mono',monospace;font-size:13px;color:var(--grijs);margin-top:24px}
-
 /* logo (wordmark) */
 .logo{display:flex;flex-direction:column;gap:5px;text-decoration:none;color:var(--zand)}
 .logo b{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:26px;letter-spacing:.5px;line-height:1}
@@ -231,11 +221,7 @@ footer .legal-links a{color:var(--tekst-l);text-decoration:none;font-size:14px}
 .band .acts a{flex-wrap:wrap}
 .band .acts span{font-size:13px}
 
-footer .copy{text-align:center;margin-top:40px;padding-top:20px;border-top:1px solid var(--lijn-d);color:#8E887E}
 
-footer .copy{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 28px}
-footer .copy a{color:#8E887E;text-decoration:none}
-footer .copy a:hover{color:var(--goud)}
 
 /* hero diashow */
 .slides{position:relative;aspect-ratio:4/5;overflow:hidden;background:#3A3734}
@@ -268,3 +254,19 @@ footer{view-transition-name:footer}
 
 .cdet summary{flex-wrap:wrap}
 .cdet .crow{padding:2px 0}
+
+/* footer */
+footer{background:var(--ant);color:var(--tekst-l);padding:56px 0 28px;font-size:14px;line-height:1.7}
+.fgrid{display:grid;grid-template-columns:1.4fr 1fr 1.4fr;gap:40px}
+@media(max-width:760px){.fgrid{grid-template-columns:1fr;gap:28px}}
+footer .logo{margin-bottom:14px}
+footer p{color:var(--tekst-l);margin:0;font-size:14px}
+.fkop{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--goud);margin-bottom:10px}
+footer nav{display:flex;flex-direction:column;gap:2px}
+footer nav a{color:var(--zand);text-decoration:none}
+footer nav a:hover{color:var(--goud)}
+footer nav span{color:var(--tekst-l)}
+footer nav .mono{font-size:12px;color:#8E887E;margin-top:6px}
+footer .copy{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 24px;margin-top:40px;padding-top:18px;border-top:1px solid var(--lijn-d);color:#8E887E;font-size:12px}
+footer .copy a{color:#8E887E;text-decoration:none}
+footer .copy a:hover{color:var(--goud)}
