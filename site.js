@@ -38,30 +38,39 @@
   if (!calc) return;
 
   var T = {
-    reinigenPerM: 3,          // ontvetten / reinigen, per meter
-    kitPerM: [                // arbeid kitten, staffel tot en met X meter
-      { tot: 10, prijs: 10 },
-      { tot: 20, prijs: 9 },
-      { tot: Infinity, prijs: 8 }
-    ],
-    meterPerKoker: 8,         // hoeveel meter naad uit één koker (aanpassen naar praktijk)
-    kokerStandaard: 17.5,     // wit / lichtgrijs / transparant, per koker
-    kokerKleur: 20,           // andere kleur, per koker
-    oudeKitPerM: null,        // oude kit verwijderen, per meter — null = optie verborgen
-    drainVast: null,          // drain / RVS put meekitten, vast per klus — null = optie verborgen
     voorrijkosten: 65,
     opslagPct: 10,
-    minimum: 125,             // excl. btw
-    btw: 0.21
+    btw: 0.21,
+    oudeKitPerM: null,        // oude kit verwijderen, per meter — null = optie verborgen
+    drainVast: null,          // drain / RVS put meekitten, vast per klus — null = optie verborgen
+    siliconen: {
+      reinigenPerM: 3,        // ontvetten / reinigen, per meter
+      kitPerM: [              // arbeid kitten, staffel tot en met X meter
+        { tot: 10, prijs: 10 },
+        { tot: 20, prijs: 9 },
+        { tot: Infinity, prijs: 8 }
+      ],
+      meterPerKoker: 8,
+      kokerStandaard: 17.5,   // wit / lichtgrijs / transparant
+      kokerKleur: 20,         // andere kleur
+      kleuren: 27             // aantal meerprijs-kleuren in het palet
+    },
+    acryl: {
+      reinigenPerM: 0,        // zit in de all-in meterprijs
+      kitPerM: [{ tot: Infinity, prijs: 6 }],   // €6 all-in per meter
+      meterPerKoker: 10,
+      kokerStandaard: 10,     // wit
+      kokerKleur: 12.5,       // kleur / structuur — AANNAME, aanpassen
+      kleuren: 4
+    }
   };
 
-
-  // Per soort klus: bereik, standaardwaarde en hulptekst onder de schuif
+  // Per soort klus: type kit, bereik, standaardwaarde, hulptekst en minimum (excl. btw)
   var SOORT = {
-    'douche of bad': { min: 4,  max: 20, start: 8,  hint: 'Douchehoek ca. 4–6 m, met douchewand 11–14 m' },
-    'keuken':        { min: 4,  max: 16, start: 8,  hint: 'Keukens doorgaans 6–12 m (aanrecht en spatwand)' },
-    'beglazing':     { min: 4,  max: 50, start: 12, hint: 'Per raam ca. 4–5 m, hele woning tot ca. 46 m' },
-    'stucnaden':     { min: 5,  max: 60, start: 20, hint: 'Plinten en plafondnaden lopen snel op' }
+    'douche of bad': { type: 'siliconen', min: 4, max: 20, start: 8,  minimum: 150, hint: 'Douchehoek ca. 4–6 m, met douchewand 11–14 m' },
+    'keuken':        { type: 'siliconen', min: 4, max: 16, start: 8,  minimum: 125, hint: 'Keukens doorgaans 6–12 m (aanrecht en spatwand)' },
+    'beglazing':     { type: 'siliconen', min: 4, max: 50, start: 12, minimum: 125, hint: 'Per raam ca. 4–5 m, hele woning tot ca. 46 m' },
+    'stucnaden':     { type: 'acryl',     min: 5, max: 60, start: 20, minimum: 100, hint: 'Plinten en plafondnaden lopen snel op' }
   };
 
   var range = calc.querySelector('#meters');
@@ -80,27 +89,40 @@
   var minOut = calc.querySelector('[data-min]');
   var maxOut = calc.querySelector('[data-max]');
   var hintOut = calc.querySelector('[data-hint]');
+  var gekozen = calc.querySelector('[data-gekozen]');
+
+  var aantalOut = calc.querySelector('[data-aantal]');
+  var meer = calc.querySelector('#meerkleur');
+  function huidig() { return SOORT[soort.value] || SOORT['douche of bad']; }
 
   function applySoort() {
-    var c = SOORT[soort.value] || SOORT['douche of bad'];
+    var c = huidig();
     range.min = c.min; range.max = c.max; range.value = c.start;
     minOut.textContent = c.min + ' m';
     maxOut.textContent = c.max + ' m';
     hintOut.textContent = c.hint;
+    // alleen de kleurstalen van dit kittype tonen; terug naar de standaardkleur
+    calc.querySelectorAll('.sw').forEach(function (l) { l.hidden = l.getAttribute('data-type') !== c.type; });
+    var eerste = calc.querySelector('.sw[data-type=' + c.type + '] input');
+    if (eerste) eerste.checked = true;
+    gekozen.textContent = '';
+    meer.open = false;
+    aantalOut.textContent = 'meerprijs · ' + T[c.type].kleuren + ' kleuren';
   }
 
   function fmt(n) { return n.toLocaleString('nl-NL'); }
 
   function update() {
     var m = Number(range.value);
-    var perM = T.kitPerM.filter(function (t) { return m <= t.tot; })[0].prijs;
-    var kokers = Math.max(1, Math.ceil(m / T.meterPerKoker));
+    var c = huidig(); var K = T[c.type];
+    var perM = K.kitPerM.filter(function (t) { return m <= t.tot; })[0].prijs;
+    var kokers = Math.max(1, Math.ceil(m / K.meterPerKoker));
     var kleurExtra = !!kleurEl().getAttribute('data-extra');
-    var materiaal = kokers * (kleurExtra ? T.kokerKleur : T.kokerStandaard);
-    var sub = T.reinigenPerM * m + perM * m + materiaal + T.voorrijkosten;
+    var materiaal = kokers * (kleurExtra ? K.kokerKleur : K.kokerStandaard);
+    var sub = K.reinigenPerM * m + perM * m + materiaal + T.voorrijkosten;
     if (T.oudeKitPerM != null && oudekit.checked) sub += T.oudeKitPerM * m;
     if (T.drainVast != null && drain.checked) sub += T.drainVast;
-    var excl = Math.max(sub * (1 + T.opslagPct / 100), T.minimum);
+    var excl = Math.max(sub * (1 + T.opslagPct / 100), c.minimum);
     excl = Math.round(excl / 5) * 5;
     var incl = Math.round(excl * (1 + T.btw) / 5) * 5;
 
@@ -118,7 +140,6 @@
 
   range.addEventListener('input', update);
   soort.addEventListener('change', function () { applySoort(); update(); });
-  var gekozen = calc.querySelector('[data-gekozen]');
   kleurGroep.forEach(function (r) {
     r.addEventListener('change', function () {
       // naam van de gekozen meerprijs-kleur tonen in de uitklapbalk; leeg bij standaardkleur

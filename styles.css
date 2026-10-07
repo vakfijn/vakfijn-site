@@ -189,3 +189,5 @@ figcaption{font-family:'DM Mono',monospace;font-size:13px;color:var(--grijs);mar
 .meer summary .gekozen:empty{display:none}
 .meer>.swatches{padding:4px 10px 10px}
 .meer>.mono{padding:0 14px 12px}
+
+.sw[hidden]{display:none}
