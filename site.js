@@ -66,7 +66,8 @@
 
   var range = calc.querySelector('#meters');
   var soort = calc.querySelector('#soort');
-  var kleur = calc.querySelector('#kleur');
+  var kleurGroep = calc.querySelectorAll('input[name=kleur]');
+  function kleurEl() { return calc.querySelector('input[name=kleur]:checked') || kleurGroep[0]; }
   var oudekit = calc.querySelector('#oudekit');
   var drain = calc.querySelector('#drain');
   if (T.oudeKitPerM == null) calc.querySelector('[data-opt=oudekit]').hidden = true;
@@ -94,7 +95,7 @@
     var m = Number(range.value);
     var perM = T.kitPerM.filter(function (t) { return m <= t.tot; })[0].prijs;
     var kokers = Math.max(1, Math.ceil(m / T.meterPerKoker));
-    var kleurExtra = !!kleur.options[kleur.selectedIndex].getAttribute('data-extra');
+    var kleurExtra = !!kleurEl().getAttribute('data-extra');
     var materiaal = kokers * (kleurExtra ? T.kokerKleur : T.kokerStandaard);
     var sub = T.reinigenPerM * m + perM * m + materiaal + T.voorrijkosten;
     if (T.oudeKitPerM != null && oudekit.checked) sub += T.oudeKitPerM * m;
@@ -110,14 +111,14 @@
     var extras = [];
     if (T.oudeKitPerM != null && oudekit.checked) extras.push('oude kit verwijderen');
     if (T.drainVast != null && drain.checked) extras.push('drain/RVS put meekitten');
-    var msg = 'Hallo, ik wil graag een vaste prijs voor kitwerk (' + soort.value + ', ca. ' + m + ' m, kleur ' + kleur.value +
+    var msg = 'Hallo, ik wil graag een vaste prijs voor kitwerk (' + soort.value + ', ca. ' + m + ' m, kleur ' + kleurEl().value +
       (extras.length ? ', ' + extras.join(', ') : '') + '). Richtprijs via de site: € ' + fmt(incl) + ' incl. btw. Foto\'s volgen.';
     wa.href = 'https://wa.me/' + nummer + '?text=' + encodeURIComponent(msg);
   }
 
   range.addEventListener('input', update);
   soort.addEventListener('change', function () { applySoort(); update(); });
-  kleur.addEventListener('change', update);
+  kleurGroep.forEach(function (r) { r.addEventListener('change', update); });
   oudekit.addEventListener('change', update);
   drain.addEventListener('change', update);
   applySoort();
