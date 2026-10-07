@@ -230,3 +230,5 @@ footer .legal-links a{color:var(--tekst-l);text-decoration:none;font-size:14px}
 .kaart .leaflet-tile-pane{filter:grayscale(1) sepia(.15) brightness(1.03)}
 .band .acts a{flex-wrap:wrap}
 .band .acts span{font-size:13px}
+
+footer .copy{text-align:center;margin-top:40px;padding-top:20px;border-top:1px solid var(--lijn-d);color:#8E887E}
