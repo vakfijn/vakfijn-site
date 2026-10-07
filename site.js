@@ -74,7 +74,7 @@
       plintM: { zelfde: 12, nieuw: 14 }, radiator: { zelfde: 95, nieuw: 120 },
       trap: { zelfde: 650, nieuw: 775 },
       opstart: [{ tot: 30, prijs: 60 }, { tot: 60, prijs: 120 }, { tot: Infinity, prijs: 175 }],  // afplakken/afdekken/opruimen, naar m²
-      ritPrijs: 45,              // voorrijkosten per werkdag
+      ritPrijs: 65,              // voorrijkosten per werkdag
       m2PerDag: 30,              // ritten = 1 + ceil(m² / 30)
       btwLaag: 0.09, btwHoog: 0.21
     };
