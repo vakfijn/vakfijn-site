@@ -56,8 +56,9 @@
       kokerKleur: 20,         // andere kleur
       kleuren: 27             // aantal meerprijs-kleuren in het palet
     },
-    beglazing: {              // hybride beglazingskit: alleen wit en betongrijs
-      reinigenPerM: 3,
+    beglazing: {              // beglazingskit, één kleur
+      reinigenPerM: 0,        // zit in oudeKitPerM (uitkrabben + ontvetten samen)
+      oudeKitPerM: 6.5,       // oude kit verwijderen én ontvetten, per meter
       kitPerM: [
         { tot: 10, prijs: 10 },
         { tot: 20, prijs: 9 },
@@ -152,7 +153,8 @@
     var kleurExtra = !!kleurEl().getAttribute('data-extra');
     var materiaal = kokers * (hyb ? K.hybrideKoker : (kleurExtra ? K.kokerKleur : K.kokerStandaard));
     var sub = K.reinigenPerM * m + perM * m + materiaal + T.voorrijkosten;
-    if (T.oudeKitPerM != null && oudekit.checked) sub += T.oudeKitPerM * m;
+    var oudePerM = K.oudeKitPerM != null ? K.oudeKitPerM : T.oudeKitPerM;
+    if (oudePerM != null && oudekit.checked) sub += oudePerM * m;
     if (T.drainVast != null && drain.checked) sub += T.drainVast;
     if (goot.checked) sub += T.gootVast;
     var excl = sub * (1 + T.opslagPct / 100);
