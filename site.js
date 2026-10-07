@@ -200,8 +200,19 @@
     if (T.drainVast != null && drain.checked) extras.push('RVS put meekitten');
     if (goot.checked) extras.push('douchegoot/Easydrain met speciale kit');
     if (hyb) extras.push('werkende naden met hybride kit');
-    var msg = 'Hallo, ik wil graag een vaste prijs voor kitwerk (' + soort.value + ', ca. ' + m + ' m, kleur ' + kleurEl().value +
-      (extras.length ? ', ' + extras.join(', ') : '') + '). Richtprijs via de site: € ' + fmt(incl) + ' incl. btw. Foto\'s volgen.';
+    var SOORTNAAM = { 'douche of bad': 'Douche of bad', 'keuken': 'Keuken', 'beglazing': 'Beglazing', 'stucnaden': 'Stucnaden en plinten' };
+    var regels = [
+      'Hallo Dennis, ik wil graag een vaste prijs voor kitwerk.',
+      '',
+      'Overzicht via de kit-calculator:',
+      '• Klus: ' + (SOORTNAAM[soort.value] || soort.value),
+      '• Meters: ca. ' + m + ' m',
+      '• Kleur: ' + kleurEl().value
+    ];
+    extras.forEach(function (x) { regels.push('• Extra: ' + x); });
+    regels.push('• Richtprijs: € ' + fmt(incl) + ' incl. btw');
+    regels.push('', 'Foto\'s (overzicht + close-ups) stuur ik hierna.');
+    var msg = regels.join('\n');
     wa.href = 'https://wa.me/' + nummer + '?text=' + encodeURIComponent(msg);
   }
 
