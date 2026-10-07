@@ -177,3 +177,15 @@ figcaption{font-family:'DM Mono',monospace;font-size:13px;color:var(--grijs);mar
 .sw:has(input:checked){border-color:var(--goud);background:rgba(212,168,44,.08)}
 .sw:has(input:checked) .dot{box-shadow:0 0 0 3px var(--ant),0 0 0 5px var(--goud)}
 .sw:has(input:focus-visible){outline:2px solid var(--goud);outline-offset:2px}
+
+.swatches.std{grid-template-columns:repeat(3,minmax(0,1fr))}
+.meer{border:1.5px solid #4A4640}
+.meer summary{list-style:none;cursor:pointer;display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;padding:12px 14px;min-height:48px;font-size:15px;font-weight:600;color:var(--zand)}
+.meer summary::-webkit-details-marker{display:none}
+.meer summary::after{content:"+";margin-left:auto;font-family:'DM Mono',monospace;font-size:18px;color:var(--goud)}
+.meer[open] summary::after{content:"–"}
+.meer summary .mono{color:#8E887E;font-weight:400}
+.meer summary .gekozen{font-family:'DM Mono',monospace;font-size:13px;color:var(--goud)}
+.meer summary .gekozen:empty{display:none}
+.meer>.swatches{padding:4px 10px 10px}
+.meer>.mono{padding:0 14px 12px}

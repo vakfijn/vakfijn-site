@@ -118,7 +118,14 @@
 
   range.addEventListener('input', update);
   soort.addEventListener('change', function () { applySoort(); update(); });
-  kleurGroep.forEach(function (r) { r.addEventListener('change', update); });
+  var gekozen = calc.querySelector('[data-gekozen]');
+  kleurGroep.forEach(function (r) {
+    r.addEventListener('change', function () {
+      // naam van de gekozen meerprijs-kleur tonen in de uitklapbalk; leeg bij standaardkleur
+      gekozen.textContent = r.getAttribute('data-extra') ? '· ' + r.value : '';
+      update();
+    });
+  });
   oudekit.addEventListener('change', update);
   drain.addEventListener('change', update);
   applySoort();
