@@ -70,7 +70,8 @@
       plafond: { wit: 31, kleur: 33, donker: 35 },               // per m², reinigen, schuren, 2 lagen
       gatenRuimte: 45, scheurM: 8, schadePlek: 145,              // stucherstel losse posten
       deur1: { zelfde: 150, nieuw: 150 }, deur2: { zelfde: 195, nieuw: 230 },
-      kozijn: { zelfde: 175, nieuw: 205 }, vensterbank: { zelfde: 55, nieuw: 70 },
+      kozijnM: { zelfde: 10, nieuw: 11 }, kozijnLagen: 3,   // per strekkende meter per laag; volledig = grondlaag + 2 lak
+      vensterbank: { zelfde: 55, nieuw: 70 },
       plintM: { zelfde: 12, nieuw: 14 }, radiator: { zelfde: 95, nieuw: 120 },
       trap: { zelfde: 1500, nieuw: 1650 },   // trap compleet vanaf €1.500
       opstart: [{ tot: 30, prijs: 60 }, { tot: 60, prijs: 120 }, { tot: Infinity, prijs: 175 }],  // afplakken/afdekken/opruimen, naar m²
@@ -105,7 +106,8 @@
       post(n('s-schade') * S.schadePlek, 'Herstelplekken: ' + n('s-schade'));
       post(n('s-deur') * S.deur1[hk] * f, 'Binnendeur 1 zijde: ' + n('s-deur'));
       post(n('s-deur2') * S.deur2[hk] * f, 'Binnendeur 2 zijden: ' + n('s-deur2'));
-      post(n('s-kozijn') * S.kozijn[hk] * f, 'Kozijn binnen: ' + n('s-kozijn'));
+      var kLagen = onderhoud ? 1 : S.kozijnLagen;
+      post(n('s-kozijn') * S.kozijnM[hk] * kLagen, 'Kozijnen binnen: ' + n('s-kozijn') + ' m, ' + kLagen + (kLagen === 1 ? ' laag' : ' lagen'));
       post(n('s-vensterbank') * S.vensterbank[hk] * f, 'Vensterbank: ' + n('s-vensterbank'));
       post(n('s-plint') * S.plintM[hk] * f, 'Plinten: ' + n('s-plint') + ' m');
       post(n('s-radiator') * S.radiator[hk] * f, 'Radiator: ' + n('s-radiator'));
@@ -115,7 +117,7 @@
 
       // samenvatting in de ingeklapte balken
       var KORT = { 's-gaten': ['ruimte', 'ruimtes'], 's-scheur': ['m scheur', 'm scheuren'], 's-schade': ['plek', 'plekken'],
-        's-deur': ['deur', 'deuren'], 's-deur2': ['deur 2-zijdig', 'deuren 2-zijdig'], 's-kozijn': ['kozijn', 'kozijnen'],
+        's-deur': ['deur', 'deuren'], 's-deur2': ['deur 2-zijdig', 'deuren 2-zijdig'], 's-kozijn': ['m kozijn', 'm kozijn'],
         's-vensterbank': ['vensterbank', 'vensterbanken'], 's-plint': ['m plint', 'm plinten'], 's-radiator': ['radiator', 'radiatoren'], 's-trap': ['trap', 'trappen'] };
       sc.querySelectorAll('details.cdet').forEach(function (d) {
         var delen = [];
@@ -130,6 +132,7 @@
       var m2 = n('s-muur') + n('s-plafond');
       var opstart = S.opstart.filter(function (t) { return m2 <= t.tot; })[0].prijs;
       var ritten = 1 + Math.ceil(m2 / S.m2PerDag);
+      if (!onderhoud && ritten < 2) ritten = 2;   // twee lagen = twee keer rijden (droogtijd)
       var excl = werk + opstart + ritten * S.ritPrijs;
       var note = 'incl. opstart (afplakken, afdekken, opruimen) en voorrijkosten voor ' + ritten + (ritten === 1 ? ' werkdag' : ' werkdagen');
       var btw = g('s-oud').checked ? S.btwLaag : S.btwHoog;
