@@ -33,15 +33,19 @@
     });
   });
 
-  // ---- Hero-diashow (home): elke 4 seconden een volgend vak ----
-  var slides = document.getElementById('heroslides');
-  if (slides && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    var figs = slides.querySelectorAll('figure'), idx = 0;
-    setInterval(function () {
-      figs[idx].classList.remove('on');
-      idx = (idx + 1) % figs.length;
-      figs[idx].classList.add('on');
-    }, 4000);
+  // ---- Hero-diashows: home elke 4 s, vakpagina's rustiger (data-interval) ----
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll('.slides').forEach(function (sl) {
+      var figs = sl.querySelectorAll('figure'), idx = 0;
+      if (figs.length < 2) return;
+      var ms = parseInt(sl.getAttribute('data-interval'), 10) || 4000;
+      if (ms > 4000) sl.classList.add('traag');
+      setInterval(function () {
+        figs[idx].classList.remove('on');
+        idx = (idx + 1) % figs.length;
+        figs[idx].classList.add('on');
+      }, ms);
+    });
   }
 
   // ---- Roterende weetjes (kitwerk): elke 6 seconden het volgende ----
