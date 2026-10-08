@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://vakfijn.nl/sitemap.xml
+Sitemap: https://vakfijn-afwerking.nl/sitemap.xml
