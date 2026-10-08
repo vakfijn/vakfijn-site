@@ -351,3 +351,8 @@ h1 .h1k{display:block;font-weight:400;line-height:1.4;margin-bottom:16px}
 .gal img,.vn img{height:auto}
 .slides.traag figure{transition:opacity 1.8s ease}
 @media(max-width:640px){.slides[style*="4/3"]{aspect-ratio:4/3!important}}
+/* brede diashow (voor/na-foto's) */
+.hero .img.slides.breed{flex:1 1 580px;aspect-ratio:16/10}
+.slides.breed figcaption{font-size:14px}
+@media(max-width:640px){.hero .img.slides.breed{aspect-ratio:16/10}}
+.hero .img.slides img{height:100%;aspect-ratio:auto}
