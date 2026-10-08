@@ -1,1 +1,130 @@
-{ "cleanUrls": true, "trailingSlash": false }
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/werkwijze",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/werkwijze.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/vastgoed",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/vastgoed.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/team",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/team.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/renovatie",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/renovatie.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/renovatie-nijmegen",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/renovatie-nijmegen.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/renovatie-arnhem",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/renovatie-arnhem.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/verduurzaming",
+      "destination": "/isolatie",
+      "permanent": true
+    },
+    {
+      "source": "/verduurzaming.html",
+      "destination": "/isolatie",
+      "permanent": true
+    },
+    {
+      "source": "/snelle-klus",
+      "destination": "/kitwerk",
+      "permanent": true
+    },
+    {
+      "source": "/snelle-klus.html",
+      "destination": "/kitwerk",
+      "permanent": true
+    },
+    {
+      "source": "/badkamerrenovatie",
+      "destination": "/kitwerk",
+      "permanent": true
+    },
+    {
+      "source": "/badkamerrenovatie.html",
+      "destination": "/kitwerk",
+      "permanent": true
+    },
+    {
+      "source": "/privacybeleid",
+      "destination": "/privacyverklaring",
+      "permanent": true
+    },
+    {
+      "source": "/privacybeleid.html",
+      "destination": "/privacyverklaring",
+      "permanent": true
+    }
+  ],
+  "headers": [
+    {
+      "source": "/images/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800"
+        }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        }
+      ]
+    }
+  ]
+}

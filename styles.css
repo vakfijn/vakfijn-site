@@ -346,3 +346,6 @@ footer .copy a:hover{color:var(--goud)}
 .menu a.btn{order:2;flex:0 0 auto;margin-left:auto;border-top:0;padding:10px 16px;min-height:42px}
 }
 @media(max-width:420px){.calc .btn{padding:14px 16px;font-size:15px}}
+/* keyword-regel boven de H1 (zelfde look als .label) */
+h1 .h1k{display:block;font-weight:400;line-height:1.4;margin-bottom:16px}
+.gal img,.vn img{height:auto}
