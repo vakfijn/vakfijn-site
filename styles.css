@@ -367,3 +367,6 @@ label small,.flab small{font-weight:400;color:var(--grijs)}
 .kz input:checked+span{background:var(--ant);color:var(--zand)}
 .kz input:checked+span::before{content:"✓";margin-right:8px;color:var(--goud);font-weight:700}
 .kz input:focus-visible+span{outline:2px solid var(--goud);outline-offset:2px}
+/* AV: modelformulier herroeping */
+.bijlage{border:1.5px dashed var(--lijn,#C9C1B3);padding:20px 24px;margin-top:32px}
+.bijlage .vul{display:block;border-bottom:1px solid var(--grijs);padding-top:26px;font-size:13px;color:var(--grijs)}
