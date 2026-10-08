@@ -16,7 +16,7 @@ Tarieven staan bovenin `site.js` (object `T`).
 1. Vercel → Add New Project → importeer `vakfijn/vakfijn-site` (geen build-instellingen nodig).
 2. Vercel → Settings → Domains → voeg `vakfijn-afwerking.nl` en `www.vakfijn-afwerking.nl` toe (kale domein doorsturen naar www).
 3. Bij je domeinprovider → DNS: alleen de A-record (@) en CNAME (www) aanpassen naar de waarden die Vercel toont. **MX- en TXT-records van e-mail niet aanraken.**
-4. `WEB3FORMS_KEY` vervangen in index, timmerwerk en isolatie.
+4. Web3Forms-sleutel staat in index, timmerwerk en isolatie (info.vakfijn@gmail.com).
 5. Google Search Console: domein verifiëren, `https://www.vakfijn-afwerking.nl/sitemap.xml` indienen.
 6. Google Bedrijfsprofiel: website-link controleren.
 
