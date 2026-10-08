@@ -217,7 +217,7 @@
     btw: 0.21,
     oudeKitPerM: 5,           // oude kit verwijderen, per meter — null = optie verborgen
     drainVast: 55,            // RVS put meekitten, vast per klus
-    gootVast: 215,            // douchegoot / Easydrain: €55 arbeid + speciale koker (2× €80 inkoop)
+    gootVast: 135,            // douchegoot / Easydrain: €55 arbeid + 1 speciale koker (€80 inkoop)
     lastigPct: 25,            // veel hoeken / nissen / krap: toeslag op de arbeid (afgestemd op offerte 2026-0036)
     siliconen: {
       reinigenPerM: 3,        // ontvetten / reinigen, per meter
@@ -279,6 +279,12 @@
   var lastig = calc.querySelector('#lastig');
   if (T.oudeKitPerM == null) calc.querySelector('[data-opt=oudekit]').hidden = true;
   if (T.drainVast == null) calc.querySelector('[data-opt=drain]').hidden = true;
+  // labels tonen het meerbedrag zoals het in de richtprijs komt (incl. opslag en btw, afgerond op €5)
+  function meer(v) { return Math.round(v * (1 + T.opslagPct / 100) * (1 + T.btw) / 5) * 5; }
+  calc.querySelectorAll('[data-prijs]').forEach(function (el) {
+    var v = T[el.getAttribute('data-prijs')];
+    if (v != null) el.textContent = '+ ca. € ' + meer(v);
+  });
   var mOut = calc.querySelector('[data-m]');
   var inclOut = calc.querySelector('[data-incl]');
   var exclOut = calc.querySelector('[data-excl]');
