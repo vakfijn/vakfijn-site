@@ -1,6 +1,14 @@
 // Vakfijn — formulieren (Web3Forms) + kit-calculator
 (function () {
   // ---- Formulieren: versturen zonder paginawissel ----
+  // klikbare keuzes (pillen) -> één verborgen veld per groep
+  document.querySelectorAll('.keuzes').forEach(function (g) {
+    var veld = g.parentNode.querySelector('input[type=hidden][name="' + g.getAttribute('data-naam') + '"]');
+    g.addEventListener('change', function () {
+      veld.value = Array.prototype.map.call(g.querySelectorAll('input:checked'), function (i) { return i.value; }).join(', ');
+    });
+  });
+
   document.querySelectorAll('form[data-web3forms]').forEach(function (form) {
     form.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -9,9 +17,11 @@
       var oud = btn.textContent;
       btn.disabled = true;
       btn.textContent = 'Versturen…';
+      var fd = new FormData(form);
+      Array.from(fd.keys()).forEach(function (k) { if (k.indexOf('kz-') === 0) fd.delete(k); });
       fetch('https://api.web3forms.com/submit', {
         method: 'POST',
-        body: new FormData(form)
+        body: fd
       })
         .then(function (r) { return r.json(); })
         .then(function (d) {

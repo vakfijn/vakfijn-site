@@ -165,14 +165,16 @@
 <input type="hidden" name="access_key" value="7f7d6a04-5c0b-4ac2-8a8b-298923888052">
 <input type="hidden" name="subject" value="Opname-aanvraag timmerwerk via vakfijn-afwerking.nl">
 <input type="hidden" name="from_name" value="Vakfijn website">
-<input type="hidden" name="dienst" value="Timmerwerk / houtrot">
 <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+<div class="field"><span class="flab">Waar zit het? <small>(meer mogelijk)</small></span><div class="keuzes" data-naam="dienst"><label class="kz"><input type="checkbox" name="kz-dienst" value="Kozijn of raam"><span>Kozijn of raam</span></label><label class="kz"><input type="checkbox" name="kz-dienst" value="Deur of onderdorpel"><span>Deur of onderdorpel</span></label><label class="kz"><input type="checkbox" name="kz-dienst" value="Vensterbank"><span>Vensterbank</span></label><label class="kz"><input type="checkbox" name="kz-dienst" value="Aftimmerwerk of koof"><span>Aftimmerwerk of koof</span></label><label class="kz"><input type="checkbox" name="kz-dienst" value="Weet ik niet zeker"><span>Weet ik niet zeker</span></label></div><input type="hidden" name="dienst" value=""></div>
+<div class="field"><span class="flab">Wanneer?</span><div class="keuzes" data-naam="wanneer"><label class="kz"><input type="radio" name="kz-wanneer" value="Zo snel mogelijk"><span>Zo snel mogelijk</span></label><label class="kz"><input type="radio" name="kz-wanneer" value="Binnen 3 maanden"><span>Binnen 3 maanden</span></label><label class="kz"><input type="radio" name="kz-wanneer" value="Flexibel"><span>Flexibel</span></label></div><input type="hidden" name="wanneer" value=""></div>
 <div class="row">
 <div class="field"><label for="naam">Naam</label><input id="naam" name="naam" type="text" required></div>
 <div class="field"><label for="tel">Telefoon / WhatsApp</label><input id="tel" name="telefoon" type="tel" required></div>
 </div>
 <div class="field"><label for="plaats">Adres of plaats</label><input id="plaats" name="plaats" type="text" placeholder="Nijmegen" required></div>
-<div class="field"><label for="bericht">Wat speelt er?</label><textarea id="bericht" name="bericht" rows="4" placeholder="Bijv. onderdorpel voordeur voelt zacht, verf bladdert bij de hoek."></textarea></div>
+<div class="field"><span class="flab">Hoe wil je contact?</span><div class="keuzes" data-naam="contact"><label class="kz"><input type="radio" name="kz-contact" value="WhatsApp" checked><span>WhatsApp</span></label><label class="kz"><input type="radio" name="kz-contact" value="Bellen"><span>Bellen</span></label></div><input type="hidden" name="contact" value="WhatsApp"></div>
+<div class="field"><label for="bericht">Wat speelt er? <small>(optioneel)</small></label><textarea id="bericht" name="bericht" rows="4" placeholder="Bijv. onderdorpel voordeur voelt zacht, verf bladdert bij de hoek."></textarea></div>
 <button class="btn btn-goud" type="submit" style="align-self:flex-start">Opname aanvragen</button>
 <div class="ok">Dank, je aanvraag is binnen. Je hoort binnen één werkdag van ons.</div>
 </form>

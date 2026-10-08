@@ -89,7 +89,7 @@ form{display:flex;flex-direction:column;gap:16px}
 .row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
 .field{display:flex;flex-direction:column;gap:6px}
 label{font-size:14px;font-weight:600}
-input,select,textarea{font-family:inherit;font-size:16px;color:var(--ant);background:var(--zand);border:1.5px solid var(--ant);padding:12px 14px;min-height:48px;width:100%;border-radius:0}
+input,select,textarea{font-family:inherit;font-size:16px;color:var(--ant);background:var(--zand);border:1.5px solid var(--ant);padding:12px 14px;min-height:48px;width:100%;border-radius:8px}
 textarea{resize:vertical}
 input[type=file]{padding:10px 14px}
 .ok{display:none;background:var(--ant);color:var(--zand);padding:20px 24px;font-size:16px}
@@ -356,3 +356,14 @@ h1 .h1k{display:block;font-weight:400;line-height:1.4;margin-bottom:16px}
 .slides.breed figcaption{font-size:14px}
 @media(max-width:640px){.hero .img.slides.breed{aspect-ratio:16/10}}
 .hero .img.slides img{height:100%;aspect-ratio:auto}
+/* klikbare keuzes in formulieren */
+.flab{font-size:14px;font-weight:600}
+label small,.flab small{font-weight:400;color:var(--grijs)}
+.keuzes{display:flex;flex-wrap:wrap;gap:8px}
+.kz{position:relative;cursor:pointer;font-weight:500}
+.kz input{position:absolute;opacity:0;width:1px;height:1px;min-height:0;padding:0}
+.kz span{display:inline-flex;align-items:center;min-height:44px;padding:10px 16px;border:1.5px solid var(--ant);background:var(--zand);font-size:15px;border-radius:999px;transition:background .15s,color .15s}
+.kz:hover span{background:var(--zand-d)}
+.kz input:checked+span{background:var(--ant);color:var(--zand)}
+.kz input:checked+span::before{content:"✓";margin-right:8px;color:var(--goud);font-weight:700}
+.kz input:focus-visible+span{outline:2px solid var(--goud);outline-offset:2px}

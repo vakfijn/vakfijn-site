@@ -152,15 +152,15 @@
 <input type="hidden" name="subject" value="Opname-aanvraag via vakfijn-afwerking.nl">
 <input type="hidden" name="from_name" value="Vakfijn website">
 <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
-<div class="row">
-<div class="field"><label for="dienst">Soort werk</label><select id="dienst" name="dienst"><option>Houtrotherstel / timmerwerk</option><option>Buitenschilderwerk</option><option>Binnengevelisolatie</option><option>Kitwerk</option><option>Anders</option></select></div>
-<div class="field"><label for="plaats">Plaats</label><input id="plaats" name="plaats" type="text" placeholder="Nijmegen" required></div>
-</div>
+<div class="field"><span class="flab">Waar gaat het om? <small>(meer mogelijk)</small></span><div class="keuzes" data-naam="dienst"><label class="kz"><input type="checkbox" name="kz-dienst" value="Houtrot / timmerwerk"><span>Houtrot / timmerwerk</span></label><label class="kz"><input type="checkbox" name="kz-dienst" value="Schilderwerk binnen"><span>Schilderwerk binnen</span></label><label class="kz"><input type="checkbox" name="kz-dienst" value="Buitenschilderwerk"><span>Buitenschilderwerk</span></label><label class="kz"><input type="checkbox" name="kz-dienst" value="Stucherstel"><span>Stucherstel</span></label><label class="kz"><input type="checkbox" name="kz-dienst" value="Isolatie dak"><span>Isolatie dak</span></label><label class="kz"><input type="checkbox" name="kz-dienst" value="Isolatie muur"><span>Isolatie muur</span></label><label class="kz"><input type="checkbox" name="kz-dienst" value="Kitwerk"><span>Kitwerk</span></label><label class="kz"><input type="checkbox" name="kz-dienst" value="Anders"><span>Anders</span></label></div><input type="hidden" name="dienst" value=""></div>
+<div class="field"><span class="flab">Wanneer?</span><div class="keuzes" data-naam="wanneer"><label class="kz"><input type="radio" name="kz-wanneer" value="Zo snel mogelijk"><span>Zo snel mogelijk</span></label><label class="kz"><input type="radio" name="kz-wanneer" value="Binnen 3 maanden"><span>Binnen 3 maanden</span></label><label class="kz"><input type="radio" name="kz-wanneer" value="Flexibel"><span>Flexibel</span></label></div><input type="hidden" name="wanneer" value=""></div>
 <div class="row">
 <div class="field"><label for="naam">Naam</label><input id="naam" name="naam" type="text" required></div>
 <div class="field"><label for="tel">Telefoon / WhatsApp</label><input id="tel" name="telefoon" type="tel" required></div>
 </div>
-<div class="field"><label for="bericht">Wat speelt er?</label><textarea id="bericht" name="bericht" rows="4" placeholder="Bijv. onderdorpel voordeur voelt zacht, verf bladdert."></textarea></div>
+<div class="field"><label for="plaats">Plaats</label><input id="plaats" name="plaats" type="text" placeholder="Nijmegen" required></div>
+<div class="field"><span class="flab">Hoe wil je contact?</span><div class="keuzes" data-naam="contact"><label class="kz"><input type="radio" name="kz-contact" value="WhatsApp" checked><span>WhatsApp</span></label><label class="kz"><input type="radio" name="kz-contact" value="Bellen"><span>Bellen</span></label></div><input type="hidden" name="contact" value="WhatsApp"></div>
+<div class="field"><label for="bericht">Wat speelt er? <small>(optioneel)</small></label><textarea id="bericht" name="bericht" rows="4" placeholder="Bijv. onderdorpel voordeur voelt zacht, verf bladdert."></textarea></div>
 <button class="btn btn-goud" type="submit" style="align-self:flex-start">Opname aanvragen</button>
 <div class="ok">Dank, je aanvraag is binnen. Je hoort binnen één werkdag van ons.</div>
 </form>
