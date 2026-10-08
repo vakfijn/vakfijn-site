@@ -246,8 +246,10 @@
     },
     acryl: {
       reinigenPerM: 0,        // zit in de all-in meterprijs
-      kitPerM: [              // all-in per meter, vast (geen staffel: veel meters = meer ladderwerk, niet sneller)
-        { tot: Infinity, prijs: 6.5 }
+      kitPerM: [              // all-in per meter, staffel
+        { tot: 10, prijs: 6 },
+        { tot: 25, prijs: 5.5 },
+        { tot: Infinity, prijs: 5 }
       ],
       meterPerKoker: 10,
       kokerStandaard: 10,     // wit
