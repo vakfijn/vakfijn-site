@@ -278,6 +278,15 @@
   var aantalOut = calc.querySelector('[data-aantal]');
   var meer = calc.querySelector('#meerkleur');
   function huidig() { return SOORT[soort.value] || SOORT['douche of bad']; }
+  // toeslag-optie (zelfde % arbeid), tekst per soort klus
+  var LASTIG = {
+    'douche of bad': ['Veel hoeken, nissen of krap (douchecabine, ombouw)', 'veel hoeken/nissen/krap'],
+    'keuken': ['Veel hoeken of slecht bereikbaar (hoekopstelling, nissen)', 'veel hoeken/slecht bereikbaar'],
+    'beglazing': ['Werken op hoogte (bovenramen, bovenverdieping, ladder)', 'werken op hoogte'],
+    'stucnaden': ['Werken op hoogte (trapgat, plafond boven 3 m)', 'werken op hoogte']
+  };
+  var lastigTxt = calc.querySelector('[data-lastig]');
+  function lastigInfo() { return LASTIG[soort.value] || LASTIG['douche of bad']; }
 
   function applySoort() {
     var c = huidig();
@@ -298,6 +307,7 @@
     calc.querySelector('[data-opt=drain]').hidden = (T.drainVast == null) || c.type !== 'siliconen' || soort.value !== 'douche of bad';
     calc.querySelector('[data-opt=goot]').hidden = soort.value !== 'douche of bad';
     calc.querySelector('[data-opt=hybride]').hidden = c.type !== 'acryl';
+    lastigTxt.textContent = lastigInfo()[0];
     hybride.checked = false;
     if (soort.value !== 'douche of bad') { drain.checked = false; goot.checked = false; }
     // oude kit verwijderen: standaard aan bij siliconen en beglazing, uit bij acryl
@@ -335,7 +345,7 @@
     if (T.drainVast != null && drain.checked) extras.push('RVS put meekitten');
     if (goot.checked) extras.push('douchegoot/Easydrain met speciale kit');
     if (hyb) extras.push('werkende naden met hybride kit');
-    if (lastig.checked) extras.push('veel hoeken/nissen/krap');
+    if (lastig.checked) extras.push(lastigInfo()[1]);
     var SOORTNAAM = { 'douche of bad': 'Douche of bad', 'keuken': 'Keuken', 'beglazing': 'Beglazing', 'stucnaden': 'Stucnaden en plinten' };
     var regels = [
       'Hallo Dennis, ik wil graag een vaste prijs voor kitwerk.',
