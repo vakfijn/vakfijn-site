@@ -220,6 +220,9 @@
     gootVast: 135,            // douchegoot / Easydrain: €55 arbeid + 1 speciale koker (€80 inkoop)
     spoedVast: 65,            // start binnen 3 werkdagen na akkoord, vast per klus
     lastigPct: 25,            // veel hoeken / nissen / krap: toeslag op de arbeid (afgestemd op offerte 2026-0036)
+    breedPct: 50,             // brede naden > 10 mm: toeslag op de arbeid per meter
+    breedKokerFactor: 2.5,    // brede naden: ca. 2,5x zoveel kit
+    breedRugPerM: 1,          // PE-rondsnoer (rugvulling), per meter
     siliconen: {
       reinigenPerM: 3,        // ontvetten / reinigen, per meter
       kitPerM: [              // arbeid kitten, staffel tot en met X meter
@@ -279,6 +282,7 @@
   var spoed = calc.querySelector('#spoed');
   var hybride = calc.querySelector('#hybride');
   var lastig = calc.querySelector('#lastig');
+  var breed = calc.querySelector('#breed');
   if (T.oudeKitPerM == null) calc.querySelector('[data-opt=oudekit]').hidden = true;
   if (T.drainVast == null) calc.querySelector('[data-opt=drain]').hidden = true;
   // labels tonen het meerbedrag zoals het in de richtprijs komt (incl. opslag en btw, afgerond op €5)
@@ -333,6 +337,7 @@
     hybride.checked = false;
     if (soort.value !== 'douche of bad') { drain.checked = false; goot.checked = false; }
     spoed.checked = false;
+    breed.checked = false;
     // oude kit verwijderen: standaard aan bij siliconen en beglazing, uit bij acryl
     oudekit.checked = c.type !== 'acryl';
   }
@@ -344,12 +349,13 @@
     var c = huidig(); var K = T[c.type];
     var perM = K.kitPerM.filter(function (t) { return m <= t.tot; })[0].prijs;
     var hyb = c.type === 'acryl' && hybride.checked;
-    var kokers = Math.max(1, Math.ceil(m / (hyb ? K.hybrideMeterPerKoker : K.meterPerKoker)));
+    var kokers = Math.max(1, Math.ceil(m * (breed.checked ? T.breedKokerFactor : 1) / (hyb ? K.hybrideMeterPerKoker : K.meterPerKoker)));
     var kleurExtra = !!kleurEl().getAttribute('data-extra');
     var materiaal = kokers * (hyb ? K.hybrideKoker : (kleurExtra ? K.kokerKleur : K.kokerStandaard));
     var oudePerM = K.oudeKitPerM != null ? K.oudeKitPerM : T.oudeKitPerM;
     var arbeid = K.reinigenPerM * m + perM * m + ((oudePerM != null && oudekit.checked) ? oudePerM * m : 0);
     if (lastig.checked) arbeid *= 1 + T.lastigPct / 100;
+    if (breed.checked) { arbeid *= 1 + T.breedPct / 100; arbeid += T.breedRugPerM * m; }
     var sub = arbeid + materiaal + T.voorrijkosten;
     if (T.drainVast != null && drain.checked) sub += T.drainVast;
     if (goot.checked) sub += T.gootVast;
@@ -371,6 +377,7 @@
     if (spoed.checked) extras.push('spoed: start binnen 3 werkdagen');
     if (hyb) extras.push('werkende naden met hybride kit');
     if (lastig.checked) extras.push(lastigInfo()[1]);
+    if (breed.checked) extras.push('brede naden > 10 mm (rugvulling)');
     var SOORTNAAM = { 'douche of bad': 'Douche of bad', 'keuken': 'Keuken', 'beglazing': 'Beglazing', 'stucnaden': 'Stucnaden en plinten' };
     var regels = [
       'Hallo Dennis, ik wil graag een vaste prijs voor kitwerk.',
@@ -402,6 +409,7 @@
   spoed.addEventListener('change', update);
   hybride.addEventListener('change', update);
   lastig.addEventListener('change', update);
+  breed.addEventListener('change', update);
   applySoort();
   update();
 })();
