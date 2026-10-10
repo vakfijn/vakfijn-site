@@ -370,3 +370,18 @@ label small,.flab small{font-weight:400;color:var(--grijs)}
 /* AV: modelformulier herroeping */
 .bijlage{border:1.5px dashed var(--lijn,#C9C1B3);padding:20px 24px;margin-top:32px}
 .bijlage .vul{display:block;border-bottom:1px solid var(--grijs);padding-top:26px;font-size:13px;color:var(--grijs)}
+/* uitklapbaar praktijkvoorbeeld (lichte achtergrond) */
+.praktijk{border:2px solid var(--ant);background:var(--zand)}
+.praktijk summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:24px 28px}
+.praktijk summary::-webkit-details-marker{display:none}
+.praktijk summary>span:first-child{display:flex;flex-direction:column}
+.praktijk .pk{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(22px,3vw,30px);letter-spacing:-.5px;line-height:1.1;color:var(--ant)}
+.praktijk .ps{font-size:15px;color:var(--grijs);margin-top:6px}
+.praktijk .pplus{flex-shrink:0;width:44px;height:44px;border-radius:50%;background:var(--ant);color:var(--goud);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:24px;transition:transform .25s}
+.praktijk[open] .pplus{transform:rotate(45deg)}
+.praktijk>.split{padding:0 28px 28px}
+.praktijk .feiten div{border-color:var(--lijn)}
+.praktijk .feiten dt{color:var(--goud-d)}
+.praktijk .feiten dd{color:var(--ant)}
+.praktijk p{color:var(--grijs)}
+@media(max-width:640px){.praktijk summary{padding:18px 18px}.praktijk>.split{padding:0 18px 20px}}
