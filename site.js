@@ -225,7 +225,7 @@
     breedRugPerM: 1,          // PE-rondsnoer (rugvulling), per meter
     siliconen: {
       reinigenPerM: 3,        // ontvetten / reinigen, per meter
-      kitPerM: [              // arbeid kitten, staffel tot en met X meter
+      kitPerM: [              // arbeid kitten, oplopende staffel: eerste 10 m, 10–20 m, daarboven
         { tot: 10, prijs: 10 },
         { tot: 20, prijs: 9 },
         { tot: Infinity, prijs: 8 }
@@ -355,13 +355,22 @@
   function update() {
     var m = Number(range.value);
     var c = huidig(); var K = T[c.type];
-    var perM = K.kitPerM.filter(function (t) { return m <= t.tot; })[0].prijs;
+    // oplopende staffel: elke meter tegen het tarief van zijn eigen schijf (geen sprongen)
+    function kitArbeid(meters) {
+      var tot = 0, vorige = 0;
+      K.kitPerM.forEach(function (t) {
+        var grens = Math.min(meters, t.tot);
+        if (grens > vorige) tot += (grens - vorige) * t.prijs;
+        vorige = Math.max(vorige, grens);
+      });
+      return tot;
+    }
     var hyb = c.type === 'acryl' && hybride.checked;
     var kokers = Math.max(1, Math.ceil(m * (breed.checked ? T.breedKokerFactor : 1) / (hyb ? K.hybrideMeterPerKoker : K.meterPerKoker)));
     var kleurExtra = !!kleurEl().getAttribute('data-extra');
     var materiaal = kokers * (hyb ? K.hybrideKoker : (kleurExtra ? K.kokerKleur : K.kokerStandaard));
     var oudePerM = K.oudeKitPerM != null ? K.oudeKitPerM : T.oudeKitPerM;
-    var arbeid = K.reinigenPerM * m + perM * m + ((oudePerM != null && oudekit.checked) ? oudePerM * m : 0);
+    var arbeid = K.reinigenPerM * m + kitArbeid(m) + ((oudePerM != null && oudekit.checked) ? oudePerM * m : 0);
     if (lastig.checked) arbeid *= 1 + T.lastigPct / 100;
     if (breed.checked) { arbeid *= 1 + T.breedPct / 100; arbeid += T.breedRugPerM * m; }
     var sub = arbeid + materiaal + T.voorrijkosten;
