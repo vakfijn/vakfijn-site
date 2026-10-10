@@ -220,7 +220,7 @@
     gootVast: 135,            // douchegoot / Easydrain: €55 arbeid + 1 speciale koker (€80 inkoop)
     spoedVast: 65,            // start binnen 3 werkdagen na akkoord, vast per klus
     lastigPct: 25,            // veel hoeken / nissen / krap: toeslag op de arbeid (afgestemd op offerte 2026-0036)
-    breedPct: 50,             // brede naden > 10 mm: toeslag op de arbeid per meter
+    breedPct: 15,             // brede naden > 10 mm: iets meer afstrijkwerk, toeslag op de arbeid
     breedKokerFactor: 2.5,    // brede naden: ca. 2,5x zoveel kit
     breedRugPerM: 1,          // PE-rondsnoer (rugvulling), per meter
     siliconen: {
