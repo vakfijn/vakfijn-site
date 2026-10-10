@@ -342,6 +342,14 @@
     oudekit.checked = c.type !== 'acryl';
   }
 
+  var extrasOut = calc.querySelector('[data-extras]');
+  var EXTRA_KORT = { drain: 'RVS put', goot: 'douchegoot', breed: 'brede naden', hybride: 'hybride kit', spoed: 'spoed' };
+  function extrasSamenvatting() {
+    var d = [];
+    Object.keys(EXTRA_KORT).forEach(function (k) { var el = calc.querySelector('#' + k); var wrap = calc.querySelector('[data-opt=' + k + ']'); if (el && el.checked && wrap && !wrap.hidden) d.push(EXTRA_KORT[k]); });
+    extrasOut.textContent = d.length ? '· ' + d.join(', ') : '';
+  }
+
   function fmt(n) { return n.toLocaleString('nl-NL'); }
 
   function update() {
@@ -367,6 +375,7 @@
     excl = Math.round(excl);
 
     mOut.textContent = m + ' m';
+    extrasSamenvatting();
     inclOut.textContent = '€ ' + fmt(incl);
     exclOut.textContent = '€ ' + fmt(excl) + ' excl. 21% btw · incl. ' + kokers + (kokers === 1 ? ' koker' : ' kokers') + ' kit en voorrijkosten';
 

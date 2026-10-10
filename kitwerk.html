@@ -142,14 +142,19 @@
 </details>
 </div>
 <div class="opts">
-<label class="chk" data-opt="lastig"><input type="checkbox" id="lastig"> <span data-lastig>Veel hoeken, nissen of krap (douchecabine, ombouw)</span></label>
 <label class="chk" data-opt="oudekit"><input type="checkbox" id="oudekit" checked> Oude kit zit er nog in en moet eruit</label>
-<label class="chk" data-opt="breed"><input type="checkbox" id="breed"> Brede naden, meer dan 10 mm (rugvulling, extra kit en arbeid)</label>
+<label class="chk" data-opt="lastig"><input type="checkbox" id="lastig"> <span data-lastig>Veel hoeken, nissen of krap (douchecabine, ombouw)</span></label>
+</div>
+<details class="meer" id="meerextra">
+<summary>Extra's en bijzonderheden <span class="gekozen" data-extras></span></summary>
+<div class="opts" style="padding:4px 14px 12px">
 <label class="chk" data-opt="drain"><input type="checkbox" id="drain"> RVS put meekitten (<span data-prijs="drainVast">+ ca. € 75</span>)</label>
-<label class="chk" data-opt="hybride"><input type="checkbox" id="hybride"> Werkende naden of scheuren: hybride kit, blijft elastisch (meerprijs)</label>
 <label class="chk" data-opt="goot"><input type="checkbox" id="goot"> Douchegoot / Easydrain met speciale kit (<span data-prijs="gootVast">+ ca. € 180</span>)</label>
+<label class="chk" data-opt="breed"><input type="checkbox" id="breed"> Brede naden, meer dan 10 mm (rugvulling, extra kit en arbeid)</label>
+<label class="chk" data-opt="hybride"><input type="checkbox" id="hybride"> Werkende naden of scheuren: hybride kit, blijft elastisch (meerprijs)</label>
 <label class="chk" data-opt="spoed"><input type="checkbox" id="spoed"> Binnen 3 werkdagen starten (<span data-prijs="spoedVast">+ ca. € 85</span>)</label>
 </div>
+</details>
 <div class="field">
 <div class="top"><label for="meters">Aantal strekkende meter</label><span class="m" data-m>8 m</span></div>
 <input id="meters" type="range" min="4" max="20" step="1" value="8">
@@ -251,6 +256,65 @@
 </g>
 </svg>
 </figure></div>
+</div>
+</details>
+<details class="praktijk" style="margin-top:16px">
+<summary><span><span class="label" style="margin-bottom:6px">Voorbeeld uit de praktijk · spoed</span><span class="pk">RVS putje opnieuw gekit, binnen 3 werkdagen.</span><span class="ps">Waarom een putje meer is dan vier randjes kit.</span></span><span class="pplus" aria-hidden="true">+</span></summary>
+<div class="split" style="align-items:center;padding-top:28px">
+<div>
+<h3 style="font-size:24px;margin-bottom:16px">Lekkage rond de put, douche moest snel weer bruikbaar.</h3>
+<p>De kit rond een vloerput laat vaak als eerste los: daar staat het water en werkt de tegelvloer. Hier was de naad tussen put en tegel breder dan 10 mm, dus eerst een rugvulling erin, anders hecht de kit op drie vlakken en scheurt hij opnieuw. Daarna sanitairsiliconen in de tegelkleur, strak afgestreken. Klaar in een ochtend, 24 uur niet douchen.</p>
+<dl class="feiten" style="grid-template-columns:repeat(2,minmax(0,1fr))">
+<div><dt>Wat</dt><dd>RVS vloerput, 4 zijden, brede naad</dd></div>
+<div><dt>Extra's</dt><dd>rugvulling, kit in kleur, spoed</dd></div>
+<div><dt>Doorlooptijd</dt><dd>akkoord op maandag, gekit op woensdag</dd></div>
+<div><dt>In de calculator</dt><dd>douche of bad · RVS put · brede naden · binnen 3 werkdagen</dd></div>
+</dl>
+</div>
+<figure class="schets">
+<svg viewBox="0 0 560 420" role="img" aria-label="Schematische doorsnede van een vloerput in een tegelvloer: brede naad met rugvulling en kit erbovenop">
+<defs>
+<pattern id="ppap" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="#F5F2EC" stroke-opacity=".06" stroke-width="1"/></pattern>
+<pattern id="phatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><path d="M0 0V8" stroke="#F5F2EC" stroke-opacity=".18" stroke-width="2"/></pattern>
+</defs>
+<rect width="560" height="420" fill="url(#ppap)"/>
+<!-- ondervloer -->
+<rect x="40" y="250" width="480" height="60" fill="url(#phatch)"/>
+<!-- tegels links en rechts -->
+<rect x="40" y="220" width="170" height="30" fill="#F5F2EC" fill-opacity=".16" stroke="#F5F2EC" stroke-opacity=".5" stroke-width="2"/>
+<rect x="350" y="220" width="170" height="30" fill="#F5F2EC" fill-opacity=".16" stroke="#F5F2EC" stroke-opacity=".5" stroke-width="2"/>
+<!-- RVS put (U-vorm) -->
+<path d="M228 220 V300 H332 V220" fill="#F5F2EC" fill-opacity=".06" stroke="#F5F2EC" stroke-opacity=".8" stroke-width="3"/>
+<path d="M228 220 H214 M332 220 H346" stroke="#F5F2EC" stroke-opacity=".8" stroke-width="3"/>
+<rect x="262" y="226" width="36" height="6" fill="#F5F2EC" fill-opacity=".5"/>
+<!-- rugvulling (rondsnoer) in de brede naad -->
+<circle cx="219" cy="241" r="7" fill="#F5F2EC" fill-opacity=".25" stroke="#F5F2EC" stroke-opacity=".6" stroke-width="1.5"/>
+<circle cx="341" cy="241" r="7" fill="#F5F2EC" fill-opacity=".25" stroke="#F5F2EC" stroke-opacity=".6" stroke-width="1.5"/>
+<!-- kit bovenop (goud, hol afgestreken) -->
+<path d="M210 222 Q219 236 228 222" fill="#D4A82C" stroke="#D4A82C" stroke-width="2"/>
+<path d="M332 222 Q341 236 350 222" fill="#D4A82C" stroke="#D4A82C" stroke-width="2"/>
+<!-- maatlijn breedte naad -->
+<path d="M210 196 H228" stroke="#D4A82C" stroke-width="1.5"/><path d="M210 190 V202 M228 190 V202" stroke="#D4A82C" stroke-width="1.5"/>
+<!-- uitvergroting rechts -->
+<g transform="translate(372 40)">
+<rect x="0" y="0" width="150" height="130" fill="#2C2A28" stroke="#F5F2EC" stroke-opacity=".3" stroke-width="1"/>
+<rect x="0" y="80" width="50" height="50" fill="#F5F2EC" fill-opacity=".16"/>
+<path d="M100 80 V130 M100 80 H150" fill="none" stroke="#F5F2EC" stroke-opacity=".8" stroke-width="3"/>
+<circle cx="75" cy="110" r="18" fill="#F5F2EC" fill-opacity=".25" stroke="#F5F2EC" stroke-opacity=".6" stroke-width="1.5"/>
+<path d="M50 84 Q75 118 100 84" fill="#D4A82C"/>
+</g>
+<path d="M219 232 L372 100" stroke="#F5F2EC" stroke-opacity=".3" stroke-width="1" stroke-dasharray="3 4"/>
+<!-- labels -->
+<g font-family="DM Mono, monospace" font-size="11" fill="#F5F2EC" fill-opacity=".75" letter-spacing="1">
+<text x="60" y="240">TEGEL</text><text x="258" y="285">RVS PUT</text><text x="60" y="290">ONDERVLOER</text>
+<text x="160" y="185" fill="#D4A82C" fill-opacity="1">NAAD &gt; 10 MM</text>
+</g>
+<g font-family="DM Mono, monospace" font-size="11" letter-spacing="1">
+<text x="40" y="350" fill="#D4A82C">■ SANITAIRKIT, HOL AFGESTREKEN</text>
+<text x="40" y="372" fill="#F5F2EC" fill-opacity=".6">○ RUGVULLING (RONDSNOER): KIT HECHT OP 2 VLAKKEN, NIET OP 3</text>
+</g>
+</svg>
+</figure>
 </div>
 </details>
 </div>
