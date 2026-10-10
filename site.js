@@ -218,6 +218,7 @@
     oudeKitPerM: 5,           // oude kit verwijderen, per meter — null = optie verborgen
     drainVast: 55,            // RVS put meekitten, vast per klus
     gootVast: 135,            // douchegoot / Easydrain: €55 arbeid + 1 speciale koker (€80 inkoop)
+    spoedVast: 65,            // start binnen 3 werkdagen na akkoord, vast per klus
     lastigPct: 25,            // veel hoeken / nissen / krap: toeslag op de arbeid (afgestemd op offerte 2026-0036)
     siliconen: {
       reinigenPerM: 3,        // ontvetten / reinigen, per meter
@@ -275,6 +276,7 @@
   var oudekit = calc.querySelector('#oudekit');
   var drain = calc.querySelector('#drain');
   var goot = calc.querySelector('#goot');
+  var spoed = calc.querySelector('#spoed');
   var hybride = calc.querySelector('#hybride');
   var lastig = calc.querySelector('#lastig');
   if (T.oudeKitPerM == null) calc.querySelector('[data-opt=oudekit]').hidden = true;
@@ -330,6 +332,7 @@
     lastigTxt.textContent = lastigInfo()[0];
     hybride.checked = false;
     if (soort.value !== 'douche of bad') { drain.checked = false; goot.checked = false; }
+    spoed.checked = false;
     // oude kit verwijderen: standaard aan bij siliconen en beglazing, uit bij acryl
     oudekit.checked = c.type !== 'acryl';
   }
@@ -350,6 +353,7 @@
     var sub = arbeid + materiaal + T.voorrijkosten;
     if (T.drainVast != null && drain.checked) sub += T.drainVast;
     if (goot.checked) sub += T.gootVast;
+    if (spoed.checked) sub += T.spoedVast;
     var excl = sub * (1 + T.opslagPct / 100);
     var incl = excl * (1 + T.btw);
     if (incl < c.minimum) { incl = c.minimum; excl = c.minimum / (1 + T.btw); }
@@ -364,6 +368,7 @@
     if (T.oudeKitPerM != null && oudekit.checked) extras.push('oude kit verwijderen');
     if (T.drainVast != null && drain.checked) extras.push('RVS put meekitten');
     if (goot.checked) extras.push('douchegoot/Easydrain met speciale kit');
+    if (spoed.checked) extras.push('spoed: start binnen 3 werkdagen');
     if (hyb) extras.push('werkende naden met hybride kit');
     if (lastig.checked) extras.push(lastigInfo()[1]);
     var SOORTNAAM = { 'douche of bad': 'Douche of bad', 'keuken': 'Keuken', 'beglazing': 'Beglazing', 'stucnaden': 'Stucnaden en plinten' };
@@ -394,6 +399,7 @@
   oudekit.addEventListener('change', update);
   drain.addEventListener('change', update);
   goot.addEventListener('change', update);
+  spoed.addEventListener('change', update);
   hybride.addEventListener('change', update);
   lastig.addEventListener('change', update);
   applySoort();
