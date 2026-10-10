@@ -205,10 +205,49 @@
 <div style="grid-column:1/-1"><dt>Zonder het vinkje 'veel hoeken'</dt><dd>ca. € 100 lager. Daarom vragen we altijd een overzichtsfoto: dan zien wij of het een gewone douchehoek is of een cabine met zestien naden.</dd></div>
 </dl>
 </div>
-<div class="gal" style="grid-template-columns:repeat(2,minmax(0,1fr));gap:12px">
-<figure><img decoding="async" width="1200" height="900" src="/images/kit-cabine-hoek-1.jpg" alt="Betegeld zitje in de douchecabine met oude, vervuilde kitnaden" loading="lazy"><figcaption style="color:var(--tekst-l)">Zitje: drie vlakken, zes naden</figcaption></figure>
-<figure><img decoding="async" width="900" height="1200" src="/images/kit-cabine-hoek-2.jpg" alt="Hoek tussen douchebak en wand met oude kit" loading="lazy"><figcaption style="color:var(--tekst-l)">Hoek op de douchebak, vóór het kitten</figcaption></figure>
-</div>
+<figure class="schets">
+<svg viewBox="0 0 560 420" role="img" aria-label="Schematisch bovenaanzicht van de douchecabine: douchebak in de hoek, glazen deur, betegeld zitje en alle kitnaden binnen en buiten">
+<defs>
+<pattern id="kpap" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0H0V20" fill="none" stroke="#F5F2EC" stroke-opacity=".06" stroke-width="1"/></pattern>
+<pattern id="ktegel" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M24 0H0V24" fill="none" stroke="#F5F2EC" stroke-opacity=".12" stroke-width="1"/></pattern>
+<pattern id="khatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><path d="M0 0V8" stroke="#F5F2EC" stroke-opacity=".18" stroke-width="2"/></pattern>
+</defs>
+<rect width="560" height="420" fill="url(#kpap)"/>
+<!-- wanden (dik) -->
+<rect x="60" y="40" width="14" height="340" fill="url(#khatch)"/>
+<rect x="60" y="40" width="440" height="14" fill="url(#khatch)"/>
+<!-- douchebak -->
+<rect x="74" y="54" width="230" height="230" fill="#F5F2EC" fill-opacity=".08" stroke="#F5F2EC" stroke-opacity=".5" stroke-width="2"/>
+<rect x="96" y="76" width="186" height="186" fill="none" stroke="#F5F2EC" stroke-opacity=".25" stroke-width="1.5"/>
+<circle cx="189" cy="169" r="9" fill="none" stroke="#F5F2EC" stroke-opacity=".5" stroke-width="1.5"/>
+<!-- zitje (betegeld) -->
+<rect x="74" y="284" width="130" height="60" fill="url(#ktegel)" stroke="#F5F2EC" stroke-opacity=".5" stroke-width="2"/>
+<!-- glazen wand + deur -->
+<line x1="304" y1="54" x2="304" y2="200" stroke="#F5F2EC" stroke-opacity=".7" stroke-width="3"/>
+<path d="M304 200 L370 258" stroke="#F5F2EC" stroke-opacity=".7" stroke-width="3"/>
+<path d="M304 200 A88 88 0 0 1 392 288" fill="none" stroke="#F5F2EC" stroke-opacity=".25" stroke-width="1" stroke-dasharray="3 4"/>
+<line x1="204" y1="284" x2="204" y2="344" stroke="#F5F2EC" stroke-opacity=".7" stroke-width="3"/>
+<!-- kitnaden (goud) -->
+<g stroke="#D4A82C" stroke-width="4" stroke-linecap="round" fill="none">
+<path d="M74 54 V284"/><path d="M74 54 H304"/>
+<path d="M74 284 H204"/><path d="M204 284 V344"/><path d="M74 344 H204"/>
+<path d="M304 54 V200"/><path d="M304 54 V284"/>
+<path d="M304 284 H74" stroke-dasharray="1 9"/>
+</g>
+<!-- labels -->
+<g font-family="DM Mono, monospace" font-size="11" fill="#F5F2EC" fill-opacity=".75" letter-spacing="1">
+<text x="110" y="166">DOUCHEBAK</text>
+<text x="84" y="320">ZITJE</text>
+<text x="330" y="140">GLAS</text>
+<text x="316" y="250">DEUR</text>
+</g>
+<g font-family="DM Mono, monospace" font-size="11" fill="#D4A82C" letter-spacing="1">
+<text x="340" y="330">— KITNAAD, BINNEN</text>
+<text x="340" y="352" fill-opacity=".9">···· KITNAAD, BUITENRAND</text>
+<text x="340" y="384" fill="#F5F2EC" fill-opacity=".6">13,5 M IN 16 STUKKEN</text>
+</g>
+</svg>
+</figure></div>
 </div>
 </section>
 
