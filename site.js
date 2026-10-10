@@ -386,7 +386,7 @@
     mOut.textContent = m + ' m';
     extrasSamenvatting();
     inclOut.textContent = '€ ' + fmt(incl);
-    exclOut.textContent = '€ ' + fmt(excl) + ' excl. 21% btw · incl. ' + kokers + (kokers === 1 ? ' koker' : ' kokers') + ' kit en voorrijkosten';
+    exclOut.textContent = '€ ' + fmt(excl) + ' excl. 21% btw · incl. materiaal en voorrijkosten';
 
     var extras = [];
     if (T.oudeKitPerM != null && oudekit.checked) extras.push('oude kit verwijderen');
