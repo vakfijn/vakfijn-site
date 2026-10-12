@@ -261,6 +261,19 @@
       hybrideKoker: 20,       // hybride (STP) kit voor werkende naden — AANNAME: 2× inkoop
       hybrideMeterPerKoker: 8,
       kleuren: 4
+    },
+    vloer: {                  // vloernaden PVC, laminaat, parket, trap — neutrale vloersiliconen (S125)
+      reinigenPerM: 0,        // zit in de meterprijs
+      kitPerM: [              // tussen acrylaat en sanitair: minder risico dan sanitair, wel primer en duurdere kit
+        { tot: 10, prijs: 6 },
+        { tot: 30, prijs: 5.5 },
+        { tot: Infinity, prijs: 5 }
+      ],
+      primerPerM: 0.5,        // primer op de vloerkant (PVC, laminaat): materiaal + handeling
+      meterPerKoker: 10,
+      kokerStandaard: 12.5,   // wit / sanitairgrijs / transparant
+      kokerKleur: 15,         // antraciet, zwart, crèmewit — AANNAME
+      kleuren: 3
     }
   };
 
@@ -269,7 +282,8 @@
     'douche of bad': { type: 'siliconen', min: 2, max: 40, start: 8,  minimum: 150, hint: 'Wastafel of toilet 2–3 m, douchehoek 4–6 m, met douchewand 11–14 m, complete badkamer 25–35 m' },
     'keuken':        { type: 'siliconen', min: 2, max: 16, start: 8,  minimum: 125, hint: 'Keukens doorgaans 6–12 m (aanrecht en spatwand)' },
     'beglazing':     { type: 'beglazing', min: 2, max: 50, start: 12, minimum: 125, hint: 'Per raam ca. 4–5 m, hele woning tot ca. 46 m' },
-    'stucnaden':     { type: 'acryl',     min: 3, max: 120, start: 20, minimum: 100, hint: 'Plinten en plafondnaden lopen snel op: een hele woning is al gauw 60–100 m' }
+    'stucnaden':     { type: 'acryl',     min: 3, max: 120, start: 20, minimum: 100, hint: 'Plinten en plafondnaden lopen snel op: een hele woning is al gauw 60–100 m' },
+    'vloer':         { type: 'vloer',     min: 3, max: 100, start: 25, minimum: 100, hint: 'Woonkamer 25–40 m langs de plinten, trap ca. 20–30 m (treden en stootborden)' }
   };
 
   var range = calc.querySelector('#meters');
@@ -283,6 +297,7 @@
   var hybride = calc.querySelector('#hybride');
   var lastig = calc.querySelector('#lastig');
   var breed = calc.querySelector('#breed');
+  var primer = calc.querySelector('#primer');
   if (T.oudeKitPerM == null) calc.querySelector('[data-opt=oudekit]').hidden = true;
   if (T.drainVast == null) calc.querySelector('[data-opt=drain]').hidden = true;
   // labels tonen het meerbedrag zoals het in de richtprijs komt (incl. opslag en btw, afgerond op €5)
@@ -309,7 +324,8 @@
     'douche of bad': ['Veel hoeken, nissen of krap (douchecabine, ombouw)', 'veel hoeken/nissen/krap'],
     'keuken': ['Veel hoeken of slecht bereikbaar (hoekopstelling, nissen)', 'veel hoeken/slecht bereikbaar'],
     'beglazing': ['Werken op hoogte (bovenramen, bovenverdieping, ladder)', 'werken op hoogte'],
-    'stucnaden': ['Werken op hoogte (trapgat, plafond boven 3 m)', 'werken op hoogte']
+    'stucnaden': ['Werken op hoogte (trapgat, plafond boven 3 m)', 'werken op hoogte'],
+    'vloer': ['Trap of veel korte stukken (treden, stootborden, deuropeningen)', 'trap/veel korte stukken']
   };
   var lastigTxt = calc.querySelector('[data-lastig]');
   function lastigInfo() { return LASTIG[soort.value] || LASTIG['douche of bad']; }
@@ -333,13 +349,15 @@
     calc.querySelector('[data-opt=drain]').hidden = (T.drainVast == null) || c.type !== 'siliconen' || soort.value !== 'douche of bad';
     calc.querySelector('[data-opt=goot]').hidden = soort.value !== 'douche of bad';
     calc.querySelector('[data-opt=hybride]').hidden = c.type !== 'acryl';
+    calc.querySelector('[data-opt=primer]').hidden = c.type !== 'vloer';
+    primer.checked = c.type === 'vloer';
     lastigTxt.textContent = lastigInfo()[0];
     hybride.checked = false;
     if (soort.value !== 'douche of bad') { drain.checked = false; goot.checked = false; }
     spoed.checked = false;
     breed.checked = false;
     // oude kit verwijderen: standaard aan bij siliconen en beglazing, uit bij acryl
-    oudekit.checked = c.type !== 'acryl';
+    oudekit.checked = c.type === 'siliconen' || c.type === 'beglazing';
   }
 
   var extrasOut = calc.querySelector('[data-extras]');
@@ -373,6 +391,7 @@
     var arbeid = K.reinigenPerM * m + kitArbeid(m) + ((oudePerM != null && oudekit.checked) ? oudePerM * m : 0);
     if (lastig.checked) arbeid *= 1 + T.lastigPct / 100;
     if (breed.checked) { arbeid *= 1 + T.breedPct / 100; arbeid += T.breedRugPerM * m; }
+    if (c.type === 'vloer' && primer.checked) arbeid += K.primerPerM * m;
     var sub = arbeid + materiaal + T.voorrijkosten;
     if (T.drainVast != null && drain.checked) sub += T.drainVast;
     if (goot.checked) sub += T.gootVast;
@@ -396,7 +415,8 @@
     if (hyb) extras.push('werkende naden met hybride kit');
     if (lastig.checked) extras.push(lastigInfo()[1]);
     if (breed.checked) extras.push('brede naden > 10 mm (rugvulling)');
-    var SOORTNAAM = { 'douche of bad': 'Douche of bad', 'keuken': 'Keuken', 'beglazing': 'Beglazing', 'stucnaden': 'Stucnaden en plinten' };
+    if (c.type === 'vloer' && primer.checked) extras.push('primer op de vloerkant');
+    var SOORTNAAM = { 'douche of bad': 'Douche of bad', 'keuken': 'Keuken', 'beglazing': 'Beglazing', 'stucnaden': 'Stucnaden en plinten', 'vloer': 'Vloernaden (PVC, laminaat, trap)' };
     var regels = [
       'Hallo Dennis, ik wil graag een vaste prijs voor kitwerk.',
       '',
@@ -428,6 +448,7 @@
   hybride.addEventListener('change', update);
   lastig.addEventListener('change', update);
   breed.addEventListener('change', update);
+  primer.addEventListener('change', update);
   applySoort();
   update();
 })();
