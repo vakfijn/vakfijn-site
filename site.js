@@ -271,7 +271,7 @@
       ],
       primerPerM: 0.5,        // primer op de vloerkant (PVC, laminaat): materiaal + handeling
       meterPerKoker: 10,
-      kokerStandaard: 12.5,   // wit / sanitairgrijs / transparant
+      kokerStandaard: 12.5,   // wit / transparant grijs / transparant
       kokerKleur: 15,         // andere kleur uit het S125-palet — AANNAME
       kleuren: 45
     }
