@@ -237,11 +237,11 @@
     },
     beglazing: {              // beglazingskit, één kleur
       reinigenPerM: 0,        // zit in oudeKitPerM (uitkrabben + ontvetten samen)
-      oudeKitPerM: 6.5,       // oude kit verwijderen én ontvetten, per meter
-      kitPerM: [
-        { tot: 10, prijs: 10 },
-        { tot: 20, prijs: 9 },
-        { tot: Infinity, prijs: 8 }
+      oudeKitPerM: 9.5,       // oude kit uitkrabben én ontvetten, per meter — het grootste deel van het werk bij renovatie
+      kitPerM: [              // nieuwe kit erin
+        { tot: 10, prijs: 7 },
+        { tot: 20, prijs: 6 },
+        { tot: Infinity, prijs: 5 }
       ],
       meterPerKoker: 8,
       kokerStandaard: 17.5,
@@ -272,7 +272,7 @@
         { tot: Infinity, prijs: 5 }
       ],
       primerPerM: 0.5,        // primer op de vloerkant (PVC, laminaat): materiaal + handeling
-      meterPerKoker: 10,
+      meterPerKoker: 8,       // kleine naad, maar verlies bij korte stukken (trap)
       kokerStandaard: 12.5,   // wit / transparant grijs / transparant
       kokerKleur: 15,         // andere kleur uit het S125-palet — AANNAME
       kleuren: 45
