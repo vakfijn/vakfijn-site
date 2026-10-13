@@ -233,9 +233,10 @@
         { tot: Infinity, prijs: 5 }
       ],
       meterPerKoker: 8,
-      kokerStandaard: 17.5,   // wit / lichtgrijs / transparant
-      kokerKleur: 20,         // andere kleur
-      kleuren: 27             // aantal meerprijs-kleuren in het palet
+      kokerStandaard: 17.5,   // S100 wit / lichtgrijs / transparant (inkoop lager dan S70, verkoop gelijk gehouden)
+      kokerKleur: 20,         // andere kleur uit het S100-palet
+      kokerNeutraal: 20,      // S70 neutraal: natuursteen, betonlook, RVS (ook in kleur € 20)
+      kleuren: 81             // aantal meerprijs-kleuren in het S100-palet
     },
     beglazing: {              // beglazingskit, één kleur
       reinigenPerM: 0,        // zit in oudeKitPerM (uitkrabben + ontvetten samen)
@@ -302,6 +303,7 @@
   var lastig = calc.querySelector('#lastig');
   var breed = calc.querySelector('#breed');
   var primer = calc.querySelector('#primer');
+  var natuursteen = calc.querySelector('#natuursteen');
   if (T.oudeKitPerM == null) calc.querySelector('[data-opt=oudekit]').hidden = true;
   if (T.drainVast == null) calc.querySelector('[data-opt=drain]').hidden = true;
   // labels tonen het meerbedrag zoals het in de richtprijs komt (incl. opslag en btw, afgerond op €5)
@@ -354,6 +356,8 @@
     calc.querySelector('[data-opt=goot]').hidden = soort.value !== 'douche of bad';
     calc.querySelector('[data-opt=hybride]').hidden = c.type !== 'acryl';
     calc.querySelector('[data-opt=primer]').hidden = c.type !== 'vloer';
+    calc.querySelector('[data-opt=natuursteen]').hidden = c.type !== 'siliconen';
+    natuursteen.checked = false;
     primer.checked = c.type === 'vloer';
     lastigTxt.textContent = lastigInfo()[0];
     hybride.checked = false;
@@ -390,7 +394,8 @@
     var hyb = c.type === 'acryl' && hybride.checked;
     var kokers = Math.max(1, Math.ceil(m * (breed.checked ? T.breedKokerFactor : 1) / (hyb ? K.hybrideMeterPerKoker : K.meterPerKoker)));
     var kleurExtra = !!kleurEl().getAttribute('data-extra');
-    var materiaal = kokers * (hyb ? K.hybrideKoker : (kleurExtra ? K.kokerKleur : K.kokerStandaard));
+    var neutraal = c.type === 'siliconen' && natuursteen.checked;
+    var materiaal = kokers * (hyb ? K.hybrideKoker : (neutraal ? Math.max(K.kokerNeutraal, kleurExtra ? K.kokerKleur : 0) : (kleurExtra ? K.kokerKleur : K.kokerStandaard)));
     var oudePerM = K.oudeKitPerM != null ? K.oudeKitPerM : T.oudeKitPerM;
     var arbeid = K.reinigenPerM * m + kitArbeid(m) + ((oudePerM != null && oudekit.checked) ? oudePerM * m : 0);
     if (lastig.checked) arbeid *= 1 + T.lastigPct / 100;
@@ -418,6 +423,7 @@
     if (goot.checked) extras.push('douchegoot/drain in 2poxy (3 jaar garantie)');
     if (spoed.checked) extras.push('spoed: start binnen 3 werkdagen');
     if (hyb) extras.push('werkende naden met hybride kit');
+    if (neutraal) extras.push('natuursteen/betonlook/RVS: neutrale kit');
     if (lastig.checked) extras.push(lastigInfo()[1]);
     if (breed.checked) extras.push('brede naden > 10 mm (rugvulling)');
     if (c.type === 'vloer' && primer.checked) extras.push('primer op de vloerkant');
@@ -454,6 +460,7 @@
   lastig.addEventListener('change', update);
   breed.addEventListener('change', update);
   primer.addEventListener('change', update);
+  natuursteen.addEventListener('change', update);
   applySoort();
   update();
 })();
