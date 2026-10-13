@@ -216,8 +216,10 @@
     opslagPct: 10,
     btw: 0.21,
     oudeKitPerM: 8,           // oude kit verwijderen, per meter — het grootste deel van de tijd bij renovatie; null = optie verborgen
-    drainVast: 55,            // RVS put meekitten, vast per klus
-    gootVast: 135,            // douchegoot / Easydrain: €55 arbeid + 1 speciale koker (€80 inkoop)
+    drainVast: 55,            // RVS put meekitten (siliconen), vast per klus bij renovatie: afplakken, flens uitkrabben, rugvulling, schuin afstrijken
+    drainNieuw: 30,           // zelfde zonder oude kit eruit (nieuwbouw)
+    gootVast: 155,            // douchegoot / drain met 2poxy (3 jaar garantie): €55 arbeid + koker €100 (inkoop €80 × 1,25)
+    gootNieuw: 130,           // zonder oude kit eruit: €30 arbeid + koker €100
     spoedVast: 65,            // start binnen 3 werkdagen na akkoord, vast per klus
     lastigPct: 25,            // veel hoeken / nissen / krap: toeslag op de arbeid (afgestemd op offerte 2026-0036)
     breedPct: 15,             // brede naden > 10 mm: iets meer afstrijkwerk, toeslag op de arbeid
@@ -395,8 +397,9 @@
     if (breed.checked) { arbeid *= 1 + T.breedPct / 100; arbeid += T.breedRugPerM * m; }
     if (c.type === 'vloer' && primer.checked) arbeid += K.primerPerM * m;
     var sub = arbeid + materiaal + T.voorrijkosten;
-    if (T.drainVast != null && drain.checked) sub += T.drainVast;
-    if (goot.checked) sub += T.gootVast;
+    var reno = T.oudeKitPerM != null && oudekit.checked;
+    if (T.drainVast != null && drain.checked) sub += reno ? T.drainVast : T.drainNieuw;
+    if (goot.checked) sub += reno ? T.gootVast : T.gootNieuw;
     if (spoed.checked) sub += T.spoedVast;
     var excl = sub * (1 + T.opslagPct / 100);
     var incl = excl * (1 + T.btw);
@@ -412,7 +415,7 @@
     var extras = [];
     if (T.oudeKitPerM != null && oudekit.checked) extras.push('oude kit verwijderen');
     if (T.drainVast != null && drain.checked) extras.push('RVS put meekitten');
-    if (goot.checked) extras.push('douchegoot/Easydrain met speciale kit');
+    if (goot.checked) extras.push('douchegoot/drain in 2poxy (3 jaar garantie)');
     if (spoed.checked) extras.push('spoed: start binnen 3 werkdagen');
     if (hyb) extras.push('werkende naden met hybride kit');
     if (lastig.checked) extras.push(lastigInfo()[1]);
