@@ -215,7 +215,7 @@
     voorrijkosten: 65,
     opslagPct: 10,
     btw: 0.21,
-    oudeKitPerM: 5,           // oude kit verwijderen, per meter — null = optie verborgen
+    oudeKitPerM: 8,           // oude kit verwijderen, per meter — het grootste deel van de tijd bij renovatie; null = optie verborgen
     drainVast: 55,            // RVS put meekitten, vast per klus
     gootVast: 135,            // douchegoot / Easydrain: €55 arbeid + 1 speciale koker (€80 inkoop)
     spoedVast: 65,            // start binnen 3 werkdagen na akkoord, vast per klus
@@ -225,10 +225,10 @@
     breedRugPerM: 1,          // PE-rondsnoer (rugvulling), per meter
     siliconen: {
       reinigenPerM: 3,        // ontvetten / reinigen, per meter
-      kitPerM: [              // arbeid kitten, oplopende staffel: eerste 10 m, 10–20 m, daarboven
-        { tot: 10, prijs: 10 },
-        { tot: 20, prijs: 9 },
-        { tot: Infinity, prijs: 8 }
+      kitPerM: [              // arbeid kitten (nieuwe kit erin), oplopende staffel: eerste 10 m, 10–20 m, daarboven
+        { tot: 10, prijs: 7 },
+        { tot: 20, prijs: 6 },
+        { tot: Infinity, prijs: 5 }
       ],
       meterPerKoker: 8,
       kokerStandaard: 17.5,   // wit / lichtgrijs / transparant
@@ -250,6 +250,7 @@
     },
     acryl: {
       reinigenPerM: 0,        // zit in de all-in meterprijs
+      oudeKitPerM: 5,         // oude kit verwijderen, per meter
       kitPerM: [              // all-in per meter, staffel
         { tot: 10, prijs: 6 },
         { tot: 25, prijs: 5.5 },
@@ -264,6 +265,7 @@
     },
     vloer: {                  // vloernaden PVC, laminaat, parket, trap — neutrale vloersiliconen (S125)
       reinigenPerM: 0,        // zit in de meterprijs
+      oudeKitPerM: 5,         // oude kit verwijderen, per meter
       kitPerM: [              // tussen acrylaat en sanitair: minder risico dan sanitair, wel primer en duurdere kit
         { tot: 10, prijs: 6 },
         { tot: 30, prijs: 5.5 },
