@@ -253,10 +253,10 @@
       reinigenPerM: 0,        // zit in de all-in meterprijs
       oudeKitPerM: 5,         // oude kit verwijderen, per meter
       kitPerM: [              // all-in per meter, oplopende staffel: grote meters zichtbaar goedkoper
-        { tot: 10, prijs: 6 },
-        { tot: 25, prijs: 5.5 },
-        { tot: 60, prijs: 4.5 },
-        { tot: Infinity, prijs: 4 }
+        { tot: 10, prijs: 5 },
+        { tot: 25, prijs: 4.5 },
+        { tot: 60, prijs: 4 },
+        { tot: Infinity, prijs: 3.5 }
       ],
       meterPerKoker: 10,
       kokerStandaard: 10,     // wit
