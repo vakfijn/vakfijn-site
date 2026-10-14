@@ -213,7 +213,7 @@
     voorrijkosten: 65,
     opslagPct: 10,
     btw: 0.21,
-    oudeKitPerM: 8,           // oude kit verwijderen, per meter — het grootste deel van de tijd bij renovatie; null = optie verborgen
+    oudeKitPerM: 9,           // oude kit verwijderen, per meter — het grootste deel van de tijd bij renovatie; null = optie verborgen
     drainVast: 55,            // RVS put meekitten (siliconen), vast per klus bij renovatie: afplakken, flens uitkrabben, rugvulling, schuin afstrijken
     drainNieuw: 30,           // zelfde zonder oude kit eruit (nieuwbouw)
     gootVast: 155,            // douchegoot / drain met 2poxy (3 jaar garantie): €55 arbeid + koker €100 (inkoop €80 × 1,25)
@@ -224,7 +224,7 @@
     breedKokerFactor: 2.5,    // brede naden: ca. 2,5x zoveel kit
     breedRugPerM: 1,          // PE-rondsnoer (rugvulling), per meter
     siliconen: {
-      reinigenPerM: 3,        // ontvetten / reinigen, per meter
+      reinigenPerM: 2,        // ontvetten / reinigen, per meter (nieuw tegelwerk: stof en cementsluier; bij renovatie zit het zware werk in oude kit eruit)
       kitPerM: [              // arbeid kitten (nieuwe kit erin), oplopende staffel: eerste 10 m, 10–20 m, daarboven
         { tot: 10, prijs: 7 },
         { tot: 20, prijs: 6 },
