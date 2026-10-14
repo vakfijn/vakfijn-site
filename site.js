@@ -231,7 +231,7 @@
         { tot: Infinity, prijs: 5 }
       ],
       meterPerKoker: 8,
-      kokerStandaard: 17.5,   // S100 wit / lichtgrijs / transparant (inkoop lager dan S70, verkoop gelijk gehouden)
+      kokerStandaard: 17.5,   // S100 wit / grijs / transparant (inkoop lager dan S70, verkoop gelijk gehouden)
       kokerKleur: 20,         // andere kleur uit het S100-palet
       kokerNeutraal: 20,      // S70 neutraal: natuursteen, betonlook, RVS (ook in kleur € 20)
       kleuren: 81             // aantal meerprijs-kleuren in het S100-palet
