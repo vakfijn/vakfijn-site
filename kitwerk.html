@@ -97,6 +97,7 @@
 </div>
 <div class="field">
 <span class="lbl">Kleur kit</span>
+<label class="chk" data-opt="natuursteen" style="margin:0 0 10px"><input type="checkbox" id="natuursteen"> Natuursteen, betonlook of RVS: neutrale kit, ander palet</label>
 <div class="swatches std" role="radiogroup" aria-label="Kleur kit">
 <label class="sw" data-type="beglazing" title="Wit"><input type="radio" name="kleur" value="wit"><span class="dot" style="background:#F4F3EF"></span><span class="nm">Wit<br><small>beglazingskit</small></span></label>
 <label class="sw" data-type="acryl" title="Wit C01"><input type="radio" name="kleur" value="wit (C01)"><span class="dot" style="background:#F4F3EF"></span><span class="nm">Wit<br><small>C01</small></span></label>
@@ -106,6 +107,13 @@
 <label class="sw" data-type="natuursteen" title="Wit C01"><input type="radio" name="kleur" value="wit (C01)"><span class="dot" style="background:#F4F3EF"></span><span class="nm">Wit<br><small>C01</small></span></label>
 <label class="sw" data-type="natuursteen" title="Lichtgrijs C38"><input type="radio" name="kleur" value="lichtgrijs (C38)"><span class="dot" style="background:#C9C8C4"></span><span class="nm">Lichtgrijs<br><small>C38</small></span></label>
 <label class="sw" data-type="natuursteen" title="Transparant C00"><input type="radio" name="kleur" value="transparant (C00)"><span class="dot" style="background:#fff;background-image:linear-gradient(45deg,#ddd 25%,transparent 25%,transparent 75%,#ddd 75%),linear-gradient(45deg,#ddd 25%,transparent 25%,transparent 75%,#ddd 75%);background-size:10px 10px;background-position:0 0,5px 5px"></span><span class="nm">Transparant<br><small>C00</small></span></label>
+<label class="sw" data-type="vloer" title="Wit"><input type="radio" name="kleur" value="wit (C01)"><span class="dot" style="background:#F4F3EF"></span><span class="nm">Wit<br><small>C01</small></span></label>
+<label class="sw" data-type="vloer" title="Transparant grijs C284"><input type="radio" name="kleur" value="transparant grijs (C284)"><span class="dot" style="background:#C5C5C2;background-image:linear-gradient(45deg,#a9a9a6 25%,transparent 25%,transparent 75%,#a9a9a6 75%),linear-gradient(45deg,#a9a9a6 25%,transparent 25%,transparent 75%,#a9a9a6 75%);background-size:10px 10px;background-position:0 0,5px 5px"></span><span class="nm">Transparant grijs<br><small>C284</small></span></label>
+<label class="sw" data-type="vloer" title="Transparant C00"><input type="radio" name="kleur" value="transparant (C00)"><span class="dot" style="background:#fff;background-image:linear-gradient(45deg,#ddd 25%,transparent 25%,transparent 75%,#ddd 75%),linear-gradient(45deg,#ddd 25%,transparent 25%,transparent 75%,#ddd 75%);background-size:10px 10px;background-position:0 0,5px 5px"></span><span class="nm">Transparant<br><small>C00</small></span></label>
+</div>
+<details class="meer" id="meerkleur">
+<summary>Andere kleur kiezen <span class="mono" data-aantal>meerprijs · 81 kleuren</span><span class="gekozen" data-gekozen></span></summary>
+<div class="swatches" role="radiogroup" aria-label="Andere kleuren">
 <label class="sw" data-type="natuursteen" title="Mat wit C6112"><input type="radio" name="kleur" value="mat wit (C6112)"><span class="dot" style="background:#EDECE8"></span><span class="nm">Mat wit<br><small>C6112</small></span></label>
 <label class="sw" data-type="natuursteen" title="Jasmijn C08"><input type="radio" name="kleur" value="jasmijn (C08)"><span class="dot" style="background:#EDE6D3"></span><span class="nm">Jasmijn<br><small>C08</small></span></label>
 <label class="sw" data-type="natuursteen" title="Pergamon C84"><input type="radio" name="kleur" value="pergamon (C84)"><span class="dot" style="background:#E8E2D2"></span><span class="nm">Pergamon<br><small>C84</small></span></label>
@@ -133,13 +141,6 @@
 <label class="sw" data-type="natuursteen" title="Galaxy C4720"><input type="radio" name="kleur" value="galaxy (C4720)"><span class="dot" style="background:#5B5F66"></span><span class="nm">Galaxy<br><small>C4720</small></span></label>
 <label class="sw" data-type="natuursteen" title="Adriablauw C990"><input type="radio" name="kleur" value="adriablauw (C990)"><span class="dot" style="background:#2E4A6B"></span><span class="nm">Adriablauw<br><small>C990</small></span></label>
 <label class="sw" data-type="natuursteen" title="Donkergroen C37"><input type="radio" name="kleur" value="donkergroen (C37)"><span class="dot" style="background:#2F4A3B"></span><span class="nm">Donkergroen<br><small>C37</small></span></label>
-<label class="sw" data-type="vloer" title="Wit"><input type="radio" name="kleur" value="wit (C01)"><span class="dot" style="background:#F4F3EF"></span><span class="nm">Wit<br><small>C01</small></span></label>
-<label class="sw" data-type="vloer" title="Transparant grijs C284"><input type="radio" name="kleur" value="transparant grijs (C284)"><span class="dot" style="background:#C5C5C2;background-image:linear-gradient(45deg,#a9a9a6 25%,transparent 25%,transparent 75%,#a9a9a6 75%),linear-gradient(45deg,#a9a9a6 25%,transparent 25%,transparent 75%,#a9a9a6 75%);background-size:10px 10px;background-position:0 0,5px 5px"></span><span class="nm">Transparant grijs<br><small>C284</small></span></label>
-<label class="sw" data-type="vloer" title="Transparant C00"><input type="radio" name="kleur" value="transparant (C00)"><span class="dot" style="background:#fff;background-image:linear-gradient(45deg,#ddd 25%,transparent 25%,transparent 75%,#ddd 75%),linear-gradient(45deg,#ddd 25%,transparent 25%,transparent 75%,#ddd 75%);background-size:10px 10px;background-position:0 0,5px 5px"></span><span class="nm">Transparant<br><small>C00</small></span></label>
-</div>
-<details class="meer" id="meerkleur">
-<summary>Andere kleur kiezen <span class="mono" data-aantal>meerprijs · 81 kleuren</span><span class="gekozen" data-gekozen></span></summary>
-<div class="swatches" role="radiogroup" aria-label="Andere kleuren">
 <label class="sw" data-type="vloer" title="Alu C14 · meerprijs"><input type="radio" name="kleur" value="alu (C14)" data-extra="1"><span class="dot" style="background:#A8ABAE"></span><span class="nm">Alu<br><small>C14 · +</small></span></label>
 <label class="sw" data-type="vloer" title="Antraciet C376 · meerprijs"><input type="radio" name="kleur" value="antraciet (C376)" data-extra="1"><span class="dot" style="background:#3A3A39"></span><span class="nm">Antraciet<br><small>C376 · +</small></span></label>
 <label class="sw" data-type="vloer" title="Antracietgrijs C137 · meerprijs"><input type="radio" name="kleur" value="antracietgrijs (C137)" data-extra="1"><span class="dot" style="background:#4A4A48"></span><span class="nm">Antracietgrijs<br><small>C137 · +</small></span></label>
@@ -277,7 +278,6 @@
 <div class="opts">
 <label class="chk" data-opt="oudekit"><input type="checkbox" id="oudekit" checked> Renovatie: oude kit eruit en naad schoonmaken (nieuwbouw: uitvinken)</label>
 <label class="chk" data-opt="lastig"><input type="checkbox" id="lastig"> <span data-lastig>Veel hoeken, nissen of krap (douchecabine, ombouw)</span></label>
-<label class="chk" data-opt="natuursteen"><input type="checkbox" id="natuursteen"> Natuursteen, betonlook of RVS (neutrale kit, kleine meerprijs per koker)</label>
 <label class="chk" data-opt="primer" hidden><input type="checkbox" id="primer"> Primer op de vloerkant (bij PVC en laminaat nodig voor hechting)</label>
 </div>
 <details class="meer" id="meerextra">
