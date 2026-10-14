@@ -112,6 +112,7 @@
       extraRitten: { goed: 0, nieuw: 1, herstel: 2 },   // droogtijd: voorstrijk moet drogen (+1), pleisterherstel én voorstrijk (+2)
       lakStaffel: [{ vanaf: 1800, korting: 0.15 }, { vanaf: 900, korting: 0.10 }],   // meeschalen: groter lakwerk goedkoper per onderdeel
       lastigPct: 15,             // lastige ruimte (trapgat, schuine wanden, veel hoeken): toeslag op sauswerk
+      mengkleur: 35,             // per op maat gemengde muur-/plafondverf: aangemaakte emmer is niet terug te brengen; restant blijft bij de klant
       onderhoudFactor: 0.65,     // onderhoudslaag (1 laag) = 65% van de 2-lagenprijs, voor sauswerk en lakwerk
       btwLaag: 0.09, btwHoog: 0.21
     };
@@ -139,6 +140,8 @@
       post(n('s-muur') * S.muur[mk] * f * lf, 'Muren sauzen ' + n('s-muur') + ' m² (' + MK[mk] + ')' + lagen);
       post(n('s-muur') * S.ondergrond[og], og === 'nieuw' ? 'Voorstrijken nieuw stucwerk' : 'Stuc herstellen en voorstrijken');
       post(n('s-plafond') * S.plafond[pk] * f * lf, 'Plafond sauzen ' + n('s-plafond') + ' m² (' + PK[pk] + ')' + lagen);
+      var mengkleuren = (n('s-muur') > 0 && mk !== 'licht' && !muurOnderhoud ? 1 : 0) + (n('s-plafond') > 0 && pk !== 'wit' && !muurOnderhoud ? 1 : 0);
+      post(mengkleuren * S.mengkleur, 'Verf op kleur gemengd: ' + mengkleuren + ' kleur(en), restant blijft bij jou voor bijwerken');
       post(n('s-gaten') * S.gatenRuimte, 'Gaten vullen: ' + n('s-gaten') + ' ruimte(s)');
       post(n('s-scheur') * S.scheurM, 'Haarscheuren: ' + n('s-scheur') + ' m');
       post(n('s-schade') * S.schadePlek, 'Herstelplekken: ' + n('s-schade'));
