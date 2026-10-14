@@ -96,14 +96,14 @@
       plafond: { wit: 22, kleur: 24, donker: 26 },               // per m², reinigen, schuren, 2 lagen (markt 2026: € 12–24 incl. btw)
       gatenRuimte: 45, scheurM: 8, schadePlek: 145,              // stucherstel losse posten
       // lakwerk: prijs per laag, incl. voorbereiding en materiaal
-      lagen: { compleet: 3, standaard: 2, onderhoud: 1 },   // primer + 2 lak / 2 lak / 1 laag
-      deurZijdeLaag: { vlak: 40, panelen: 55 },   // binnendeur per zijde per laag
-      voordeurLaag: 150,         // voordeur binnenzijde met raam en lijsten, per laag (offerte 2026-0042)
+      lagen: { compleet: 2.7, standaard: 2, onderhoud: 1 },   // primer + 2 lak (primer telt 0,7: sneller dan een aflak) / 2 lak / 1 laag
+      deurZijdeLaag: { vlak: 35, panelen: 48 },   // binnendeur per zijde per laag
+      voordeurLaag: 120,         // voordeur binnenzijde met raam en lijsten, per laag
       raamLaag: 65,              // binnenraam / dagraam per laag
-      kozijnMLaag: 15,           // per strekkende meter per laag (kozijn ca. 5 m = €75/laag)
+      kozijnMLaag: 12,           // per strekkende meter per laag (kozijn ca. 5 m = €60/laag)
       vensterbankMLaag: 18,      // per meter per laag
       plintMLaag: { laag: 4, hoog: 6, profiel: 8 },   // per meter per laag, naar hoogte
-      radiatorLaag: 32,          // per radiator per laag
+      radiatorLaag: 40,          // per radiator per laag
       lakKleur: { wit: 0, kleur: 0.10, wissel: 0.15 },      // toeslag op lakwerk: andere kleur +10%, kleurwissel +15%
       lakGlans: { zijdeglans: 0, mat: 0.10, hoogglans: 0.15 },
       opstart: [{ tot: 30, prijs: 60 }, { tot: 60, prijs: 120 }, { tot: Infinity, prijs: 175 }],  // afplakken/afdekken/opruimen, naar m²
