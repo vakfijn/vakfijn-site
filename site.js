@@ -91,9 +91,9 @@
   var sc = document.getElementById('schildercalc');
   if (sc) {
     var S = {  // prijzen excl. btw, incl. materiaal en arbeid — afgestemd op offertes 2026-0019 en 2026-0038
-      muur: { licht: 21, nieuw: 23, donker: 25 },                // per m², 2 lagen
+      muur: { licht: 16, nieuw: 18, donker: 20 },                // per m², 2 lagen, incl. verf (markt 2026: € 10–22 incl. btw)
       ondergrond: { goed: 0, nieuw: 5, herstel: 21.5 },          // per m² muur: voorstrijk €5, herstel + voorstrijk €16,50 + €5
-      plafond: { wit: 31, kleur: 33, donker: 35 },               // per m², reinigen, schuren, 2 lagen
+      plafond: { wit: 22, kleur: 24, donker: 26 },               // per m², reinigen, schuren, 2 lagen (markt 2026: € 12–24 incl. btw)
       gatenRuimte: 45, scheurM: 8, schadePlek: 145,              // stucherstel losse posten
       // lakwerk: prijs per laag, incl. voorbereiding en materiaal
       lagen: { compleet: 3, standaard: 2, onderhoud: 1 },   // primer + 2 lak / 2 lak / 1 laag
@@ -104,13 +104,11 @@
       vensterbankMLaag: 18,      // per meter per laag
       plintMLaag: { laag: 4, hoog: 6, profiel: 8 },   // per meter per laag, naar hoogte
       radiatorLaag: 32,          // per radiator per laag
-      trapLaag: 500,             // trap zonder treden, per laag (3 lagen = vanaf €1.500)
-      tredenLaag: 120,           // traptreden per laag; om en om, dus 2 werkdagen per laag (stelpost €350 / 3)
       lakKleur: { wit: 0, kleur: 0.10, wissel: 0.15 },      // toeslag op lakwerk: andere kleur +10%, kleurwissel +15%
       lakGlans: { zijdeglans: 0, mat: 0.10, hoogglans: 0.15 },
       opstart: [{ tot: 30, prijs: 60 }, { tot: 60, prijs: 120 }, { tot: Infinity, prijs: 175 }],  // afplakken/afdekken/opruimen, naar m²
       ritPrijs: 65,              // voorrijkosten per werkdag
-      werkPerDag: 450,           // ritten = ceil(werk / 450), minimaal 1
+      werkPerDag: 550,           // ritten = ceil(werk / 550), minimaal 1: een dag sauzen is één werkmoment
       extraRitten: { goed: 0, nieuw: 1, herstel: 2 },   // droogtijd: voorstrijk moet drogen (+1), pleisterherstel én voorstrijk (+2)
       lakStaffel: [{ vanaf: 1800, korting: 0.15 }, { vanaf: 900, korting: 0.10 }],   // meeschalen: groter lakwerk goedkoper per onderdeel
       lastigPct: 15,             // lastige ruimte (trapgat, schuine wanden, veel hoeken): toeslag op sauswerk
@@ -147,7 +145,7 @@
       // lakwerk: per laag, met kleur- en glanstoeslag over het lakwerk
       var lagen = S.lagen[lakAfw], lk = g('s-lakkleur').value, gl = g('s-glans').value;
       var lak = n('s-deur') * S.deurZijdeLaag[g('s-deurtype').value] + n('s-voordeur') * S.voordeurLaag + n('s-raam') * S.raamLaag + n('s-kozijn') * S.kozijnMLaag + n('s-vensterbank') * S.vensterbankMLaag +
-                n('s-plint') * S.plintMLaag[g('s-plinttype').value] + n('s-radiator') * S.radiatorLaag + n('s-trap') * S.trapLaag + n('s-treden') * S.tredenLaag;
+                n('s-plint') * S.plintMLaag[g('s-plinttype').value] + n('s-radiator') * S.radiatorLaag;
       lak = lak * lagen;
       var lakToeslag = lak * (S.lakKleur[lk] + S.lakGlans[gl]);
       var korting = 0;
@@ -160,8 +158,6 @@
         if (n('s-vensterbank')) regels.push('• Vensterbanken: ' + n('s-vensterbank') + ' m');
         if (n('s-plint')) regels.push('• Plinten: ' + n('s-plint') + ' m, ' + g('s-plinttype').options[g('s-plinttype').selectedIndex].text.toLowerCase());
         if (n('s-radiator')) regels.push('• Radiatoren: ' + n('s-radiator'));
-        if (n('s-trap')) regels.push('• Trap zonder treden: ' + n('s-trap'));
-        if (n('s-treden')) regels.push('• Traptreden (om en om): ' + n('s-treden') + ' trap(pen)');
         regels.push('• Lak: ' + g('s-lakkleur').options[g('s-lakkleur').selectedIndex].text.toLowerCase() + ', ' + gl);
         if (korting) regels.push('• Staffelkorting lakwerk: ' + Math.round(korting * 100) + '%');
         werk += (lak + lakToeslag) * (1 - korting);
@@ -174,7 +170,7 @@
       // samenvatting in de ingeklapte balken
       var KORT = { 's-muur': ['m² muur', 'm² muur'], 's-plafond': ['m² plafond', 'm² plafond'], 's-gaten': ['ruimte', 'ruimtes'], 's-scheur': ['m scheur', 'm scheuren'], 's-schade': ['plek', 'plekken'],
         's-deur': ['deurzijde', 'deurzijden'], 's-raam': ['raam', 'ramen'], 's-voordeur': ['voordeur', 'voordeuren'], 's-kozijn': ['m kozijn', 'm kozijn'],
-        's-vensterbank': ['m vensterbank', 'm vensterbank'], 's-plint': ['m plint', 'm plinten'], 's-radiator': ['radiator', 'radiatoren'], 's-trap': ['trap', 'trappen'], 's-treden': ['trap treden', 'trappen treden'] };
+        's-vensterbank': ['m vensterbank', 'm vensterbank'], 's-plint': ['m plint', 'm plinten'], 's-radiator': ['radiator', 'radiatoren'] };
       sc.querySelectorAll('details.cdet').forEach(function (d) {
         var delen = [];
         d.querySelectorAll('input[type=number]').forEach(function (inp) {
@@ -189,7 +185,6 @@
       var opstart = S.opstart.filter(function (t) { return m2 <= t.tot; })[0].prijs;
       var ritten = Math.max(1, Math.ceil(werk / S.werkPerDag));
       if (n('s-muur') > 0 && !muurOnderhoud) ritten += S.extraRitten[og];   // terugkomen na drogen van stuc / voorstrijk
-      if (n('s-treden') > 0) ritten = Math.max(ritten, 2 * lagen);   // treden om en om: twee werkdagen per laag
       var excl = werk + opstart + ritten * S.ritPrijs;
       var note = 'incl. opstart (afplakken, afdekken, opruimen) en voorrijkosten voor ' + ritten + (ritten === 1 ? ' werkmoment' : ' werkmomenten') + ((n('s-muur') > 0 && !muurOnderhoud && S.extraRitten[og]) ? ' (incl. droogtijd stuc/voorstrijk)' : '');
       var btw = g('s-oud').checked ? S.btwLaag : S.btwHoog;
