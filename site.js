@@ -264,6 +264,7 @@
       hybrideMeterPerKoker: 8,
       kleuren: 4
     },
+    natuursteen: { kleuren: 27 },   // S70-palet (neutraal): alle kleuren € 20 per koker, zie kokerNeutraal
     vloer: {                  // vloernaden PVC, laminaat, parket, trap — neutrale vloersiliconen (S125)
       reinigenPerM: 0,        // zit in de meterprijs
       oudeKitPerM: 5,         // oude kit verwijderen, per meter
@@ -334,21 +335,24 @@
   var lastigTxt = calc.querySelector('[data-lastig]');
   function lastigInfo() { return LASTIG[soort.value] || LASTIG['douche of bad']; }
 
+  // kleurstalen van één palet tonen en terug naar de eerste (standaard)kleur
+  function showPalet(type) {
+    calc.querySelectorAll('.sw').forEach(function (l) { l.hidden = l.getAttribute('data-type') !== type; });
+    var eerste = calc.querySelector('.sw[data-type=' + type + '] input');
+    if (eerste) eerste.checked = true;
+    gekozen.textContent = '';
+    meer.open = false;
+    var k = T[type].kleuren;
+    aantalOut.textContent = (type === 'natuursteen' ? 'neutrale kit · ' : 'meerprijs · ') + k + (k === 1 ? ' kleur' : ' kleuren');
+    meer.hidden = k === 0;
+  }
   function applySoort() {
     var c = huidig();
     range.min = c.min; range.max = c.max; range.value = c.start;
     minOut.textContent = c.min + ' m';
     maxOut.textContent = c.max + ' m';
     hintOut.textContent = c.hint;
-    // alleen de kleurstalen van dit kittype tonen; terug naar de standaardkleur
-    calc.querySelectorAll('.sw').forEach(function (l) { l.hidden = l.getAttribute('data-type') !== c.type; });
-    var eerste = calc.querySelector('.sw[data-type=' + c.type + '] input');
-    if (eerste) eerste.checked = true;
-    gekozen.textContent = '';
-    meer.open = false;
-    aantalOut.textContent = 'meerprijs · ' + T[c.type].kleuren + (T[c.type].kleuren === 1 ? ' kleur' : ' kleuren');
-    // geen keuze? dan de uitklapbalk verbergen
-    meer.hidden = T[c.type].kleuren === 0;
+    showPalet(c.type);
     // drain/put alleen zinvol bij douche of bad
     calc.querySelector('[data-opt=drain]').hidden = (T.drainVast == null) || c.type !== 'siliconen' || soort.value !== 'douche of bad';
     calc.querySelector('[data-opt=goot]').hidden = soort.value !== 'douche of bad';
@@ -458,7 +462,7 @@
   lastig.addEventListener('change', update);
   breed.addEventListener('change', update);
   primer.addEventListener('change', update);
-  natuursteen.addEventListener('change', update);
+  natuursteen.addEventListener('change', function () { showPalet(natuursteen.checked ? 'natuursteen' : huidig().type); update(); });
   applySoort();
   update();
 })();
