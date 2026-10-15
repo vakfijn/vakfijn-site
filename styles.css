@@ -270,6 +270,14 @@ footer{view-transition-name:footer}
 .cdet summary{flex-wrap:wrap}
 .cdet .crow{padding:2px 0}
 
+/* uitklapmenu */
+.dd{position:relative;display:flex;align-items:center}
+.dd>a::after{content:"";display:inline-block;width:6px;height:6px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg);margin:0 0 3px 7px;opacity:.7}
+.ddm{position:absolute;top:100%;left:-14px;min-width:200px;background:var(--ant);border:1px solid var(--lijn-d);padding:6px 0;display:none;z-index:30}
+.ddm a{display:block;padding:10px 16px;white-space:nowrap}
+.dd:hover .ddm,.dd:focus-within .ddm{display:block}
+@media(max-width:640px){.dd{display:contents}.dd>a::after{display:none}.ddm,.dd:hover .ddm,.dd:focus-within .ddm{display:none}}
+
 /* footer */
 footer{background:var(--ant);color:var(--tekst-l);padding:56px 0 28px;font-size:14px;line-height:1.7}
 .fgrid{display:grid;grid-template-columns:1.4fr 1fr 1.4fr;gap:40px}
