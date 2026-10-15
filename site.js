@@ -227,8 +227,8 @@
       reinigenPerM: 2,        // ontvetten / reinigen, per meter (nieuw tegelwerk: stof en cementsluier; bij renovatie zit het zware werk in oude kit eruit)
       kitPerM: [              // arbeid kitten (nieuwe kit erin), oplopende staffel: eerste 10 m, 10–20 m, daarboven
         { tot: 10, prijs: 7 },
-        { tot: 20, prijs: 6 },
-        { tot: Infinity, prijs: 5 }
+        { tot: 20, prijs: 4.5 },
+        { tot: Infinity, prijs: 3.5 }
       ],
       meterPerKoker: 8,
       kokerStandaard: 17.5,   // S100 wit / grijs / transparant (inkoop lager dan S70, verkoop gelijk gehouden)
@@ -241,8 +241,8 @@
       oudeKitPerM: 9.5,       // oude kit uitkrabben én ontvetten, per meter — het grootste deel van het werk bij renovatie
       kitPerM: [              // nieuwe kit erin
         { tot: 10, prijs: 7 },
-        { tot: 20, prijs: 6 },
-        { tot: Infinity, prijs: 5 }
+        { tot: 20, prijs: 4.5 },
+        { tot: Infinity, prijs: 3.5 }
       ],
       meterPerKoker: 8,
       kokerStandaard: 17.5,
