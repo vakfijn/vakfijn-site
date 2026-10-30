@@ -238,7 +238,7 @@
     },
     beglazing: {              // beglazingskit, één kleur
       reinigenPerM: 0,        // zit in oudeKitPerM (uitkrabben + ontvetten samen)
-      oudeKitPerM: 12,        // oude, verharde kit uitsnijden én ontvetten, per meter — verreweg het meeste werk bij renovatie
+      oudeKitPerM: 10,        // oude, verharde kit uitsnijden én ontvetten, per meter — verreweg het meeste werk bij renovatie (offerte: boven 50 m € 8/m)
       kitPerM: [              // nieuwe kit erin: rechte, goed bereikbare naden
         { tot: 10, prijs: 5 },
         { tot: 20, prijs: 4 },
