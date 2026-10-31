@@ -271,6 +271,10 @@ footer{view-transition-name:footer}
 .cdet summary{flex-wrap:wrap}
 .cdet .crow{padding:2px 0}
 
+/* stappen onder calculator */
+.route{list-style:none;margin:18px 0 0;padding:14px 0 0;border-top:1px solid var(--lijn-d);display:flex;flex-wrap:wrap;gap:6px 22px;font-size:13.5px;color:var(--tekst-l)}
+.route b{font-family:'DM Mono',monospace;color:var(--goud);font-weight:500;margin-right:6px}
+
 /* uitgelichte kaart */
 .card.kacc{outline:2px solid var(--goud);outline-offset:-2px}
 

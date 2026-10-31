@@ -1,6 +1,6 @@
 # vakfijn-site
 
-Statische site van Vakfijn (kitwerk, schilderwerk, timmerwerk, isolatie). Geen build-stap: HTML + CSS + JS, gehost op Vercel.
+Statische site van Vakfijn, kitbedrijf in Elst (Nijmegen/Arnhem); schilder-, timmer- en isolatiewerk als nevendiensten. Geen build-stap: HTML + CSS + JS, gehost op Vercel.
 
 ## Invullen voor livegang
 Zoek en vervang in alle .html-bestanden:
