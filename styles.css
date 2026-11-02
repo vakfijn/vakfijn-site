@@ -414,3 +414,16 @@ label small,.flab small{font-weight:400;color:var(--grijs)}
 .reviewbar .dot-sep{color:#8E887E}
 .reviewbar .pijl{font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.5px;color:#6B655D;margin-left:6px}
 .reviewbar a:hover .pijl{color:var(--goud)}
+
+/* galerij-carrousel met tik-voor-info */
+.gal.carrousel figure{cursor:pointer;position:relative}
+.gal.carrousel .gtit{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.gal.carrousel .gplus{font-family:'IBM Plex Mono',monospace;font-weight:500;color:var(--goud-d);font-size:16px;transition:transform .2s}
+.gal.carrousel figure.open .gplus{transform:rotate(45deg)}
+.gal.carrousel .ginfo{display:none;margin-top:6px;font-size:14.5px;line-height:1.55;color:var(--grijs)}
+.gal.carrousel figure.open .ginfo{display:block}
+@media(max-width:720px){
+.gal.carrousel{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;margin-left:-20px;margin-right:-20px;padding:0 20px 8px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.gal.carrousel::-webkit-scrollbar{display:none}
+.gal.carrousel figure{flex:0 0 80%;scroll-snap-align:center}
+}

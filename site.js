@@ -467,3 +467,10 @@
   applySoort();
   update();
 })();
+
+/* galerij: tik voor info */
+document.querySelectorAll('.gal.carrousel figure').forEach(function (f) {
+  function toggle() { f.classList.toggle('open'); }
+  f.addEventListener('click', toggle);
+  f.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
+});
