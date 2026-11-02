@@ -427,3 +427,15 @@ label small,.flab small{font-weight:400;color:var(--grijs)}
 .gal.carrousel::-webkit-scrollbar{display:none}
 .gal.carrousel figure{flex:0 0 80%;scroll-snap-align:center}
 }
+
+/* hover-animatie menu en kitkaarten */
+.menu a:not(.btn){position:relative}
+.menu a:not(.btn)::after{content:"";position:absolute;left:0;right:0;bottom:6px;height:2px;background:var(--goud);transform:scaleX(0);transform-origin:left;transition:transform .25s ease}
+.menu a:not(.btn):hover::after,.menu a:not(.btn):focus-visible::after{transform:scaleX(1)}
+.menu a:not(.btn){transition:color .2s}
+.menu a:not(.btn):hover{color:var(--goud)}
+a.card{transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
+a.card:hover{transform:translateY(-4px);box-shadow:0 10px 28px rgba(44,42,40,.12);border-color:var(--goud-d)}
+a.card .more{transition:letter-spacing .25s ease}
+a.card:hover .more{letter-spacing:.5px}
+@media (prefers-reduced-motion:reduce){.menu a::after,a.card,a.card .more{transition:none}a.card:hover{transform:none}}
