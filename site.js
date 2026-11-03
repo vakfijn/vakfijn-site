@@ -238,9 +238,10 @@
     },
     beglazing: {              // beglazingskit, één kleur
       reinigenPerM: 0,        // zit in oudeKitPerM (uitkrabben + ontvetten samen)
-      oudeKitPerM: [          // oude, verharde kit uitsnijden én ontvetten — verreweg het meeste werk; staffel om met schilders te concurreren op middelgrote klussen
-        { tot: 15, prijs: 10 },
-        { tot: Infinity, prijs: 8 }
+      oudeKitPerM: [          // oude, verharde kit uitsnijden én ontvetten — verreweg het meeste werk; scherpe staffel om met schilders te concurreren
+        { tot: 10, prijs: 10 },
+        { tot: 30, prijs: 8 },
+        { tot: Infinity, prijs: 7 }
       ],
       kitPerM: [              // nieuwe kit erin: rechte, goed bereikbare naden
         { tot: 10, prijs: 5 },
