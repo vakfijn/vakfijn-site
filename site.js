@@ -238,7 +238,10 @@
     },
     beglazing: {              // beglazingskit, één kleur
       reinigenPerM: 0,        // zit in oudeKitPerM (uitkrabben + ontvetten samen)
-      oudeKitPerM: 10,        // oude, verharde kit uitsnijden én ontvetten, per meter — verreweg het meeste werk bij renovatie (offerte: boven 50 m € 8/m)
+      oudeKitPerM: [          // oude, verharde kit uitsnijden én ontvetten — verreweg het meeste werk; staffel om met schilders te concurreren op middelgrote klussen
+        { tot: 15, prijs: 10 },
+        { tot: Infinity, prijs: 8 }
+      ],
       kitPerM: [              // nieuwe kit erin: rechte, goed bereikbare naden
         { tot: 10, prijs: 5 },
         { tot: 20, prijs: 4 },
@@ -384,10 +387,11 @@
   function update() {
     var m = Number(range.value);
     var c = huidig(); var K = T[c.type];
-    // oplopende staffel: elke meter tegen het tarief van zijn eigen schijf (geen sprongen)
-    function kitArbeid(meters) {
+    // oplopende staffel: elke meter tegen het tarief van zijn eigen schijf (geen sprongen); vast tarief mag ook
+    function staffel(meters, tarieven) {
+      if (!Array.isArray(tarieven)) return tarieven * meters;
       var tot = 0, vorige = 0;
-      K.kitPerM.forEach(function (t) {
+      tarieven.forEach(function (t) {
         var grens = Math.min(meters, t.tot);
         if (grens > vorige) tot += (grens - vorige) * t.prijs;
         vorige = Math.max(vorige, grens);
@@ -400,7 +404,7 @@
     var neutraal = c.type === 'siliconen' && natuursteen.checked;
     var materiaal = kokers * (hyb ? K.hybrideKoker : (neutraal ? Math.max(K.kokerNeutraal, kleurExtra ? K.kokerKleur : 0) : (kleurExtra ? K.kokerKleur : K.kokerStandaard)));
     var oudePerM = K.oudeKitPerM != null ? K.oudeKitPerM : T.oudeKitPerM;
-    var arbeid = K.reinigenPerM * m + kitArbeid(m) + ((oudePerM != null && oudekit.checked) ? oudePerM * m : 0);
+    var arbeid = K.reinigenPerM * m + staffel(m, K.kitPerM) + ((oudePerM != null && oudekit.checked) ? staffel(m, oudePerM) : 0);
     if (lastig.checked) arbeid *= 1 + T.lastigPct / 100;
     if (breed.checked) { arbeid *= 1 + T.breedPct / 100; arbeid += T.breedRugPerM * m; }
     if (c.type === 'vloer' && primer.checked) arbeid += K.primerPerM * m;
