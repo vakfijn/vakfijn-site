@@ -75,7 +75,8 @@ form.open{display:block}
 .klaar.open{display:block}
 .klaar h2{font-family:'Bricolage Grotesque',sans-serif;font-size:22px;margin:0 0 8px;color:var(--goud)}
 .klaar p{margin:0 0 10px;font-size:14.5px;opacity:.9}
-.klaar pre{white-space:pre-wrap;font-family:'DM Mono',monospace;font-size:12.5px;background:rgba(245,242,236,.08);padding:14px;margin:0;line-height:1.6}
+.klaar pre{white-space:pre-wrap;font-family:'DM Mono',monospace;font-size:12.5px;background:rgba(245,242,236,.08);padding:14px;margin:0 0 14px;line-height:1.6}
+.wabtn{display:block;text-align:center;background:#25D366;color:#083b1f;font-weight:600;text-decoration:none;padding:13px;font-size:15px}
 .uitleg{font-size:13px;color:var(--grijs);margin:20px 0 50px}
 </style>
 </head>
@@ -102,6 +103,7 @@ form.open{display:block}
 <p class="gekozen" id="gekozen"></p>
 <div class="veld"><label for="naam">Naam</label><input id="naam" required></div>
 <div class="veld"><label for="tel">Telefoon / WhatsApp</label><input id="tel" type="tel" required></div>
+<div class="veld"><label for="adres">Adres</label><input id="adres" placeholder="Straat en huisnummer" required></div>
 <div class="veld"><label for="plaats">Plaats</label><input id="plaats" placeholder="Nijmegen" required></div>
 <div class="veld"><label>Waar gaat het om?</label>
 <div class="chips" id="chips"></div>
@@ -113,6 +115,7 @@ form.open{display:block}
 <h2 id="klaarkop">Aanvraag verstuurd.</h2>
 <p id="klaarsub">Je ontvangt binnen één werkdag een bevestiging per WhatsApp — pas dan staat het dagdeel vast.</p>
 <pre id="preview"></pre>
+<a id="wabevestig" class="wabtn" href="#" target="_blank" rel="noopener">Stuur ook een appje ter bevestiging</a>
 </div>
 
 <p class="uitleg">Reserveren kan tot drie weken vooruit, op werkdagen. Ochtend is 8.00 – 12.30, middag 13.00 – 17.00. De eerste drie werkdagen gelden als spoed: start op korte termijn, met een vaste toeslag van ca. € 85.</p>
@@ -127,7 +130,7 @@ var HORIZON=21; // dagen vooruit
 function pad(n){return (n<10?'0':'')+n}
 function sleutel(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())}
 
-var keuze=null, dagInfo={};
+var keuze=null, gekozenDatum=null, gekozenDeel=null, gekozenSpoed=false, dagInfo={};
 function bouw(bezetMap, demo){
   var grid=document.getElementById('kgrid'); grid.innerHTML='';
   ['ma','di','wo','do','vr','za','zo'].forEach(function(n){var h=document.createElement('div');h.className='kdagnaam';h.textContent=n;grid.appendChild(h);});
@@ -167,7 +170,7 @@ function bouw(bezetMap, demo){
   document.getElementById('kmaand').textContent=maanden.join(' · ')+(demo?'  (voorbeelddata)':'');
 }
 function toonDelen(k){
-  var info=dagInfo[k];
+  var info=dagInfo[k]; info.k=k;
   var blok=document.getElementById('delenblok'); blok.classList.add('open');
   document.getElementById('dkop').innerHTML=info.lbl.charAt(0).toUpperCase()+info.lbl.slice(1)+(info.spoed?' <span class="spoedtag">spoed · + ca. € 85</span>':'');
   var delen=document.getElementById('delen'); delen.innerHTML='';
@@ -179,7 +182,7 @@ function toonDelen(k){
       b.innerHTML=dd[0]+'<small>'+dd[1]+(info.spoed?' · spoed':'')+'</small>';
       b.addEventListener('click',function(){
         delen.querySelectorAll('.aan').forEach(function(x){x.classList.remove('aan')});
-        b.classList.add('aan'); keuze=info.lbl+' · '+dd[0]+(info.spoed?' (spoed, + ca. € 85 toeslag)':'');
+        b.classList.add('aan'); keuze=info.lbl+' · '+dd[0]+(info.spoed?' (spoed, + ca. € 85 toeslag)':''); gekozenDatum=info.k; gekozenDeel=dd[0]; gekozenSpoed=!!info.spoed;
         document.getElementById('gekozen').textContent='Gekozen: '+keuze;
         document.getElementById('f').classList.add('open');
         document.getElementById('f').scrollIntoView({behavior:'smooth',block:'start'});
@@ -204,12 +207,16 @@ SOORT.forEach(function(st,i){
 document.getElementById('f').addEventListener('submit',function(e){
   e.preventDefault();
   var knop=document.querySelector('.verstuur'); knop.disabled=true; knop.textContent='Versturen…';
+  var naam=document.getElementById('naam').value, tel=document.getElementById('tel').value,
+      adres=document.getElementById('adres').value, plaats=document.getElementById('plaats').value;
+  var icsLink='https://www.vakfijn-afwerking.nl/api/ics?'+new URLSearchParams({d:gekozenDatum,deel:gekozenDeel,naam:naam,tel:tel,adres:adres,plaats:plaats,klus:soort,spoed:gekozenSpoed?'ja':'nee'}).toString();
   var data={access_key:'7f7d6a04-5c0b-4ac2-8a8b-298923888052',subject:'Reservering dagdeel (plan-test)',from_name:'Vakfijn planner',
-    dagdeel:keuze,naam:document.getElementById('naam').value,telefoon:document.getElementById('tel').value,
-    plaats:document.getElementById('plaats').value,klus:soort};
+    dagdeel:keuze,naam:naam,telefoon:tel,adres:adres,plaats:plaats,klus:soort,zet_in_agenda:icsLink};
   fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(data)})
   .then(function(r){return r.json()}).then(function(j){
-    document.getElementById('preview').textContent='Dagdeel: '+keuze+'\nNaam: '+data.naam+'\nTelefoon: '+data.telefoon+'\nPlaats: '+data.plaats+'\nKlus: '+data.klus;
+    document.getElementById('preview').textContent='Dagdeel: '+keuze+'\nNaam: '+naam+'\nAdres: '+adres+', '+plaats+'\nKlus: '+data.klus;
+    var waTekst='Hoi, ik heb net een dagdeel gereserveerd via de site: '+keuze+'. Naam: '+naam+', '+plaats+'. Klus: '+data.klus+'.';
+    document.getElementById('wabevestig').href='https://wa.me/31639784959?text='+encodeURIComponent(waTekst);
     if(!(j&&j.success)){document.getElementById('klaarkop').textContent='Versturen mislukte — app 06 39 78 49 59 direct.';}
     document.getElementById('klaar').classList.add('open');
     document.getElementById('klaar').scrollIntoView({behavior:'smooth'});
