@@ -9,6 +9,14 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=DM+Mono:wght@400;500&family=Inter:wght@400;600&display=swap">
 <style>
+@view-transition{navigation:auto}
+::view-transition-old(root){animation:vtUit .22s ease both}
+::view-transition-new(root){animation:vtIn .3s ease both}
+@keyframes vtUit{to{opacity:0}}
+@keyframes vtIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.wrap{animation:paginaIn .4s ease both}
+@keyframes paginaIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.wrap,::view-transition-old(root),::view-transition-new(root){animation:none}}
 :root{--ant:#2C2A28;--goud:#D4A82C;--goud-d:#8A6A12;--zand:#F5F2EC;--zand-d:#EAE4D8;--grijs:#5E5A55;--lijn:#D9D2C5;--lijn-d:#4A4640}
 *{box-sizing:border-box}
 body{margin:0;font-family:Inter,sans-serif;font-size:16px;line-height:1.6;color:var(--ant);background:var(--zand)}

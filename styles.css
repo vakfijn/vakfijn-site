@@ -464,3 +464,11 @@ a.card:hover .more{letter-spacing:.5px}
 .wam .wamopt b{display:block;font-weight:600}
 .wam .wamopt small{color:var(--grijs);font-size:12.5px}
 .wam .wamx{position:absolute;top:14px;right:16px;background:none;border:0;font-size:22px;line-height:1;color:var(--grijs);cursor:pointer;padding:6px}
+
+/* zachte paginawissel (browsers met view transitions) */
+@view-transition{navigation:auto}
+::view-transition-old(root){animation:vtUit .22s ease both}
+::view-transition-new(root){animation:vtIn .3s ease both}
+@keyframes vtUit{to{opacity:0}}
+@keyframes vtIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){::view-transition-old(root),::view-transition-new(root){animation:none}}
