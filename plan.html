@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Plan je kitwerk in | Vakfijn</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=DM+Mono:wght@400;500&family=Inter:wght@400;600&display=swap">
+<style>
+:root{--ant:#2C2A28;--goud:#D4A82C;--goud-d:#8A6A12;--zand:#F5F2EC;--zand-d:#EAE4D8;--grijs:#5E5A55;--lijn:#D9D2C5;--lijn-d:#4A4640}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,sans-serif;font-size:16px;line-height:1.6;color:var(--ant);background:var(--zand)}
+.wrap{max-width:560px;margin:0 auto;padding:0 20px}
+.test{background:var(--ant);color:var(--zand);font-family:'DM Mono',monospace;font-size:12.5px;letter-spacing:1px;text-transform:uppercase;text-align:center;padding:9px 16px}
+.test b{color:var(--goud);font-weight:500}
+header{padding:34px 0 8px}
+.logo{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:24px;letter-spacing:.5px}
+.logo i{display:block;width:40px;height:4px;background:var(--goud);margin-top:6px}
+h1{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(28px,6vw,38px);letter-spacing:-.5px;line-height:1.1;margin:18px 0 8px}
+.sub{color:var(--grijs);margin:0 0 26px}
+.label{font-family:'DM Mono',monospace;font-size:12.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--goud-d);margin:26px 0 10px}
+
+/* kalender */
+.kal{background:#fff;border:1px solid var(--lijn);padding:18px 16px 16px}
+.kmaand{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:19px;margin:0 0 12px;text-transform:capitalize}
+.kgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.kdagnaam{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--grijs);text-align:center;padding-bottom:4px}
+.kdag{position:relative;font:inherit;font-size:15px;font-weight:600;aspect-ratio:1;border:1px solid var(--lijn);background:var(--zand);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:0;transition:border-color .15s}
+.kdag:hover{border-color:var(--goud-d)}
+.kdag .dots{display:flex;gap:3px}
+.kdag .dot{width:6px;height:6px;border-radius:50%;background:var(--goud)}
+.kdag .dot.uit{background:var(--lijn)}
+.kdag.uit{background:none;border-color:transparent;color:#B8B1A5;cursor:default;font-weight:400}
+.kdag.uit:hover{border-color:transparent}
+.kdag.vol{background:var(--zand-d);color:#A39C90;cursor:default;font-weight:400}
+.kdag.vol:hover{border-color:var(--lijn)}
+.kdag.vol::after{content:"vol";font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.5px}
+.kdag.vol .dots{display:none}
+.kdag.aan{background:var(--goud);border-color:var(--goud)}
+.kdag.aan .dot{background:var(--ant)}
+.kdag.aan .dot.uit{background:rgba(44,42,40,.25)}
+.legenda{display:flex;gap:18px;font-family:'DM Mono',monospace;font-size:11px;color:var(--grijs);margin-top:12px}
+.legenda span{display:flex;align-items:center;gap:6px}
+.legenda .dot{width:7px;height:7px;border-radius:50%;background:var(--goud);display:inline-block}
+.legenda .vlak{width:11px;height:11px;background:var(--zand-d);border:1px solid var(--lijn);display:inline-block}
+
+/* dagdeelkeuze */
+.delenblok{display:none;background:#fff;border:1px solid var(--lijn);border-top:4px solid var(--goud);padding:18px 16px;margin-top:14px}
+.delenblok.open{display:block}
+.delenblok .dkop{font-weight:600;margin:0 0 10px}
+.spoedtag{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.5px;text-transform:uppercase;color:var(--goud-d);border:1px solid var(--goud);padding:2px 7px;margin-left:8px;vertical-align:middle}
+.delen{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.deel{font:inherit;font-size:15px;padding:13px 8px;border:1px solid var(--lijn);background:var(--zand);cursor:pointer;text-align:center;transition:border-color .15s}
+.deel small{display:block;font-family:'DM Mono',monospace;font-size:11px;color:var(--grijs)}
+.deel:hover{border-color:var(--goud-d)}
+.deel.bezet{background:var(--zand-d);color:#A39C90;cursor:not-allowed;text-decoration:line-through}
+.deel.bezet small{text-decoration:none;color:#A39C90}
+.deel.aan{background:var(--goud);border-color:var(--goud);font-weight:600}
+.deel.aan small{color:var(--ant)}
+
+form{display:none;background:#fff;border:1px solid var(--lijn);border-top:4px solid var(--goud);padding:22px 20px 24px;margin-top:14px}
+form.open{display:block}
+.gekozen{font-family:'DM Mono',monospace;font-size:13px;color:var(--goud-d);margin:0 0 14px}
+.veld{margin-bottom:14px}
+.veld label{display:block;font-size:13.5px;font-weight:600;margin-bottom:5px}
+.veld input{width:100%;font:inherit;font-size:15px;padding:11px 12px;border:1px solid var(--lijn);background:var(--zand)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:inherit;font-size:13.5px;padding:8px 13px;border:1px solid var(--lijn);background:var(--zand);cursor:pointer}
+.chip.aan{background:var(--ant);color:var(--zand);border-color:var(--ant)}
+.verstuur{display:block;width:100%;font:inherit;font-size:16px;font-weight:600;background:var(--goud);color:var(--ant);border:0;padding:15px;margin-top:6px;cursor:pointer}
+.verstuur:hover{background:#c99b22}
+.klaar{display:none;background:var(--ant);color:var(--zand);padding:24px 22px;margin-top:22px}
+.klaar.open{display:block}
+.klaar h2{font-family:'Bricolage Grotesque',sans-serif;font-size:22px;margin:0 0 8px;color:var(--goud)}
+.klaar p{margin:0 0 10px;font-size:14.5px;opacity:.9}
+.klaar pre{white-space:pre-wrap;font-family:'DM Mono',monospace;font-size:12.5px;background:rgba(245,242,236,.08);padding:14px;margin:0 0 14px;line-height:1.6}
+.wabtn{display:block;text-align:center;background:#25D366;color:#083b1f;font-weight:600;text-decoration:none;padding:13px;font-size:15px}
+.uitleg{font-size:13px;color:var(--grijs);margin:20px 0 50px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><div class="logo">VAKFIJN<i></i></div></header>
+<h1>Plan je kitwerk in.</h1>
+<p class="sub">Kies een dag en een vrij dagdeel. Je ontvangt dezelfde werkdag een bevestiging per WhatsApp — pas dan staat je reservering vast.</p>
+
+<div class="label">Kies een dag</div>
+<div class="kal">
+<p class="kmaand" id="kmaand"></p>
+<div class="kgrid" id="kgrid"></div>
+<div class="legenda"><span><i class="dot"></i>dagdeel vrij</span><span><i class="vlak"></i>vol</span></div>
+</div>
+
+<div class="delenblok" id="delenblok">
+<p class="dkop" id="dkop"></p>
+<div class="delen" id="delen"></div>
+</div>
+
+<form id="f">
+<p class="gekozen" id="gekozen"></p>
+<div class="veld"><label for="naam">Naam</label><input id="naam" required></div>
+<div class="veld"><label for="tel">Telefoon / WhatsApp</label><input id="tel" type="tel" required></div>
+<div class="veld"><label for="adres">Adres</label><input id="adres" placeholder="Straat en huisnummer" required></div>
+<div class="veld"><label for="plaats">Plaats</label><input id="plaats" placeholder="Nijmegen" required></div>
+<div class="veld"><label>Waar gaat het om?</label>
+<div class="chips" id="chips"></div>
+</div>
+<button class="verstuur" type="submit">Reserveer dit dagdeel</button>
+</form>
+
+<div class="klaar" id="klaar">
+<h2 id="klaarkop">Aanvraag verstuurd.</h2>
+<p id="klaarsub">Je ontvangt binnen één werkdag een bevestiging per WhatsApp — pas dan staat het dagdeel vast.</p>
+<pre id="preview"></pre>
+<a id="wabevestig" class="wabtn" href="#" target="_blank" rel="noopener">Stuur ook een appje ter bevestiging</a>
+</div>
+
+<p class="uitleg">Reserveren kan tot drie weken vooruit, op werkdagen. Ochtend is 8.00 – 12.30, middag 13.00 – 17.00. De eerste drie werkdagen gelden als spoed: start op korte termijn, met een vaste toeslag van ca. € 85.</p>
+</div>
+
+<script>
+(function(){
+var DAGNAMEN=['zondag','maandag','dinsdag','woensdag','donderdag','vrijdag','zaterdag'];
+var MAANDEN=['januari','februari','maart','april','mei','juni','juli','augustus','september','oktober','november','december'];
+var MND_K=['jan','feb','mrt','apr','mei','jun','jul','aug','sep','okt','nov','dec'];
+var HORIZON=21; // dagen vooruit
+function pad(n){return (n<10?'0':'')+n}
+function sleutel(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())}
+
+var keuze=null, gekozenDatum=null, gekozenDeel=null, gekozenSpoed=false, dagInfo={};
+function bouw(bezetMap, demo){
+  var grid=document.getElementById('kgrid'); grid.innerHTML='';
+  ['ma','di','wo','do','vr','za','zo'].forEach(function(n){var h=document.createElement('div');h.className='kdagnaam';h.textContent=n;grid.appendChild(h);});
+  var vandaag=new Date(); vandaag.setHours(0,0,0,0);
+  var eerste=new Date(vandaag); eerste.setDate(eerste.getDate()+1);
+  var spoedTeller=0;
+  var laatste=new Date(vandaag); laatste.setDate(laatste.getDate()+HORIZON);
+  // grid begint op de maandag van de week van morgen
+  var start=new Date(eerste); start.setDate(start.getDate()-((start.getDay()+6)%7));
+  var maanden=[];
+  var d=new Date(start);
+  while(d<=laatste || (d.getDay()+6)%7!==0){
+    var cel=document.createElement('button'); cel.type='button'; cel.className='kdag'; cel.textContent=d.getDate();
+    var k=sleutel(d); var weekend=d.getDay()===0||d.getDay()===6;
+    if(maanden.indexOf(MAANDEN[d.getMonth()])<0 && d>=eerste && d<=laatste) maanden.push(MAANDEN[d.getMonth()]);
+    if(d<eerste || d>laatste || weekend){ cel.classList.add('uit'); cel.disabled=true; }
+    else{
+      var bz=(bezetMap[k]||[]);
+      var oVrij=bz.indexOf('ochtend')<0, mVrij=bz.indexOf('middag')<0;
+      spoedTeller++;
+      dagInfo[k]={o:oVrij,m:mVrij,spoed:spoedTeller<=3,lbl:DAGNAMEN[d.getDay()]+' '+d.getDate()+' '+MND_K[d.getMonth()]};
+      if(!oVrij && !mVrij){ cel.classList.add('vol'); cel.disabled=true; }
+      else{
+        var dots=document.createElement('span'); dots.className='dots';
+        dots.innerHTML='<span class="dot'+(oVrij?'':' uit')+'"></span><span class="dot'+(mVrij?'':' uit')+'"></span>';
+        cel.appendChild(dots);
+        cel.addEventListener('click',(function(k,cel){return function(){
+          document.querySelectorAll('.kdag.aan').forEach(function(x){x.classList.remove('aan')});
+          cel.classList.add('aan'); toonDelen(k);
+        }})(k,cel));
+      }
+    }
+    grid.appendChild(cel);
+    d.setDate(d.getDate()+1);
+    if(grid.children.length>7*7) break;
+  }
+  document.getElementById('kmaand').textContent=maanden.join(' · ')+(demo?'  (voorbeelddata)':'');
+}
+function toonDelen(k){
+  var info=dagInfo[k]; info.k=k;
+  var blok=document.getElementById('delenblok'); blok.classList.add('open');
+  document.getElementById('dkop').innerHTML=info.lbl.charAt(0).toUpperCase()+info.lbl.slice(1)+(info.spoed?' <span class="spoedtag">spoed · + ca. € 85</span>':'');
+  var delen=document.getElementById('delen'); delen.innerHTML='';
+  document.getElementById('f').classList.remove('open'); keuze=null;
+  [['ochtend','8.00 – 12.30',info.o],['middag','13.00 – 17.00',info.m]].forEach(function(dd){
+    var b=document.createElement('button'); b.type='button'; b.className='deel';
+    if(!dd[2]){ b.classList.add('bezet'); b.disabled=true; b.innerHTML='bezet<small>'+dd[1]+'</small>'; }
+    else{
+      b.innerHTML=dd[0]+'<small>'+dd[1]+(info.spoed?' · spoed':'')+'</small>';
+      b.addEventListener('click',function(){
+        delen.querySelectorAll('.aan').forEach(function(x){x.classList.remove('aan')});
+        b.classList.add('aan'); keuze=info.lbl+' · '+dd[0]+(info.spoed?' (spoed, + ca. € 85 toeslag)':''); gekozenDatum=info.k; gekozenDeel=dd[0]; gekozenSpoed=!!info.spoed;
+        document.getElementById('gekozen').textContent='Gekozen: '+keuze;
+        document.getElementById('f').classList.add('open');
+        document.getElementById('f').scrollIntoView({behavior:'smooth',block:'start'});
+      });
+    }
+    delen.appendChild(b);
+  });
+  blok.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+var DEMO={}; (function(){var d=new Date();var i=0;while(i<15){d.setDate(d.getDate()+1);if(d.getDay()===0||d.getDay()===6)continue;var k=sleutel(d);if(i===1)DEMO[k]=['ochtend'];if(i===3)DEMO[k]=['ochtend','middag'];if(i===6)DEMO[k]=['middag'];i++;}})();
+fetch('/api/vrij').then(function(r){return r.json()}).then(function(j){
+  if(j&&j.ok) bouw(j.bezet,false); else bouw(DEMO,true);
+}).catch(function(){bouw(DEMO,true)});
+
+var SOORT=['Badkamer of douche','Keuken','Beglazing','Vloer of plinten','Putje of goot','Anders'];
+var chips=document.getElementById('chips'); var soort=SOORT[0];
+SOORT.forEach(function(st,i){
+  var c=document.createElement('button'); c.type='button'; c.className='chip'+(i===0?' aan':''); c.textContent=st;
+  c.addEventListener('click',function(){chips.querySelectorAll('.aan').forEach(function(x){x.classList.remove('aan')});c.classList.add('aan');soort=st;});
+  chips.appendChild(c);
+});
+document.getElementById('f').addEventListener('submit',function(e){
+  e.preventDefault();
+  var knop=document.querySelector('.verstuur'); knop.disabled=true; knop.textContent='Versturen…';
+  var naam=document.getElementById('naam').value, tel=document.getElementById('tel').value,
+      adres=document.getElementById('adres').value, plaats=document.getElementById('plaats').value;
+  var icsLink='https://www.vakfijn-afwerking.nl/api/ics?'+new URLSearchParams({d:gekozenDatum,deel:gekozenDeel,naam:naam,tel:tel,adres:adres,plaats:plaats,klus:soort,spoed:gekozenSpoed?'ja':'nee'}).toString();
+  var data={access_key:'7f7d6a04-5c0b-4ac2-8a8b-298923888052',subject:'Reservering dagdeel (plan-test)',from_name:'Vakfijn planner',
+    dagdeel:keuze,naam:naam,telefoon:tel,adres:adres,plaats:plaats,klus:soort,zet_in_agenda:icsLink};
+  fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(data)})
+  .then(function(r){return r.json()}).then(function(j){
+    document.getElementById('preview').textContent='Dagdeel: '+keuze+'\nNaam: '+naam+'\nAdres: '+adres+', '+plaats+'\nKlus: '+data.klus;
+    var waTekst='Hoi, ik heb net een dagdeel gereserveerd via de site: '+keuze+'. Naam: '+naam+', '+plaats+'. Klus: '+data.klus+'.';
+    document.getElementById('wabevestig').href='https://wa.me/31639784959?text='+encodeURIComponent(waTekst);
+    if(!(j&&j.success)){document.getElementById('klaarkop').textContent='Versturen mislukte — app 06 39 78 49 59 direct.';}
+    document.getElementById('klaar').classList.add('open');
+    document.getElementById('klaar').scrollIntoView({behavior:'smooth'});
+    knop.disabled=false; knop.textContent='Reserveer dit dagdeel';
+  });
+});
+})();
+</script>
+</body>
+</html>
