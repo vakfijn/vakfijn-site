@@ -84,7 +84,7 @@ form.open{display:block}
 <div class="wrap">
 <header><div class="logo">VAKFIJN<i></i></div></header>
 <h1>Plan je kitwerk in.</h1>
-<p class="sub">Kies een dag en een vrij dagdeel. Dennis bevestigt je reservering dezelfde werkdag per WhatsApp — pas dan staat hij vast.</p>
+<p class="sub">Kies een dag en een vrij dagdeel. Je ontvangt dezelfde werkdag een bevestiging per WhatsApp — pas dan staat je reservering vast.</p>
 
 <div class="label">Kies een dag</div>
 <div class="kal">
@@ -111,7 +111,7 @@ form.open{display:block}
 
 <div class="klaar" id="klaar">
 <h2 id="klaarkop">Aanvraag verstuurd.</h2>
-<p id="klaarsub">Dennis bevestigt je reservering binnen één werkdag per WhatsApp — pas dan staat het dagdeel vast.</p>
+<p id="klaarsub">Je ontvangt binnen één werkdag een bevestiging per WhatsApp — pas dan staat het dagdeel vast.</p>
 <pre id="preview"></pre>
 </div>
 
@@ -210,7 +210,7 @@ document.getElementById('f').addEventListener('submit',function(e){
   fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(data)})
   .then(function(r){return r.json()}).then(function(j){
     document.getElementById('preview').textContent='Dagdeel: '+keuze+'\nNaam: '+data.naam+'\nTelefoon: '+data.telefoon+'\nPlaats: '+data.plaats+'\nKlus: '+data.klus;
-    if(!(j&&j.success)){document.getElementById('klaarkop').textContent='Versturen mislukte — app Dennis direct.';}
+    if(!(j&&j.success)){document.getElementById('klaarkop').textContent='Versturen mislukte — app 06 39 78 49 59 direct.';}
     document.getElementById('klaar').classList.add('open');
     document.getElementById('klaar').scrollIntoView({behavior:'smooth'});
     knop.disabled=false; knop.textContent='Reserveer dit dagdeel';
