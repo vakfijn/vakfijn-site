@@ -50,6 +50,7 @@ h1{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(
 .delenblok{display:none;background:#fff;border:1px solid var(--lijn);border-top:4px solid var(--goud);padding:18px 16px;margin-top:14px}
 .delenblok.open{display:block}
 .delenblok .dkop{font-weight:600;margin:0 0 10px}
+.spoedtag{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.5px;text-transform:uppercase;color:var(--goud-d);border:1px solid var(--goud);padding:2px 7px;margin-left:8px;vertical-align:middle}
 .delen{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .deel{font:inherit;font-size:15px;padding:13px 8px;border:1px solid var(--lijn);background:var(--zand);cursor:pointer;text-align:center;transition:border-color .15s}
 .deel small{display:block;font-family:'DM Mono',monospace;font-size:11px;color:var(--grijs)}
@@ -114,7 +115,7 @@ form.open{display:block}
 <pre id="preview"></pre>
 </div>
 
-<p class="uitleg">Reserveren kan tot drie weken vooruit, op werkdagen. Ochtend is 8.00 – 12.30, middag 13.00 – 17.00.</p>
+<p class="uitleg">Reserveren kan tot drie weken vooruit, op werkdagen. Ochtend is 8.00 – 12.30, middag 13.00 – 17.00. De eerste drie werkdagen gelden als spoed: start op korte termijn, met een vaste toeslag van ca. € 85.</p>
 </div>
 
 <script>
@@ -132,6 +133,7 @@ function bouw(bezetMap, demo){
   ['ma','di','wo','do','vr','za','zo'].forEach(function(n){var h=document.createElement('div');h.className='kdagnaam';h.textContent=n;grid.appendChild(h);});
   var vandaag=new Date(); vandaag.setHours(0,0,0,0);
   var eerste=new Date(vandaag); eerste.setDate(eerste.getDate()+1);
+  var spoedTeller=0;
   var laatste=new Date(vandaag); laatste.setDate(laatste.getDate()+HORIZON);
   // grid begint op de maandag van de week van morgen
   var start=new Date(eerste); start.setDate(start.getDate()-((start.getDay()+6)%7));
@@ -145,7 +147,8 @@ function bouw(bezetMap, demo){
     else{
       var bz=(bezetMap[k]||[]);
       var oVrij=bz.indexOf('ochtend')<0, mVrij=bz.indexOf('middag')<0;
-      dagInfo[k]={o:oVrij,m:mVrij,lbl:DAGNAMEN[d.getDay()]+' '+d.getDate()+' '+MND_K[d.getMonth()]};
+      spoedTeller++;
+      dagInfo[k]={o:oVrij,m:mVrij,spoed:spoedTeller<=3,lbl:DAGNAMEN[d.getDay()]+' '+d.getDate()+' '+MND_K[d.getMonth()]};
       if(!oVrij && !mVrij){ cel.classList.add('vol'); cel.disabled=true; }
       else{
         var dots=document.createElement('span'); dots.className='dots';
@@ -166,17 +169,17 @@ function bouw(bezetMap, demo){
 function toonDelen(k){
   var info=dagInfo[k];
   var blok=document.getElementById('delenblok'); blok.classList.add('open');
-  document.getElementById('dkop').textContent=info.lbl.charAt(0).toUpperCase()+info.lbl.slice(1);
+  document.getElementById('dkop').innerHTML=info.lbl.charAt(0).toUpperCase()+info.lbl.slice(1)+(info.spoed?' <span class="spoedtag">spoed · + ca. € 85</span>':'');
   var delen=document.getElementById('delen'); delen.innerHTML='';
   document.getElementById('f').classList.remove('open'); keuze=null;
   [['ochtend','8.00 – 12.30',info.o],['middag','13.00 – 17.00',info.m]].forEach(function(dd){
     var b=document.createElement('button'); b.type='button'; b.className='deel';
     if(!dd[2]){ b.classList.add('bezet'); b.disabled=true; b.innerHTML='bezet<small>'+dd[1]+'</small>'; }
     else{
-      b.innerHTML=dd[0]+'<small>'+dd[1]+'</small>';
+      b.innerHTML=dd[0]+'<small>'+dd[1]+(info.spoed?' · spoed':'')+'</small>';
       b.addEventListener('click',function(){
         delen.querySelectorAll('.aan').forEach(function(x){x.classList.remove('aan')});
-        b.classList.add('aan'); keuze=info.lbl+' · '+dd[0];
+        b.classList.add('aan'); keuze=info.lbl+' · '+dd[0]+(info.spoed?' (spoed, + ca. € 85 toeslag)':'');
         document.getElementById('gekozen').textContent='Gekozen: '+keuze;
         document.getElementById('f').classList.add('open');
         document.getElementById('f').scrollIntoView({behavior:'smooth',block:'start'});
