@@ -53,7 +53,7 @@ form.open{display:block}
 </style>
 </head>
 <body>
-<div class="test"><b>Testversie</b> · nog niet zichtbaar voor klanten · reserveringen worden niet verwerkt</div>
+<div class="test"><b>Testversie</b> · nog niet zichtbaar voor klanten</div>
 <div class="wrap">
 <header><div class="logo">VAKFIJN<i></i></div></header>
 <h1>Plan je kitwerk in.</h1>
@@ -74,8 +74,8 @@ form.open{display:block}
 </form>
 
 <div class="klaar" id="klaar">
-<h2>Aanvraag staat klaar.</h2>
-<p>In de echte versie krijgt Dennis nu dit bericht en ontvang jij binnen een werkdag een bevestiging per WhatsApp:</p>
+<h2 id="klaarkop">Aanvraag verstuurd.</h2>
+<p id="klaarsub">Dennis bevestigt je reservering binnen één werkdag per WhatsApp — pas dan staat het dagdeel vast.</p>
 <pre id="preview"></pre>
 </div>
 
@@ -86,54 +86,65 @@ form.open{display:block}
 (function(){
 var DAGNAMEN=['zondag','maandag','dinsdag','woensdag','donderdag','vrijdag','zaterdag'];
 var MAANDEN=['jan','feb','mrt','apr','mei','jun','jul','aug','sep','okt','nov','dec'];
-// demo-beschikbaarheid: in het echt komt dit uit jouw agenda of een bestandje dat je bijhoudt
-var BEZET={ochtend:[1,4,7],middag:[2,4,8]}; // index van werkdag vanaf morgen
-var el=document.getElementById('dagen');
-var d=new Date(); var werkdag=0; var keuze=null;
-while(werkdag<10){
-  d.setDate(d.getDate()+1);
-  if(d.getDay()===0||d.getDay()===6) continue;
-  var kop=DAGNAMEN[d.getDay()]+' <small>'+d.getDate()+' '+MAANDEN[d.getMonth()]+'</small>';
-  var dag=document.createElement('div'); dag.className='dag';
-  dag.innerHTML='<div class="dkop">'+kop+'</div><div class="delen"></div>';
-  var delen=dag.querySelector('.delen');
-  [['ochtend','8.00 – 12.30'],['middag','13.00 – 17.00']].forEach(function(dd,di){
-    var b=document.createElement('button'); b.type='button'; b.className='deel';
-    b.innerHTML=dd[0]+'<small>'+dd[1]+'</small>';
-    var bezet=BEZET[dd[0]].indexOf(werkdag)>-1;
-    if(bezet){b.classList.add('bezet');b.disabled=true;b.innerHTML='bezet<small>'+dd[1]+'</small>';}
-    else{
-      var lbl=DAGNAMEN[d.getDay()]+' '+d.getDate()+' '+MAANDEN[d.getMonth()]+' · '+dd[0];
-      b.addEventListener('click',function(){
-        document.querySelectorAll('.deel.aan').forEach(function(x){x.classList.remove('aan')});
-        b.classList.add('aan'); keuze=lbl;
-        document.getElementById('gekozen').textContent='Gekozen: '+lbl;
-        document.getElementById('f').classList.add('open');
-        document.getElementById('f').scrollIntoView({behavior:'smooth',block:'start'});
-      });
-    }
-    delen.appendChild(b);
-  });
-  el.appendChild(dag); werkdag++;
+var el=document.getElementById('dagen'); var keuze=null;
+function pad(n){return (n<10?'0':'')+n}
+function bouw(bezetMap, demo){
+  el.innerHTML='';
+  if(demo){var n=document.createElement('p');n.style.cssText='font-family:DM Mono,monospace;font-size:12px;color:var(--grijs)';n.textContent='(agenda nog niet gekoppeld — voorbeelddata)';el.appendChild(n);}
+  var d=new Date(); var werkdag=0;
+  while(werkdag<10){
+    d.setDate(d.getDate()+1);
+    if(d.getDay()===0||d.getDay()===6) continue;
+    var sleutel=d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+    var bz=bezetMap[sleutel]||[];
+    var dag=document.createElement('div'); dag.className='dag';
+    dag.innerHTML='<div class="dkop">'+DAGNAMEN[d.getDay()]+' <small>'+d.getDate()+' '+MAANDEN[d.getMonth()]+'</small></div><div class="delen"></div>';
+    var delen=dag.querySelector('.delen');
+    [['ochtend','8.00 – 12.30'],['middag','13.00 – 17.00']].forEach(function(dd){
+      var b=document.createElement('button'); b.type='button'; b.className='deel';
+      if(bz.indexOf(dd[0])>-1){b.classList.add('bezet');b.disabled=true;b.innerHTML='bezet<small>'+dd[1]+'</small>';}
+      else{
+        b.innerHTML=dd[0]+'<small>'+dd[1]+'</small>';
+        var lbl=DAGNAMEN[d.getDay()]+' '+d.getDate()+' '+MAANDEN[d.getMonth()]+' · '+dd[0];
+        b.addEventListener('click',(function(lbl,b){return function(){
+          document.querySelectorAll('.deel.aan').forEach(function(x){x.classList.remove('aan')});
+          b.classList.add('aan'); keuze=lbl;
+          document.getElementById('gekozen').textContent='Gekozen: '+lbl;
+          document.getElementById('f').classList.add('open');
+          document.getElementById('f').scrollIntoView({behavior:'smooth',block:'start'});
+        }})(lbl,b));
+      }
+      delen.appendChild(b);
+    });
+    el.appendChild(dag); werkdag++;
+  }
 }
+var DEMO={}; (function(){var d=new Date();var i=0;while(i<10){d.setDate(d.getDate()+1);if(d.getDay()===0||d.getDay()===6)continue;var k=d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());if(i===1)DEMO[k]=['ochtend'];if(i===3)DEMO[k]=['ochtend','middag'];if(i===6)DEMO[k]=['middag'];i++;}})();
+fetch('/api/vrij').then(function(r){return r.json()}).then(function(j){
+  if(j&&j.ok) bouw(j.bezet,false); else bouw(DEMO,true);
+}).catch(function(){bouw(DEMO,true)});
+
 var SOORT=['Badkamer of douche','Keuken','Beglazing','Vloer of plinten','Putje of goot','Anders'];
 var chips=document.getElementById('chips'); var soort=SOORT[0];
-SOORT.forEach(function(s,i){
-  var c=document.createElement('button'); c.type='button'; c.className='chip'+(i===0?' aan':''); c.textContent=s;
-  c.addEventListener('click',function(){chips.querySelectorAll('.aan').forEach(function(x){x.classList.remove('aan')});c.classList.add('aan');soort=s;});
+SOORT.forEach(function(st,i){
+  var c=document.createElement('button'); c.type='button'; c.className='chip'+(i===0?' aan':''); c.textContent=st;
+  c.addEventListener('click',function(){chips.querySelectorAll('.aan').forEach(function(x){x.classList.remove('aan')});c.classList.add('aan');soort=st;});
   chips.appendChild(c);
 });
 document.getElementById('f').addEventListener('submit',function(e){
   e.preventDefault();
-  var tekst='Reservering dagdeel (test)\n'+
-    'Dagdeel: '+keuze+'\n'+
-    'Naam: '+document.getElementById('naam').value+'\n'+
-    'Telefoon: '+document.getElementById('tel').value+'\n'+
-    'Plaats: '+document.getElementById('plaats').value+'\n'+
-    'Klus: '+soort;
-  document.getElementById('preview').textContent=tekst;
-  document.getElementById('klaar').classList.add('open');
-  document.getElementById('klaar').scrollIntoView({behavior:'smooth'});
+  var knop=document.querySelector('.verstuur'); knop.disabled=true; knop.textContent='Versturen…';
+  var data={access_key:'7f7d6a04-5c0b-4ac2-8a8b-298923888052',subject:'Reservering dagdeel (plan-test)',from_name:'Vakfijn planner',
+    dagdeel:keuze,naam:document.getElementById('naam').value,telefoon:document.getElementById('tel').value,
+    plaats:document.getElementById('plaats').value,klus:soort};
+  fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify(data)})
+  .then(function(r){return r.json()}).then(function(j){
+    document.getElementById('preview').textContent='Dagdeel: '+keuze+'\nNaam: '+data.naam+'\nTelefoon: '+data.telefoon+'\nPlaats: '+data.plaats+'\nKlus: '+data.klus;
+    if(!(j&&j.success)){document.getElementById('klaarkop').textContent='Versturen mislukte — app Dennis direct.';}
+    document.getElementById('klaar').classList.add('open');
+    document.getElementById('klaar').scrollIntoView({behavior:'smooth'});
+    knop.disabled=false; knop.textContent='Reserveer dit dagdeel';
+  });
 });
 })();
 </script>
