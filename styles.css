@@ -472,3 +472,8 @@ a.card:hover .more{letter-spacing:.5px}
 @keyframes vtUit{to{opacity:0}}
 @keyframes vtIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){::view-transition-old(root),::view-transition-new(root){animation:none}}
+
+/* zachte entree op elke pagina (ook terug naar home, ook zonder view-transition-support) */
+body{animation:bodyIn .3s ease both}
+@keyframes bodyIn{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){body{animation:none}}
