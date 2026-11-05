@@ -127,7 +127,7 @@ form.open{display:block}
 <a id="wabevestig" class="wabtn" href="#" target="_blank" rel="noopener">Stuur ook een appje ter bevestiging</a>
 </div>
 
-<p class="uitleg">Reserveren kan tot drie weken vooruit, op werkdagen. Ochtend is 8.00 – 12.30, middag 13.00 – 17.00. De eerste drie werkdagen gelden als spoed: start op korte termijn, met een vaste toeslag van ca. € 85.</p>
+<p class="uitleg">Reserveren kan tot zes weken vooruit, op werkdagen. Ochtend is 8.00 – 12.30, middag 13.00 – 17.00. De eerste drie werkdagen gelden als spoed: start op korte termijn, met een vaste toeslag van ca. € 85.</p>
 </div>
 
 <script>
@@ -135,7 +135,7 @@ form.open{display:block}
 var DAGNAMEN=['zondag','maandag','dinsdag','woensdag','donderdag','vrijdag','zaterdag'];
 var MAANDEN=['januari','februari','maart','april','mei','juni','juli','augustus','september','oktober','november','december'];
 var MND_K=['jan','feb','mrt','apr','mei','jun','jul','aug','sep','okt','nov','dec'];
-var HORIZON=21; // dagen vooruit
+var HORIZON=42; // dagen vooruit (6 weken)
 function pad(n){return (n<10?'0':'')+n}
 function sleutel(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())}
 
@@ -174,7 +174,7 @@ function bouw(bezetMap, demo){
     }
     grid.appendChild(cel);
     d.setDate(d.getDate()+1);
-    if(grid.children.length>7*7) break;
+    if(grid.children.length>7*12) break;
   }
   document.getElementById('kmaand').textContent=maanden.join(' · ')+(demo?'  (voorbeelddata)':'');
 }
