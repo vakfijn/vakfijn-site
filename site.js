@@ -479,3 +479,45 @@ document.querySelectorAll('.gal.carrousel figure').forEach(function (f) {
   f.addEventListener('click', toggle);
   f.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
 });
+
+/* WhatsApp-keuzemenu: generieke knoppen krijgen eerst een kort onderwerp-menu */
+(function () {
+  var NR = '31639784959';
+  var OPTIES = [
+    ['Kitrand zwart of los', 'badkamer of douche', "Hoi, de kitrand in mijn badkamer of douche is zwart of laat los. Graag een offerte. Foto's volgen."],
+    ['Lekkage of kapotte kit', 'liefst snel geholpen', "Hoi, ik heb een lekkage of kapotte kitrand en wil snel geholpen worden. Foto's volgen."],
+    ['Nieuwbouw of renovatie afkitten', 'badkamer, keuken of hele woning', "Hoi, ik wil nieuw werk laten afkitten (nieuwbouw of renovatie). Graag een offerte. Foto's volgen."],
+    ['Keukenblad', 'naad tussen blad en wand', "Hoi, de kitnaad van mijn keukenblad moet vervangen worden. Graag een offerte. Foto's volgen."],
+    ['Beglazing of kozijnen', 'kit langs het glas', "Hoi, de beglazingskit van mijn ramen of kozijnen moet vervangen worden. Graag een offerte. Foto's volgen."],
+    ['Vloer, plinten of stucnaden', 'ook PVC en laminaat', "Hoi, ik wil vloernaden, plinten of stucnaden laten kitten. Graag een offerte. Foto's volgen."],
+    ['Iets anders', 'vertel het in je bericht', "Hoi, ik wil graag een offerte van Vakfijn. Foto's volgen."]
+  ];
+  var doelen = [].filter.call(document.querySelectorAll('a[href*="wa.me/' + NR + '"]'), function (a) {
+    if (a.hasAttribute('data-wa')) return false;
+    var t = decodeURIComponent(a.href);
+    return t.indexOf('offerte van Vakfijn') > -1 || t.indexOf('foto-offerte voor kitwerk') > -1 || t.indexOf('foto-offerte van Vakfijn') > -1;
+  });
+  if (!doelen.length) return;
+  var wam = document.createElement('div');
+  wam.className = 'wam';
+  wam.innerHTML = '<div class="wamachter"></div><div class="wamkaart" role="dialog" aria-label="Waar gaat het om?">' +
+    '<button class="wamx" type="button" aria-label="Sluiten">&times;</button>' +
+    '<h3>Waar gaat het om?</h3><p class="wamsub">Eén tik — dan opent WhatsApp met je bericht al klaar.</p>' +
+    OPTIES.map(function (o, i) { return '<button class="wamopt" type="button" data-i="' + i + '"><b>' + o[0] + '</b><small>' + o[1] + '</small></button>'; }).join('') +
+    '</div>';
+  document.body.appendChild(wam);
+  function dicht() { wam.classList.remove('open'); }
+  wam.querySelector('.wamachter').addEventListener('click', dicht);
+  wam.querySelector('.wamx').addEventListener('click', dicht);
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') dicht(); });
+  wam.querySelectorAll('.wamopt').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var o = OPTIES[Number(b.getAttribute('data-i'))];
+      window.open('https://wa.me/' + NR + '?text=' + encodeURIComponent(o[2]), '_blank', 'noopener');
+      dicht();
+    });
+  });
+  doelen.forEach(function (a) {
+    a.addEventListener('click', function (e) { e.preventDefault(); wam.classList.add('open'); });
+  });
+})();
