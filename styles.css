@@ -477,3 +477,9 @@ a.card:hover .more{letter-spacing:.5px}
 body{animation:bodyIn .3s ease both}
 @keyframes bodyIn{from{opacity:0}to{opacity:1}}
 @media (prefers-reduced-motion:reduce){body{animation:none}}
+
+/* roterende reviewtekst in de feitenbalk */
+.reviewquote{max-width:1180px;margin:0 auto;padding:10px 20px 2px;text-align:center;font-size:13.5px;color:var(--grijs);min-height:22px}
+.reviewquote .wie{font-family:'DM Mono',monospace;font-size:11px;color:var(--goud-d);margin-left:8px}
+.reviewquote span.q{opacity:0;transition:opacity .5s}
+.reviewquote span.q.on{opacity:1}

@@ -522,3 +522,31 @@ document.querySelectorAll('.gal.carrousel figure').forEach(function (f) {
   });
 })();
 
+
+/* reviewbalk voedt zichzelf uit /reviews.json */
+(function () {
+  var bar = document.querySelector('.reviewbar');
+  if (!bar) return;
+  fetch('/reviews.json').then(function (r) { return r.json(); }).then(function (j) {
+    if (!j || !j.score) return;
+    var a = bar.querySelector('.feiten3 a');
+    if (a) {
+      a.innerHTML = '<span class="sterren" aria-hidden="true">★★★★★</span><b>' + j.score + '</b> op ' + j.bron + '<span class="dot-sep">·</span>' + j.aantal + ' reviews';
+    }
+    if (j.quotes && j.quotes.length) {
+      var q = document.createElement('div');
+      q.className = 'reviewquote';
+      q.innerHTML = '<span class="q on"></span>';
+      bar.appendChild(q);
+      var el = q.querySelector('.q'), i = 0;
+      function toon() {
+        el.innerHTML = '“' + j.quotes[i].t + '”<span class="wie">' + (j.quotes[i].wie || j.bron) + '</span>';
+      }
+      toon();
+      if (j.quotes.length > 1) setInterval(function () {
+        el.classList.remove('on');
+        setTimeout(function () { i = (i + 1) % j.quotes.length; toon(); el.classList.add('on'); }, 500);
+      }, 8000);
+    }
+  }).catch(function () {});
+})();
