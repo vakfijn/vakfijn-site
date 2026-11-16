@@ -540,7 +540,7 @@ document.querySelectorAll('.gal.carrousel figure').forEach(function (f) {
       bar.appendChild(q);
       var el = q.querySelector('.q'), i = 0;
       function toon() {
-        el.innerHTML = '“' + j.quotes[i].t + '”<span class="wie">' + (j.quotes[i].wie || j.bron) + '</span>';
+        el.innerHTML = '“' + j.quotes[i].t + '”<span class="wie">★★★★★ · ' + (j.quotes[i].wie || j.bron) + ' · ' + j.bron + '</span>';
       }
       toon();
       if (j.quotes.length > 1) setInterval(function () {

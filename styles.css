@@ -478,8 +478,8 @@ body{animation:bodyIn .3s ease both}
 @keyframes bodyIn{from{opacity:0}to{opacity:1}}
 @media (prefers-reduced-motion:reduce){body{animation:none}}
 
-/* roterende reviewtekst in de feitenbalk */
-.reviewquote{max-width:1180px;margin:0 auto;padding:10px 20px 2px;text-align:center;font-size:13.5px;color:var(--grijs);min-height:22px}
-.reviewquote .wie{font-family:'DM Mono',monospace;font-size:11px;color:var(--goud-d);margin-left:8px}
-.reviewquote span.q{opacity:0;transition:opacity .5s}
+/* roterende reviewtekst: donkere strook onder de feitenbalk */
+.reviewquote{background:var(--ant);border-top:3px solid var(--goud);padding:16px 20px 18px;text-align:center}
+.reviewquote span.q{display:block;max-width:760px;margin:0 auto;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(16px,2.6vw,20px);line-height:1.45;color:#fff;opacity:0;transition:opacity .5s}
 .reviewquote span.q.on{opacity:1}
+.reviewquote .wie{display:block;font-family:'DM Mono',monospace;font-weight:400;font-size:11.5px;letter-spacing:1px;text-transform:uppercase;color:var(--goud);margin-top:7px}
