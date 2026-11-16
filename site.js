@@ -522,22 +522,3 @@ document.querySelectorAll('.gal.carrousel figure').forEach(function (f) {
   });
 })();
 
-/* home-test: proces-stappen + quote-wissel */
-document.querySelectorAll('.pstap').forEach(function (st) {
-  st.addEventListener('click', function () {
-    document.querySelectorAll('.pstap').forEach(function (x) { x.classList.remove('aan'); });
-    st.classList.add('aan');
-    var i = Number(st.getAttribute('data-foto'));
-    document.querySelectorAll('.pfotos img').forEach(function (img, n) { img.classList.toggle('on', n === i); });
-  });
-});
-(function () {
-  var qs = document.querySelectorAll('.quote'), dots = document.querySelectorAll('.qdots button');
-  if (!qs.length) return;
-  function zet(i) {
-    qs.forEach(function (q, n) { q.classList.toggle('on', n === i); });
-    dots.forEach(function (d, n) { d.classList.toggle('on', n === i); });
-  }
-  dots.forEach(function (d, i) { d.addEventListener('click', function () { zet(i); }); });
-  var i = 0; setInterval(function () { i = (i + 1) % qs.length; zet(i); }, 7000);
-})();
